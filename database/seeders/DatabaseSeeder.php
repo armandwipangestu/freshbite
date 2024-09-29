@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             ProfileSeeder::class,
             RajaOngkirProvinceSeeder::class,
             AddressSeeder::class,
+            CategorySeeder::class,
         ]);
     }
 }
