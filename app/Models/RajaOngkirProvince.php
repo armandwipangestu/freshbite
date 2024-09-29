@@ -18,4 +18,9 @@ class RajaOngkirProvince extends Model
     {
         return $this->hasMany(RajaOngkirCity::class);
     }
+
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(Address::class, RajaOngkirCity::class);
+    }
 }
