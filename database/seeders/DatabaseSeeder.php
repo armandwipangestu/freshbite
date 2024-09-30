@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             CategoryProductSeeder::class,
             CartSeeder::class,
             CartItemSeeder::class,
+            WishlistSeeder::class,
+            WishlistItemSeeder::class,
         ]);
     }
 }
