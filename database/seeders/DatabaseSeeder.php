@@ -26,6 +26,9 @@ class DatabaseSeeder extends Seeder
             CartItemSeeder::class,
             WishlistSeeder::class,
             WishlistItemSeeder::class,
+            RajaOngkirCourierSeeder::class,
+            OrderSeeder::class,
+            OrderItemSeeder::class,
         ]);
     }
 }
