@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             RajaOngkirCourierSeeder::class,
             OrderSeeder::class,
             OrderItemSeeder::class,
+            ReviewSeeder::class,
         ]);
     }
 }

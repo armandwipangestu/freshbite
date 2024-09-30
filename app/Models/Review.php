@@ -7,20 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class OrderItem extends Model
+class Review extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'order_id',
+        'star',
+        'message',
+        'is_published',
+        'order_item_id',
         'product_id',
-        'quantity',
-        'price',
+        'user_id',
     ];
 
-    public function order(): BelongsTo
+    public function orderItem(): HasOne
     {
-        return $this->belongsTo(Order::class);
+        return $this->hasOne(OrderItem::class);
     }
 
     public function product(): BelongsTo
@@ -28,8 +30,8 @@ class OrderItem extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function review(): HasOne
+    public function user(): BelongsTo
     {
-        return $this->hasOne(Review::class);
+        return $this->belongsTo(User::class);
     }
 }

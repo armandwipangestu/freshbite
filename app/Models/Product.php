@@ -62,4 +62,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Order::class, 'order_items');
     }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
 }
