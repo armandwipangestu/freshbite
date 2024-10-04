@@ -33,6 +33,8 @@ class RajaOngkirProvinceSeeder extends Seeder
                     RajaOngkirCity::create([
                         'id' => $cityData['city_id'],
                         'name' => $cityData['city_name'],
+                        'type' => $cityData['type'],
+                        'postal_code' => $cityData['postal_code'],
                         'province_id' => $cityData['province_id'],
                     ]);
                 }
