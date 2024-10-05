@@ -38,6 +38,9 @@ class UserFactory extends Factory
         $adminRole->syncPermissions([$manageUsersPermission, $viewDashboardPermission]);
         $userRole->syncPermissions([$viewDashboardPermission]);
 
+        $created_at = fake()->dateTimeBetween('-1 year', 'now');
+        $updated_at = fake()->dateTimeBetween($created_at, 'now');
+
         return [
             'name' => fake()->name(),
             'avatar' => fake()->imageUrl(),
@@ -45,6 +48,8 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'created_at' => $created_at,
+            'updated_at' => $updated_at,
         ];
     }
 
