@@ -83,6 +83,13 @@ class UserResource extends Resource
                                 'regex' => 'Password must contain at least 1 lowercase letter, 1 uppercase letter, 1 number, and 1 special character.',
                             ]),
 
+                        Forms\Components\Select::make('roles')
+                            ->suffixIcon('heroicon-m-shield-check')
+                            ->relationship('roles', 'name')
+                            ->multiple()
+                            ->preload()
+                            ->searchable(),
+
                         Select::make('theme')
                             ->label('Theme')
                             ->suffixIcon('heroicon-m-swatch')
