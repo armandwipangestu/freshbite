@@ -36,6 +36,8 @@ class AdminPanelProvider extends PanelProvider
                 'success' => Color::Emerald,
                 'warning' => Color::Orange,
             ])
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('5s')
             ->font('Poppins')
             ->favicon(asset('storage/assets/images/favicon.png'))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')

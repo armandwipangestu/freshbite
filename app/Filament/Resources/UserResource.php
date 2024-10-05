@@ -2,12 +2,14 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Exports\UserExporter;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Filament\Resources\UserResource\Widgets\UserStatsFooter;
 use App\Filament\Resources\UserResource\Widgets\UserStatsHeader;
 use App\Models\Profile;
 use App\Models\User;
+use Filament\Actions\Exports\Enums\ExportFormat;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\FileUpload;
@@ -21,6 +23,8 @@ use Filament\Tables;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ExportAction;
+use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\SelectColumn;
@@ -169,10 +173,28 @@ class UserResource extends Resource
                 EditAction::make(),
                 DeleteAction::make(),
             ])
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(UserExporter::class)
+                    ->color('primary')
+                    ->formats([
+                        ExportFormat::Csv,
+                        ExportFormat::Xlsx,
+                    ])
+                    ->icon('heroicon-m-arrow-up-tray'),
+            ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
+                ExportBulkAction::make()
+                    ->exporter(UserExporter::class)
+                    ->color('primary')
+                    ->formats([
+                        ExportFormat::Csv,
+                        ExportFormat::Xlsx,
+                    ])
+                    ->icon('heroicon-m-arrow-up-tray'),
             ]);
     }
 
