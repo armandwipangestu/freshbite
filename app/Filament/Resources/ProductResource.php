@@ -1,8 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\CategoryResource\RelationManagers;
+namespace App\Filament\Resources;
 
 use App\Filament\Exports\ProductExporter;
+use App\Filament\Resources\ProductResource\Pages;
+use App\Filament\Resources\ProductResource\RelationManagers;
+use App\Filament\Resources\ProductResource\Widgets\ProductStatsHeader;
+use App\Models\Product;
 use Filament\Actions\Exports\Enums\ExportFormat;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
@@ -14,9 +18,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
-use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ExportAction;
@@ -29,11 +32,20 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
-class ProductsRelationManager extends RelationManager
+class ProductResource extends Resource
 {
-    protected static string $relationship = 'products';
+    protected static ?string $model = Product::class;
 
-    public function form(Form $form): Form
+    protected static ?string $navigationIcon = 'heroicon-o-inbox-stack';
+
+    protected static ?string $navigationGroup = 'Product Management';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) "Published " . Product::where('is_published', true)->count();
+    }
+
+    public static function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -109,7 +121,7 @@ class ProductsRelationManager extends RelationManager
                             ->appendFiles()
                             ->openable()
                             ->previewable()
-                            ->downloadable()
+                            ->downloadable(),
                     ])
                     ->columnSpan(1)
                     ->columns(1),
@@ -117,10 +129,9 @@ class ProductsRelationManager extends RelationManager
             ->columns(3);
     }
 
-    public function table(Table $table): Table
+    public static function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('name')
             ->columns([
                 TextColumn::make('name')
                     ->toggleable()
@@ -177,7 +188,6 @@ class ProductsRelationManager extends RelationManager
                 TrashedFilter::make(),
             ])
             ->headerActions([
-                CreateAction::make(),
                 ExportAction::make()
                     ->exporter(ProductExporter::class)
                     ->color('primary')
@@ -205,5 +215,29 @@ class ProductsRelationManager extends RelationManager
                     ])
                     ->icon('heroicon-m-arrow-up-tray'),
             ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            RelationManagers\ReviewsRelationManager::class,
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListProducts::route('/'),
+            'create' => Pages\CreateProduct::route('/create'),
+            'edit' => Pages\EditProduct::route('/{record}/edit'),
+            'view' => Pages\ViewProduct::route('/{record}'),
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            ProductStatsHeader::class,
+        ];
     }
 }

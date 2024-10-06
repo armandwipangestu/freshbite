@@ -28,8 +28,8 @@ class CategoryStatsHeader extends BaseWidget
         return [
             Stat::make('Total Categories', $total_categories)
                 ->description('Total number of categories')
-                ->descriptionColor('success')
-                ->descriptionIcon('heroicon-m-tag', IconPosition::Before)
+                ->descriptionColor('primary')
+                ->descriptionIcon('heroicon-m-arrow-trending-up', IconPosition::After)
                 ->chart($chart_data)
                 ->color('primary'),
         ];
