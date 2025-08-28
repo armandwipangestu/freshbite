@@ -18,24 +18,24 @@ class RajaOngkirProvinceSeeder extends Seeder
         $rajaOngkirService = new RajaOngkirService();
 
         if (RajaOngkirProvince::count() == 0) {
-            $provinces = $rajaOngkirService->getProvinces();
+            $provincesResponse = $rajaOngkirService->getProvinces();
 
-            foreach ($provinces['rajaongkir']['results'] as $provinceData) {
+            foreach ($provincesResponse['data'] as $provinceData) {
                 $province = RajaOngkirProvince::create([
-                    'id' => $provinceData['province_id'],
-                    'name' => $provinceData['province'],
+                    'id' => $provinceData['id'],
+                    'name' => $provinceData['name'],
                 ]);
 
-                // Ambil data kota berdasarkan provinsi
-                $cities = $rajaOngkirService->getCity(null, $province->id);
+                // ambil city berdasarkan province id
+                $citiesResponse = $rajaOngkirService->getCitiesByProvince($province->id);
 
-                foreach ($cities['rajaongkir']['results'] as $cityData) {
+                foreach ($citiesResponse['data'] as $cityData) {
                     RajaOngkirCity::create([
-                        'id' => $cityData['city_id'],
-                        'name' => $cityData['city_name'],
-                        'type' => $cityData['type'],
-                        'postal_code' => $cityData['postal_code'],
-                        'province_id' => $cityData['province_id'],
+                        'id' => $cityData['id'],
+                        'name' => $cityData['name'],
+                        'type' => $cityData['type'] ?? null,
+                        'postal_code' => $cityData['zip_code'] ?? null,
+                        'province_id' => $province->id,
                     ]);
                 }
             }

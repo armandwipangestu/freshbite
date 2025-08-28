@@ -17,10 +17,10 @@ class RajaOngkirService
 
     protected function request($endpoint, $params = [], $method = 'GET')
     {
-        $url = 'https://api.rajaongkir.com/starter/' . $endpoint;
+        $url = 'https://rajaongkir.komerce.id/api/v1/' . $endpoint;
         $options = [
             'headers' => [
-                'key' => $this->apiKey,
+                'Key' => $this->apiKey,
             ],
         ];
 
@@ -37,38 +37,36 @@ class RajaOngkirService
         return json_decode($response->getBody(), true);
     }
 
-    public function getProvinces($id = null)
+    public function getProvinces()
     {
-        $params = [];
-        if ($id) {
-            $params['id'] = $id;
-        }
-
-        return $this->request('province', $params);
+        return $this->request('destination/province');
     }
 
-    public function getCity($id = null, $provinceId = null)
+    public function getCitiesByProvince($provinceId)
     {
-        $params = [];
-        if ($id) {
-            $params['id'] = $id;
-        }
-        if ($provinceId) {
-            $params['province'] = $provinceId;
-        }
-
-        return $this->request('city', $params);
+        return $this->request("destination/city/{$provinceId}");
     }
 
-    public function getCost($origin, $destination, $weight, $courier)
+    public function getDistrictsByCity($cityId)
+    {
+        return $this->request("destination/district/{$cityId}");
+    }
+
+    public function getSubDistrictsByDistrict($districtId)
+    {
+        return $this->request("destination/sub-district/{$districtId}");
+    }
+
+    public function getCost($origin, $destination, $weight, $couriers)
     {
         $params = [
             'origin' => $origin,
             'destination' => $destination,
             'weight' => $weight,
-            'courier' => $courier,
+            'courier' => $couriers,
+            'price' => 'lowest',
         ];
 
-        return $this->request('cost', $params, 'POST');
+        return $this->request('calculate/district/domestic-cost', $params, 'POST');
     }
 }
