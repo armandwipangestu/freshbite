@@ -19,6 +19,7 @@ use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -74,12 +75,12 @@ class ReviewResource extends Resource
                                 'undo',
                             ]),
 
-                        Select::make('order_item_id')
-                            ->label('Order Item')
-                            ->suffixIcon('heroicon-m-swatch')
-                            ->relationship('orderItem', 'id')
-                            ->preload()
-                            ->searchable(),
+                        // Select::make('order_item_id')
+                        //     ->label('Order Item')
+                        //     ->suffixIcon('heroicon-m-swatch')
+                        //     ->relationship('orderItem', 'id')
+                        //     ->preload()
+                        //     ->searchable(),
 
                         Select::make('product_id')
                             ->label('Product')
@@ -88,12 +89,12 @@ class ReviewResource extends Resource
                             ->preload()
                             ->searchable(),
 
-                        Select::make('roles')
-                            ->suffixIcon('heroicon-m-shield-check')
-                            ->relationship('roles', 'name')
-                            ->multiple()
-                            ->preload()
-                            ->searchable(),
+                        // Select::make('roles')
+                        //     ->suffixIcon('heroicon-m-shield-check')
+                        //     ->relationship('roles', 'name')
+                        //     ->multiple()
+                        //     ->preload()
+                        //     ->searchable(),
                     ])
                     ->columnSpan('full')
                     ->columns(2),
@@ -107,6 +108,10 @@ class ReviewResource extends Resource
                 TextColumn::make('user.name')
                     ->label('User')
                     ->sortable(),
+
+                ImageColumn::make('product.images')
+                    ->label('Product Image')
+                    ->getStateUsing(fn($record) => $record->product?->images->first()?->image),
 
                 TextColumn::make('star')
                     ->label('Rating')
@@ -152,7 +157,7 @@ class ReviewResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ProductRelationManager::class,
         ];
     }
 
@@ -160,7 +165,7 @@ class ReviewResource extends Resource
     {
         return [
             'index' => Pages\ListReviews::route('/'),
-            'create' => Pages\CreateReview::route('/create'),
+            // 'create' => Pages\CreateReview::route('/create'),
             'edit' => Pages\EditReview::route('/{record}/edit'),
         ];
     }
