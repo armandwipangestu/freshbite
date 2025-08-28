@@ -48,7 +48,14 @@ php artisan shield:super-admin
 php artisan optimize:clear
 ```
 
-8. Run Development Server
+8. Remove & Re-Symlink Folder Storage
+
+```bash
+rm public/storage
+php artisan storage:link
+```
+
+9. Run Development Server
 
 ```bash
 php artisan serve
