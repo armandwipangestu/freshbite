@@ -147,6 +147,7 @@ class ProductResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('price')
+                    ->money('idr', true)
                     ->toggleable()
                     ->sortable()
                     ->searchable(),
