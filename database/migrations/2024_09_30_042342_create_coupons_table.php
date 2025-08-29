@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->decimal('discount', 10, 2);
             $table->integer('stock');
-            $table->date('expired_at');
+            $table->timestamp('expired_at');
             $table->boolean('is_active')->default(false);
             $table->timestamps();
             $table->softDeletes();
