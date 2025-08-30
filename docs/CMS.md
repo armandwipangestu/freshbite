@@ -51,3 +51,16 @@ php artisan make:filament-relation-manager <ResourceName> <relation_method> <fie
 ```bash
 php artisan make:filament-page View<ModelName> --resource=<ResourceName> --type=ViewRecord
 ```
+
+5. Create Filament Widget Resource
+
+> [!NOTE]
+> Example
+>
+> ```bash
+> php artisan make:filament-widget ProductStatsHeader --resource=ProductResource
+> ```
+
+```bash
+php artisan make:filament-page <ModelName>Stats<Header|Footer> --resource=<ResourceName>
+```
