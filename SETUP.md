@@ -62,3 +62,9 @@ php artisan serve
 ```
 
 Login and access panel admin at `http://localhost:8000/admin`
+
+10. Run the queue background process on other terminal session
+
+```bash
+php artisan queue:work
+```
