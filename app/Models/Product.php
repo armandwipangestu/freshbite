@@ -51,7 +51,8 @@ class Product extends Model
 
     public function wishlists(): BelongsToMany
     {
-        return $this->belongsToMany(Wishlist::class, 'wishlist_items');
+        return $this->belongsToMany(Wishlist::class, 'wishlist_items')
+            ->withTimestamps();
     }
 
     public function orderItems(): HasMany
@@ -76,6 +77,7 @@ class Product extends Model
 
     public function coupons(): BelongsToMany
     {
-        return $this->belongsToMany(Coupon::class, 'coupon_products');
+        return $this->belongsToMany(Coupon::class, 'coupon_products')
+            ->withTimestamps();
     }
 }
