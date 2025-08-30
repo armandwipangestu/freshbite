@@ -58,9 +58,9 @@ php artisan make:filament-page View<ModelName> --resource=<ResourceName> --type=
 > Example
 >
 > ```bash
-> php artisan make:filament-widget ProductStatsHeader --resource=ProductResource --stats
+> php artisan make:filament-widget ProductStatsHeader --resource=ProductResource --stats-overview
 > ```
 
 ```bash
-php artisan make:filament-page <ModelName>Stats<Header|Footer> --resource=<ResourceName> --<chart|stats|table|custom>
+php artisan make:filament-page <ModelName>Stats<Header|Footer> --resource=<ResourceName> --<chart|stats-overview|table|custom>
 ```
