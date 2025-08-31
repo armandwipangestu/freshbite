@@ -12,7 +12,7 @@
 > You can also send arguments to create a repository and interface at the same time
 >
 > ```bash
-> php artisan make:service User --r|--repository
+> php artisan make:service User -r|--repository
 > ```
 
 ```bash
@@ -31,7 +31,7 @@ php artisan make:service <ModelName>
 > You can also send arguments to create a service at the same time
 >
 > ```bash
-> php artisan make:repository User --s|--service
+> php artisan make:repository User -s|--service
 > ```
 
 ```bash
