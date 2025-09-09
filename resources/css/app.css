@@ -20,32 +20,32 @@
         --leading-loose: 2;
 
         /* Primary Light */
-        --primary-50: #fafefa;
-        --primary-100: #f4fcf4;
-        --primary-200: #e6f8e5;
-        --primary-300: #d5f3d4;
-        --primary-400: #c1ecc0;
-        --primary-500: #a8e2a7;
-        --primary-600: #86d386;
-        --primary-700: #4dbf53;
-        --primary-800: #25b636;
-        --primary-900: #1aa92e;
-        --primary-1000: #00830c;
-        --primary-1100: #193e1a;
+        --primary-50: 120 67% 99%; /* #fafefa */
+        --primary-100: 120 57% 97%; /* #f4fcf4 */
+        --primary-200: 117 58% 94%; /* #e6f8e5 */
+        --primary-300: 118 56% 89%; /* #d5f3d4 */
+        --primary-400: 119 54% 84%; /* #c1ecc0 */
+        --primary-500: 119 50% 77%; /* #a8e2a7 */
+        --primary-600: 120 47% 68%; /* #86d386 */
+        --primary-700: 123 47% 53%; /* #4dbf53 */
+        --primary-800: 127 66% 43%; /* #25b636 */
+        --primary-900: 128 73% 38%; /* #1aa92e */
+        --primary-1000: 125 100% 26%; /* #00830c */
+        --primary-1100: 122 43% 17%; /* #193e1a */
 
         /* Ground Light */
-        --ground-50: #fcfcfd;
-        --ground-100: #f9f9fb;
-        --ground-200: #e6f8e5;
-        --ground-300: #d5f3d4;
-        --ground-400: #e0e1e6;
-        --ground-500: #d8d9e0;
-        --ground-600: #cdced7;
-        --ground-700: #b9bbc6;
-        --ground-800: #8b8d98;
-        --ground-900: #80828d;
-        --ground-1000: #62636c;
-        --ground-1100: #1e1f24;
+        --ground-50: 240 20% 99%; /* #fcfcfd */
+        --ground-100: 240 20% 98%; /* #f9f9fb */
+        --ground-200: 225 14% 95%; /* #e6f8e5 */
+        --ground-300: 228 12% 92%; /* #d5f3d4 */
+        --ground-400: 230 11% 89%; /* #e0e1e6 */
+        --ground-500: 233 11% 86%; /* #d8d9e0 */
+        --ground-600: 234 11% 82%; /* #cdced7 */
+        --ground-700: 231 10% 75%; /* #b9bbc6 */
+        --ground-800: 231 6% 57%; /* #8b8d98 */
+        --ground-900: 231 5% 53%; /* #80828d */
+        --ground-1000: 234 5% 40%; /* #62636c */
+        --ground-1100: 230 9% 13%; /* #1e1f24 */
 
         /* Base Mapping */
         --primary: var(--primary-500);
@@ -79,32 +79,32 @@
     }
     .dark {
         /* Primary Light */
-        --primary-50: #0c130c;
-        --primary-100: #131b12;
-        --primary-200: #182b18;
-        --primary-300: #173c18;
-        --primary-400: #1d4a1f;
-        --primary-500: #235a25;
-        --primary-600: #286b2b;
-        --primary-700: #2c7d31;
-        --primary-800: #25b636;
-        --primary-900: #06aa27;
-        --primary-1000: #55d75c;
-        --primary-1100: #b5f5b4;
+        --primary-50: 120 23% 6%; /* #0c130c */
+        --primary-100: 113 20% 9%; /* #131b12 */
+        --primary-200: 120 28% 13%; /* #182b18 */
+        --primary-300: 122 45% 16%; /* #173c18 */
+        --primary-400: 123 44% 20%; /* #1d4a1f */
+        --primary-500: 122 44% 25%; /* #235a25 */
+        --primary-600: 123 46% 29%; /* #286b2b */
+        --primary-700: 124 48% 33%; /* #2c7d31 */
+        --primary-800: 127 66% 43%; /* #25b636 */
+        --primary-900: 132 93% 35%; /* #06aa27 */
+        --primary-1000: 123 62% 59%; /* #55d75c */
+        --primary-1100: 119 76% 83%; /* #b5f5b4 */
 
         /* Ground Light */
-        --ground-50: #111113;
-        --ground-100: #19191b;
-        --ground-200: #222325;
-        --ground-300: #292a2e;
-        --ground-400: #303136;
-        --ground-500: #393a40;
-        --ground-600: #46484f;
-        --ground-700: #5f606a;
-        --ground-800: #6c6e79;
-        --ground-900: #797b86;
-        --ground-1000: #b2b3bd;
-        --ground-1100: #eeeef0;
+        --ground-50: 240 6% 7%; /* #111113 */
+        --ground-100: 240 4% 10%; /* #19191b */
+        --ground-200: 220 4% 14%; /* #222325 */
+        --ground-300: 228 6% 17%; /* #292a2e */
+        --ground-400: 230 6% 20%; /* #303136 */
+        --ground-500: 231 6% 24%; /* #393a40 */
+        --ground-600: 227 6% 29%; /* #46484f */
+        --ground-700: 235 5% 39%; /* #5f606a */
+        --ground-800: 231 6% 45%; /* #6c6e79 */
+        --ground-900: 231 5% 50%; /* #797b86 */
+        --ground-1000: 235 8% 72%; /* #b2b3bd */
+        --ground-1100: 240 6% 94%; /* #eeeef0 */
 
         /* Base Mapping */
         --primary: var(--primary-500);
