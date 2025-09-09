@@ -18,7 +18,7 @@ class ProductImageFactory extends Factory
     public function definition(): array
     {
         return [
-            'image' => fake()->imageUrl(),
+            'image' => 'https://picsum.photos/640/480?random=' . fake()->unique()->numberBetween(1, 2000),
             'product_id' => Product::inRandomOrder()->value('id'),
         ];
     }

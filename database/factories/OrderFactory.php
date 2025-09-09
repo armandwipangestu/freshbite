@@ -27,6 +27,7 @@ class OrderFactory extends Factory
             'payment_booking_code' => fake()->regexify('[0-9]-[0-9][A-Z][0-9]{3}'),
             'user_id' => User::inRandomOrder()->value('id'),
             'courier_id' => RajaOngkirCourier::where('code', fake()->randomElement($courier_code))->value('id'),
+            'created_at' => fake()->dateTimeBetween('-1 years', 'now'),
         ];
     }
 }

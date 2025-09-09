@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('raja_ongkir_cities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('type')->nullable();
+            $table->string('postal_code')->nullable();
             $table->foreignId('province_id')->constrained('raja_ongkir_provinces')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
