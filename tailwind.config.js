@@ -63,6 +63,16 @@ export default {
                 },
             }),
             fontSize: {
+                h1: 'var(--font-h1)',
+                h2: 'var(--font-h2)',
+                h3: 'var(--font-h3)',
+                h4: 'var(--font-h4)',
+                h5: 'var(--font-h5)',
+                body: 'var(--font-body)',
+                'body-lg': 'var(--font-body-lg)',
+                caption: 'var(--font-caption)',
+
+                // Tailwind alias override
                 xs: 'var(--font-xs)',
                 sm: 'var(--font-sm)',
                 base: 'var(--font-base)',
@@ -71,6 +81,7 @@ export default {
                 '2xl': 'var(--font-2xl)',
                 '3xl': 'var(--font-3xl)',
                 '4xl': 'var(--font-4xl)',
+                '5xl': 'var(--font-5xl)',
             },
             lineHeight: {
                 normal: 'var(--leading-normal)',

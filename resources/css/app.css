@@ -5,14 +5,25 @@
 @layer base {
     :root {
         /* Font sizes */
-        --font-xs: 0.75rem;
-        --font-sm: 0.875rem;
-        --font-base: 1rem;
-        --font-lg: 1.125rem;
-        --font-xl: 1.25rem;
-        --font-2xl: 1.5rem;
-        --font-3xl: 1.875rem;
-        --font-4xl: 2.25rem;
+        --font-h1: 5rem; /* 80px */
+        --font-h2: 3.812rem; /* 61px */
+        --font-h3: 2.938rem; /* 47px */
+        --font-h4: 2.25rem; /* 36px */
+        --font-h5: 1.688rem; /* 27px */
+        --font-body-lg: 1.312rem; /* 21px */
+        --font-body: 1rem; /* 16px */
+        --font-caption: 0.75rem; /* 12px */
+
+        /* === Tailwind alias (biar tetap kompatibel) === */
+        --font-xs: var(--font-caption);
+        --font-sm: 0.875rem; /* optional tambahan */
+        --font-base: var(--font-body);
+        --font-lg: var(--font-body-lg);
+        --font-xl: var(--font-h5);
+        --font-2xl: var(--font-h4);
+        --font-3xl: var(--font-h3);
+        --font-4xl: var(--font-h2);
+        --font-5xl: var(--font-h1);
 
         /* Line heights */
         --leading-normal: 1.5;
