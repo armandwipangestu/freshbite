@@ -8,8 +8,13 @@ export default function DesignSystem() {
         <>
             <Head title="Design System" />
             <div className="space-y-6 p-6">
-                <h1 className="text-2xl font-bold">
-                    FreshBite - Design System
+                <h1 className="flex items-center gap-2 text-2xl font-bold">
+                    <img
+                        src="/assets/logo.svg"
+                        alt="FreshBite Logo"
+                        className="h-8 w-auto"
+                    />
+                    - Design System
                 </h1>
 
                 <ButtonsSection />
