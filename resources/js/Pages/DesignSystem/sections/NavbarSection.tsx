@@ -1,4 +1,4 @@
-import { Navbar } from '@/components/ui/navbar';
+import { Navbar } from '@/Components/ui/navbar';
 
 export default function NavbarSection() {
     return (
