@@ -11,7 +11,11 @@ cd freshbite-dummy
 
 ```bash
 composer install
-npm install && npm run build
+npm install
+npm run dev
+
+# or if you want to build production, run this
+# npm run build
 ```
 
 3. Copy environment file
