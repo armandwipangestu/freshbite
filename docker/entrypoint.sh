@@ -11,6 +11,9 @@ log() {
 
 log "entrypoint" "INFO" "Starting entrypoint.sh"
 
+mkdir -p storage/{app,debugbar,framework,logs} \
+        storage/framework/{cache,sessions,testing,views} \
+
 log "entrypoint" "INFO" "Database ready. Running migrations..."
 
 # Storage symlink
