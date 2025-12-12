@@ -3,8 +3,8 @@
 1. Clone this repository
 
 ```bash
-git clone git@github.com:armandwipangestu/freshbite-dummy.git
-cd freshbite-dummy
+git clone git@github.com:armandwipangestu/freshbite.git
+cd freshbite
 ```
 
 2. Install dependency
