@@ -6,7 +6,7 @@ use App\Filament\Resources\ProductResource;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
-class ViewProduct extends ViewRecord
+class ViewProducts extends ViewRecord
 {
     protected static string $resource = ProductResource::class;
 
