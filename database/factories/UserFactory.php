@@ -38,13 +38,18 @@ class UserFactory extends Factory
         $adminRole->syncPermissions([$manageUsersPermission, $viewDashboardPermission]);
         $userRole->syncPermissions([$viewDashboardPermission]);
 
+        $created_at = fake()->dateTimeBetween('-1 year', 'now');
+        $updated_at = fake()->dateTimeBetween($created_at, 'now');
+
         return [
             'name' => fake()->name(),
-            'avatar' => fake()->imageUrl(),
+            'avatar' => 'https://i.pravatar.cc/200?img=' . fake()->numberBetween(1, 70),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'created_at' => $created_at,
+            'updated_at' => $updated_at,
         ];
     }
 

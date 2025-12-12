@@ -1,0 +1,1 @@
+<img src="{{ asset('storage/assets/images/logo.png') }}" alt="FreshBite Logo" class="h-10">

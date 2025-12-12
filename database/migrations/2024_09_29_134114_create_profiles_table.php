@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->enum('theme', ['light', 'dark', 'system'])->default('system');
-            $table->enum('gender', ['male', 'female'])->nullable();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->enum('theme', ['light', 'dark', 'system'])->default('system')->nullable();
+            $table->enum('gender', ['male', 'female', 'prefer_not_to_say'])->default('prefer_not_to_say')->nullable();
+            $table->foreignId('user_id')->constrained()->unique()->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

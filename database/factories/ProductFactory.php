@@ -16,6 +16,9 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $created_at = fake()->dateTimeBetween('-1 year', 'now');
+        $updated_at = fake()->dateTimeBetween($created_at, 'now');
+
         return [
             'name' => fake()->sentence(6),
             'description' => fake()->paragraph(3),
@@ -23,6 +26,8 @@ class ProductFactory extends Factory
             'stock' => fake()->numberBetween(10, 100),
             'total_sold' => fake()->numberBetween(10, 100),
             'is_published' => fake()->boolean,
+            'created_at' => $created_at,
+            'updated_at' => $updated_at,
         ];
     }
 }

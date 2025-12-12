@@ -1,0 +1,96 @@
+name: PR Build & Test
+
+on:
+    pull_request:
+        branches:
+            - staging
+            - main
+        types:
+            - opened
+            - synchronize
+            - reopened
+
+jobs:
+    build-and-test:
+        name: Build and Test
+        runs-on: ubuntu-latest
+        environment: ${{ github.base_ref }}
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            # ---------------------------
+            # PHP / Laravel validation
+            # ---------------------------
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: "8.3"
+                  coverage: none
+                  extensions: mbstring, pdo_mysql, intl, gd, bcmath, zip
+
+            - name: Install Composer dependencies
+              run: composer install --no-interaction --prefer-dist
+
+            # ---------------------------
+            # Node / ReactJS / Inertia validation
+            # ---------------------------
+            - name: Use Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "22"
+                  cache: "npm"
+
+            - name: Install Node dependencies
+              run: npm ci
+
+            - name: Run lint
+              run: npm run lint
+
+            # - name: Run tests
+            #   run: npm test
+
+            - name: Build front-end (for validation)
+              run: npm run build
+
+            # ---------------------------
+            # Laravel Environment & Tests
+            # ---------------------------
+            - name: Setup Laravel environment
+              run: |
+                  cp .env.example .env
+                  php artisan key:generate
+                  echo "DB_CONNECTION=sqlite" >> .env
+                  echo "DB_DATABASE=:memory:" >> .env
+
+            - name: Run migrations
+              run: php artisan migrate --force
+
+            - name: Run Laravel tests
+              run: php artisan test --without-tty
+
+            - name: Laravel optimize (ensure config dosen't break)
+              run: |
+                  php artisan config:cache
+                  php artisan route:cache
+                  php artisan view:cache
+
+            # ---------------------------
+            # Optional: Semantic Release check
+            # ---------------------------
+            - name: Install semantic-release globally
+              run: |
+                  npm install -g \
+                    semantic-release \
+                    @semantic-release/changelog \
+                    @semantic-release/git \
+                    @semantic-release/exec \
+                    @semantic-release/github \
+                    conventional-changelog-conventionalcommits
+
+            - name: Test semantic-release (dry-run)
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
+                  DEBUG: "semantic-release:*"
+              run: npx semantic-release --dry-run --branches=${{ github.head_ref }}

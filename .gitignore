@@ -19,3 +19,9 @@ yarn-error.log
 /.idea
 /.vscode
 /.zed
+
+# docker stuff
+/docker-data
+
+# app stuff
+.env.freshbite*
