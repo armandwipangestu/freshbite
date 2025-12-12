@@ -1,5 +1,6 @@
 import { Head } from '@inertiajs/react';
 import ButtonsSection from './sections/ButtonsSection';
+import InputsSection from './sections/InputsSection';
 import NavbarSection from './sections/NavbarSection';
 import TypographySection from './sections/TypographySection';
 
@@ -19,6 +20,7 @@ export default function DesignSystem() {
 
                 <ButtonsSection />
                 <NavbarSection />
+                <InputsSection />
                 <TypographySection />
             </div>
         </>
