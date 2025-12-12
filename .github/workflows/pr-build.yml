@@ -33,25 +33,6 @@ jobs:
             - name: Install Composer dependencies
               run: composer install --no-interaction --prefer-dist
 
-            - name: Setup Laravel environment
-              run: |
-                  cp .env.example .env
-                  php artisan key:generate
-                  echo "DB_CONNECTION=sqlite" >> .env
-                  echo "DB_DATABASE=:memory:" >> .env
-
-            - name: Run migrations
-              run: php artisan migrate --force
-
-            - name: Run Laravel tests
-              run: php artisan test --without-tty
-
-            - name: Laravel optimize (ensure config dosen't break)
-              run: |
-                  php artisan config:cache
-                  php artisan route:cache
-                  php artisan view:cache
-
             # ---------------------------
             # Node / ReactJS / Inertia validation
             # ---------------------------
@@ -72,6 +53,28 @@ jobs:
 
             - name: Build front-end (for validation)
               run: npm run build
+
+            # ---------------------------
+            # Laravel Environment & Tests
+            # ---------------------------
+            - name: Setup Laravel environment
+              run: |
+                  cp .env.example .env
+                  php artisan key:generate
+                  echo "DB_CONNECTION=sqlite" >> .env
+                  echo "DB_DATABASE=:memory:" >> .env
+
+            - name: Run migrations
+              run: php artisan migrate --force
+
+            - name: Run Laravel tests
+              run: php artisan test --without-tty
+
+            - name: Laravel optimize (ensure config dosen't break)
+              run: |
+                  php artisan config:cache
+                  php artisan route:cache
+                  php artisan view:cache
 
             # ---------------------------
             # Optional: Semantic Release check
