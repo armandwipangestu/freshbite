@@ -32,4 +32,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/design-system', function () {
+    return Inertia::render('DesignSystem/Index');
+})->name('design-system');
+
+Route::get('/health', function () {
+    return response()->json(['status' => 'ok']);
+});
+
 require __DIR__ . '/auth.php';

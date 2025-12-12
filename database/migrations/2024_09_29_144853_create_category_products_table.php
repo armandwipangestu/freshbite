@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories');
             $table->foreignId('product_id')->constrained('products');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

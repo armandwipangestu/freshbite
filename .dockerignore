@@ -1,0 +1,32 @@
+# Git repository
+.git
+.gitignore
+
+# Node & frontend
+node_modules
+/public/build
+/public/hot
+npm-debug.log
+yarn-error.log
+tsconfig.tsbuildinfo
+
+# PHP / Laravel
+vendor
+.env
+.env.*
+.phpunit.cache
+.phpunit.result.cache
+.phpactor.json
+
+# IDE / editor
+/.idea
+/.vscode
+/.zed
+/.fleet
+
+# Docker related
+docker-data
+
+# Misc / OS
+.DS_Store
+Thumbs.db

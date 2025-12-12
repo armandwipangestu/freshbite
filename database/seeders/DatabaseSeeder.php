@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            ShieldSeeder::class,
             UserSeeder::class,
             ProfileSeeder::class,
             RajaOngkirProvinceSeeder::class,
@@ -32,6 +33,7 @@ class DatabaseSeeder extends Seeder
             ReviewSeeder::class,
             CouponSeeder::class,
             CouponProductSeeder::class,
+            BannerSeeder::class,
         ]);
     }
 }
