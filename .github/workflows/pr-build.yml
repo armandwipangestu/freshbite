@@ -30,8 +30,18 @@ jobs:
                   coverage: none
                   extensions: mbstring, pdo_mysql, intl, gd, bcmath, zip
 
+            - name: Setup Laravel environment
+              run: |
+                  cp .env.example .env
+                  php artisan key:generate
+                  echo "DB_CONNECTION=sqlite" >> .env
+                  echo "DB_DATABASE=:memory:" >> .env
+
             - name: Install Composer dependencies
               run: composer install --no-interaction --prefer-dist
+
+            - name: Run migrations
+              run: php artisan migrate --force
 
             - name: Run Laravel tests
               run: php artisan test --without-tty
