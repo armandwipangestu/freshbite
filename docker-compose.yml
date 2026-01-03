@@ -28,10 +28,8 @@ services:
     restart: unless-stopped
     env_file: .env.freshbite-app
     volumes:
-      - .:/var/www/html
       - ./storage:/var/www/html/storage
       - ./bootstrap/cache:/var/www/html/bootstrap/cache
-      - ./public/build:/var/www/html/public/build
     logging:
       driver: "json-file"
       options:
