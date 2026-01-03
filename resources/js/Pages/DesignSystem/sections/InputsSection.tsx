@@ -1,4 +1,4 @@
-import { Input } from '@/components/ui/input';
+import { Input } from '@/Components/ui/input';
 import {
     Table,
     TableBody,
@@ -6,7 +6,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from '@/components/ui/table';
+} from '@/Components/ui/table';
 import { SearchIcon } from 'lucide-react';
 
 const sizes = ['sm', 'md', 'lg'] as const;

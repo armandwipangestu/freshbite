@@ -12,7 +12,7 @@ log() {
 log "entrypoint" "INFO" "Starting entrypoint.sh"
 
 mkdir -p storage/{app,debugbar,framework,logs} \
-        storage/framework/{cache,sessions,testing,views} \
+        storage/framework/{cache,sessions,testing,views}
 
 log "entrypoint" "INFO" "Database ready. Running migrations..."
 
@@ -21,6 +21,10 @@ php artisan storage:link || true
 
 # Migration
 php artisan migrate --force
+
+# Cache
+php artisan optimize:clear
+php artisan optimize
 
 # Fix permission
 chown -R www-data:www-data storage bootstrap/cache public/build

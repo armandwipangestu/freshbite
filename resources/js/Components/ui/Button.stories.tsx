@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Plus, Trash2 } from 'lucide-react'; // contoh ikon
-import { Button } from './Button';
+import { Button } from './button';
 
 const meta: Meta<typeof Button> = {
     title: 'UI/Button', // akan muncul di sidebar Storybook
