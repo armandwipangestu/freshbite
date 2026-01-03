@@ -1,0 +1,29 @@
+{
+    "meta": {
+        "message": "Success Get City By Province ID",
+        "code": 200,
+        "status": "success"
+    },
+    "data": [
+        {
+            "id": 251,
+            "name": "GORONTALO"
+        },
+        {
+            "id": 252,
+            "name": "GORONTALO UTARA"
+        },
+        {
+            "id": 253,
+            "name": "BOALEMO"
+        },
+        {
+            "id": 254,
+            "name": "BONE BOLANGO"
+        },
+        {
+            "id": 255,
+            "name": "POHUWATO"
+        }
+    ]
+}
