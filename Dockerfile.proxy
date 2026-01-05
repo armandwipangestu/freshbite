@@ -3,6 +3,9 @@ ARG APP_IMAGE_TAG
 
 FROM ${APP_IMAGE_NAME}:${APP_IMAGE_TAG} AS app
 
+# Add the link to your new repository here
+LABEL org.opencontainers.image.source="https://github.com/armandwipangestu/freshbite"
+
 FROM nginx:1.29.3-alpine
 
 WORKDIR /var/www/html

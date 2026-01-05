@@ -4,6 +4,9 @@
 
 FROM node:22-alpine AS frontend-builder
 
+# Add the link to your new repository here
+LABEL org.opencontainers.image.source="https://github.com/armandwipangestu/freshbite"
+
 WORKDIR /var/www/html
 
 # Copy package files
