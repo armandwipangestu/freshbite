@@ -47,7 +47,7 @@ jobs:
 
             - name: Push Docker Image (SHA tag)
               run: |
-                  docker push $GHCR_IMAGE:${{ env.SHORT_SHA }} \
+                  docker push $GHCR_IMAGE:${{ env.SHORT_SHA }}
                   docker push $DOCKERHUB_IMAGE:${{ env.SHORT_SHA }}
 
             - name: Build Docker Image Proxy with SHA tag
@@ -62,7 +62,7 @@ jobs:
 
             - name: Push Docker Image Proxy (SHA tag)
               run: |
-                  docker push $GHCR_IMAGE-proxy:${{ env.SHORT_SHA }} \
+                  docker push $GHCR_IMAGE-proxy:${{ env.SHORT_SHA }}
                   docker push $DOCKERHUB_IMAGE-proxy:${{ env.SHORT_SHA }}
 
             - name: Save SHA to file
