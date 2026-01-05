@@ -54,10 +54,10 @@ COPY --from=frontend-builder /var/www/html/public/build ./public/build
 
 # Install PHP dependencies (App Level)
 RUN composer install \
-    --no-dev \
+    # --no-dev \
     --no-interaction \
     --prefer-dist \
-    --no-scripts \
+    # --no-scripts \
     --classmap-authoritative
 
 # Copy entrypoint
