@@ -37,14 +37,38 @@ class RajaOngkirService
         return json_decode($response->getBody(), true);
     }
 
+    protected function getCachedOrFetch($filename, $callback)
+    {
+        $path = database_path('data/rajaongkir/' . $filename . '.json');
+
+        if (file_exists($path)) {
+            $content = file_get_contents($path);
+            return json_decode($content, true);
+        }
+
+        $data = $callback();
+
+        if (!file_exists(dirname($path))) {
+            mkdir(dirname($path), 0755, true);
+        }
+
+        file_put_contents($path, json_encode($data, JSON_PRETTY_PRINT));
+
+        return $data;
+    }
+
     public function getProvinces()
     {
-        return $this->request('destination/province');
+        return $this->getCachedOrFetch('provinces', function () {
+            return $this->request('destination/province');
+        });
     }
 
     public function getCitiesByProvince($provinceId)
     {
-        return $this->request("destination/city/{$provinceId}");
+        return $this->getCachedOrFetch('cities_prov_' . $provinceId, function () use ($provinceId) {
+            return $this->request("destination/city/{$provinceId}");
+        });
     }
 
     public function getDistrictsByCity($cityId)

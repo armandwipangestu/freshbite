@@ -4,7 +4,6 @@
 
 # Node & frontend
 node_modules
-/public/build
 /public/hot
 npm-debug.log
 yarn-error.log
@@ -17,6 +16,7 @@ vendor
 .phpunit.cache
 .phpunit.result.cache
 .phpactor.json
+/bootstrap/cache/*.php
 
 # IDE / editor
 /.idea

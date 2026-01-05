@@ -14,7 +14,8 @@ RUN npm install
 
 # Copy source frontend
 COPY resources resources
-COPY tsconfig.json vite.config.js tailwind.config.js ./
+COPY .storybook .storybook
+COPY tsconfig.json vite.config.js tailwind.config.js postcss.config.js ./
 
 # Build assets (production build for Vite + React + TailwindCSS)
 RUN npm run build
@@ -45,11 +46,19 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # Copy Laravel backend
 COPY . .
 
+# Clear old cache
+RUN rm -rf bootstrap/cache/*.php
+
 # Copy built frontend assets
 COPY --from=frontend-builder /var/www/html/public/build ./public/build
 
 # Install PHP dependencies (App Level)
-RUN composer install --prefer-dist --no-dev --no-scripts --no-interaction --optimize-autoloader
+RUN composer install \
+    # --no-dev \
+    --no-interaction \
+    --prefer-dist \
+    # --no-scripts \
+    --classmap-authoritative
 
 # Copy entrypoint
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh

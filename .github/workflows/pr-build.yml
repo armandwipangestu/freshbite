@@ -79,18 +79,9 @@ jobs:
             # ---------------------------
             # Optional: Semantic Release check
             # ---------------------------
-            - name: Install semantic-release globally
-              run: |
-                  npm install -g \
-                    semantic-release \
-                    @semantic-release/changelog \
-                    @semantic-release/git \
-                    @semantic-release/exec \
-                    @semantic-release/github \
-                    conventional-changelog-conventionalcommits
-
-            - name: Test semantic-release (dry-run)
+            - name: Validate Semantic Release (Dry Run)
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
-                  DEBUG: "semantic-release:*"
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
+                NPM_TOKEN: false
+                DEBUG: "semantic-release:*"
               run: npx semantic-release --dry-run --branches=${{ github.head_ref }}
