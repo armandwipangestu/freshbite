@@ -336,7 +336,15 @@ MYSQL_PASSWORD="freshbite_password"
 docker compose up -d
 ```
 
-6. Fix permission & symlink
+6. Database Seeder and Filament Admin Init
+
+```bash
+docker exec -it freshbite-app php artisan db:seed
+docker exec -it freshbite-app php artisan shield:generate --all
+docker exec -it freshbite-app php artisan shield:super-admin
+```
+
+7. Fix permission & symlink
 
 ```bash
 sudo chmod -R 775 storage
