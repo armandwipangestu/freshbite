@@ -1,3 +1,22 @@
+## [0.1.0-rc.2](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.1...v0.1.0-rc.2) (2026-01-05)
+
+### Features
+
+* add RajaOngkir cache mechanism ([51aa1f1](https://github.com/armandwipangestu/freshbite/commit/51aa1f1184570a1c6c3256338276f73b9c8cf022))
+
+### Bug Fixes
+
+* 419 Page Expired and add TrustProxies middleware ([5a408a6](https://github.com/armandwipangestu/freshbite/commit/5a408a675748387650ea17eb52d9cc103024df9c))
+* **ci:** add mounting public asset to freshbite-proxy ([f31ecda](https://github.com/armandwipangestu/freshbite/commit/f31ecda0aafe2a7d1e167302f3a24aa48bab2bdb))
+* **ci:** add name and version to package.json ([f45c661](https://github.com/armandwipangestu/freshbite/commit/f45c661007fc0e5da6fba8605537497a006f05dc))
+* **ci:** adjust semantic release configuration and docker build ([94802ec](https://github.com/armandwipangestu/freshbite/commit/94802ec8132776c2d954603768e0dd37a05703fe))
+* **ci:** build, dockerfile and docker compose configuration ([c925a31](https://github.com/armandwipangestu/freshbite/commit/c925a3164c9741ef19af35613f37a513e0b17580))
+* **ci:** lint and docker build ([f0b0d8b](https://github.com/armandwipangestu/freshbite/commit/f0b0d8bd4220d0022dd29eb90cb4ac38b517c424))
+* **ci:** remove backslash to makesure newline command ([286d00e](https://github.com/armandwipangestu/freshbite/commit/286d00eefeb6bddfe7d7ce45769946034bc8a11f))
+* **ci:** solve 404 not found asset filament ([9f907a1](https://github.com/armandwipangestu/freshbite/commit/9f907a1a42ed6a1c71f77c4201e365ec214fe4ee))
+* **ci:** update nginx configuration ([08ad925](https://github.com/armandwipangestu/freshbite/commit/08ad925db540fa0047c53b89606ca55b333539ea))
+* entrypoint.sh ([5918386](https://github.com/armandwipangestu/freshbite/commit/5918386ca5edca17186532affcae90d0a9ada1b2))
+
 # [0.1.0-rc.1](https://github.com/armandwipangestu/freshbite/compare/v0.0.2...v0.1.0-rc.1) (2025-12-12)
 
 
