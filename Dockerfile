@@ -15,7 +15,7 @@ RUN npm install
 # Copy source frontend
 COPY resources resources
 COPY .storybook .storybook
-COPY tsconfig.json vite.config.js tailwind.config.js ./
+COPY tsconfig.json vite.config.js tailwind.config.js postcss.config.js ./
 
 # Build assets (production build for Vite + React + TailwindCSS)
 RUN npm run build
@@ -54,10 +54,10 @@ COPY --from=frontend-builder /var/www/html/public/build ./public/build
 
 # Install PHP dependencies (App Level)
 RUN composer install \
-    # --no-dev \
+    --no-dev \
     --no-interaction \
     --prefer-dist \
-    # --no-scripts \
+    --no-scripts \
     --classmap-authoritative
 
 # Copy entrypoint
