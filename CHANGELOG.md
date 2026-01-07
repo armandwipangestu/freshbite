@@ -1,3 +1,9 @@
+## [0.1.0-rc.4](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.3...v0.1.0-rc.4) (2026-01-07)
+
+### Bug Fixes
+
+* **ci:** remove needs workflow ([2739dd6](https://github.com/armandwipangestu/freshbite/commit/2739dd6382e03ab45583a4e6b897e9f5dea9e461))
+
 ## [0.1.0-rc.3](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.2...v0.1.0-rc.3) (2026-01-07)
 
 ### Bug Fixes
