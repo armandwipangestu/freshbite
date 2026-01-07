@@ -1,3 +1,9 @@
+## [0.1.0-rc.3](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.2...v0.1.0-rc.3) (2026-01-07)
+
+### Bug Fixes
+
+* mismatch content HTTP Header & force HTTPS for production mode ([b0b70a0](https://github.com/armandwipangestu/freshbite/commit/b0b70a0c69ea380978427be87e5a77f17b931610))
+
 ## [0.1.0-rc.2](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.1...v0.1.0-rc.2) (2026-01-05)
 
 ### Features
