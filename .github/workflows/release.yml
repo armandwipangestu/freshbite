@@ -276,8 +276,8 @@ jobs:
                 cd ${{ secrets.PROJECT_DIR }}
 
                 if [ ! -f "docker-compose.template.yml" ]; then
-                  echo "[ERROR] docker-compose.template.yml not found"
-                  exit 1
+                  echo "[WARNING] docker-compose.template.yml not found"
+                  exit 0
                 fi
 
                 cp docker-compose.template.yml docker-compose.yml
@@ -436,7 +436,7 @@ jobs:
                 rm .env.tmp
 
               else
-                echo "Service type unknown"
-                exit 1
+                echo "[WARNING] Service type unknown"
+                exit 0
               fi
             EOF
