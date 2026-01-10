@@ -1,3 +1,9 @@
+## [0.1.0-rc.7](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.6...v0.1.0-rc.7) (2026-01-10)
+
+### Bug Fixes
+
+* **ci:** move ARG BASE_IMAGE to all stage declaration ([4c66c09](https://github.com/armandwipangestu/freshbite/commit/4c66c09e445a0dc98265f7eaa203255f690dad17))
+
 ## [0.1.0-rc.6](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.5...v0.1.0-rc.6) (2026-01-10)
 
 ### Features
