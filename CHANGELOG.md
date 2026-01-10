@@ -1,3 +1,9 @@
+## [0.2.1](https://github.com/armandwipangestu/freshbite/compare/v0.2.0...v0.2.1) (2026-01-10)
+
+### Bug Fixes
+
+* **ci:** colission dns in production and staging env, which caused from container name ([981289d](https://github.com/armandwipangestu/freshbite/commit/981289d8e9cd704acef909f5e4091106c174e502))
+
 ## [0.2.1-rc.1](https://github.com/armandwipangestu/freshbite/compare/v0.2.0...v0.2.1-rc.1) (2026-01-10)
 
 ### Bug Fixes
