@@ -36,6 +36,10 @@ WORKDIR /var/www/html
 # Copy Laravel backend
 COPY . .
 
+# Backup default assets
+RUN mkdir -p /var/www/html/docker/defaults && \
+    cp storage/app/public/assets/images/*.png /var/www/html/docker/defaults/
+
 # Clear old cache
 RUN rm -rf bootstrap/cache/*.php
 
