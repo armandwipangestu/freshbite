@@ -1,3 +1,11 @@
+## [0.1.0-rc.10](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.9...v0.1.0-rc.10) (2026-01-10)
+
+### Bug Fixes
+
+* **ci:** add docker base image version ([a8bda80](https://github.com/armandwipangestu/freshbite/commit/a8bda805b9b4f8baec5873787bfaf248c32ccebb))
+* **ci:** add logic to check if env file exist or not ([cecb4a2](https://github.com/armandwipangestu/freshbite/commit/cecb4a2f56c9b258f92f9e73fc6a77b76b39925a))
+* **ci:** optimize composer install ([7afccd6](https://github.com/armandwipangestu/freshbite/commit/7afccd6caa308af76a6174c880ea87097699d20d))
+
 ## [0.1.0-rc.9](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.8...v0.1.0-rc.9) (2026-01-10)
 
 ### Bug Fixes
