@@ -227,16 +227,12 @@ jobs:
           continue-on-error: true
 
         - name: Set VERSION env
-          if: steps.download-version.outputs.RELEASE_EXISTS == 'true'
-          run: echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
-
-        - name: Setup SSH
           run: |
-            mkdir -p ~/.ssh
-            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-            chmod 600 ~/.ssh/id_ed25519
-            ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-            chmod 644 ~/.ssh/known_hosts
+            if [ -f "version.txt" ]; then
+              echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
+            else
+              echo "VERSION=latest" >> $GITHUB_ENV
+            fi
 
         - name: Setup cloudflared
           run: |
@@ -244,6 +240,16 @@ jobs:
               -o cloudflared
             chmod +x cloudflared
             sudo mv cloudflared /usr/local/bin/cloudflared
+
+        - name: Setup SSH
+          run: |
+            mkdir -p ~/.ssh
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+            chmod 600 ~/.ssh/id_ed25519
+            # NOTE: We skip ssh-keyscan here because we use -o StrictHostKeyChecking=no 
+            #       and the host is unreachable directly (behind Cloudflare Tunnel).
+            # ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+            # chmod 644 ~/.ssh/known_hosts
 
         - name: Set Docker image name
           id: vars
