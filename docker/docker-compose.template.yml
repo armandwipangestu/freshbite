@@ -1,5 +1,5 @@
 services:
-  app:
+  __APP_SERVICE_NAME__:
     image: __APP_IMAGE__
     container_name: __APP_CONTAINER_NAME__
     restart: unless-stopped
@@ -16,12 +16,14 @@ services:
     networks:
       - ubuntu24-server
 
-  proxy:
+  __PROXY_SERVICE_NAME__:
     image: __PROXY_IMAGE__
     container_name: __PROXY_CONTAINER_NAME__
     restart: unless-stopped
     ports:
       - "__PROXY_PORT__"
+    environment:
+      - APP_SERVICE_NAME=__APP_SERVICE_NAME__
     volumes:
       - ./storage/app/public:/var/www/html/public/storage
     logging:
@@ -30,11 +32,11 @@ services:
         max-size: "500M"
         max-file: "3"
     depends_on:
-      - app
+      - __APP_SERVICE_NAME__
     networks:
       - ubuntu24-server
 
-  queue:
+  __QUEUE_SERVICE_NAME__:
     image: __APP_IMAGE__
     container_name: __QUEUE_CONTAINER_NAME__
     restart: unless-stopped
@@ -50,11 +52,11 @@ services:
         max-size: "500M"
         max-file: "3"
     depends_on:
-      - app
+      - __APP_SERVICE_NAME__
     networks:
       - ubuntu24-server
 
-  scheduler:
+  __SCHEDULER_SERVICE_NAME__:
     image: __APP_IMAGE__
     container_name: __SCHEDULER_CONTAINER_NAME__
     restart: unless-stopped
@@ -70,7 +72,7 @@ services:
         max-size: "500M"
         max-file: "3"
     depends_on:
-      - app
+      - __APP_SERVICE_NAME__
     networks:
       - ubuntu24-server
 

@@ -283,6 +283,10 @@ jobs:
                 cp docker-compose.template.yml docker-compose.yml
 
                 echo "[INFO] Change placeholder in docker-compose.yml"
+                sed -i "s|__APP_SERVICE_NAME__|${{ secrets.CONTAINER_NAME_APP }}|g" docker-compose.yml
+                sed -i "s|__PROXY_SERVICE_NAME__|${{ secrets.CONTAINER_NAME_PROXY }}|g" docker-compose.yml
+                sed -i "s|__QUEUE_SERVICE_NAME__|${{ secrets.CONTAINER_NAME_QUEUE }}|g" docker-compose.yml
+                sed -i "s|__SCHEDULER_SERVICE_NAME__|${{ secrets.CONTAINER_NAME_SCHEDULER }}|g" docker-compose.yml
                 
                 echo "[INFO] Change App section"
                 sed -i "s|__APP_IMAGE__|${{ steps.vars.outputs.DOCKER_IMAGE_NAME }}|" docker-compose.yml
