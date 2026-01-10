@@ -1,38 +1,14 @@
-## [0.2.0](https://github.com/armandwipangestu/freshbite/compare/v0.1.0...v0.2.0) (2026-01-10)
-
-### Features
-
-* add RajaOngkir cache mechanism ([51aa1f1](https://github.com/armandwipangestu/freshbite/commit/51aa1f1184570a1c6c3256338276f73b9c8cf022))
-* **cd:** add docker compose template for deployment ([ba64f73](https://github.com/armandwipangestu/freshbite/commit/ba64f731f62194c1da2efa51b32cba54882a6646))
-* **ci:** add deploy steps ([0afb2b9](https://github.com/armandwipangestu/freshbite/commit/0afb2b99de1d1bbe3f8c6310c302eca7d1a4019c))
-* **ci:** add Dockerfile.based to improve pipeline execution time ([aec89c9](https://github.com/armandwipangestu/freshbite/commit/aec89c9a688c3ef8ca4837d6184f71b7d96861a0))
+## [0.2.1-rc.1](https://github.com/armandwipangestu/freshbite/compare/v0.2.0...v0.2.1-rc.1) (2026-01-10)
 
 ### Bug Fixes
 
-* 419 Page Expired and add TrustProxies middleware ([5a408a6](https://github.com/armandwipangestu/freshbite/commit/5a408a675748387650ea17eb52d9cc103024df9c))
-* add force HTTPS even if APP_ENV local ([7ef9075](https://github.com/armandwipangestu/freshbite/commit/7ef90753d4506e74a54b6073facbf08125dff093))
-* **ci:** add cloudflare proxy command ([aa9e218](https://github.com/armandwipangestu/freshbite/commit/aa9e2185f0e4a43423304553f1524926ea6f2d2d))
-* **ci:** add docker base image version ([a8bda80](https://github.com/armandwipangestu/freshbite/commit/a8bda805b9b4f8baec5873787bfaf248c32ccebb))
-* **ci:** add favicon and logo assets file ([d547935](https://github.com/armandwipangestu/freshbite/commit/d547935896ccca47f568a7b024b852101a21dc29))
-* **ci:** add logic to check if env file exist or not ([cecb4a2](https://github.com/armandwipangestu/freshbite/commit/cecb4a2f56c9b258f92f9e73fc6a77b76b39925a))
-* **ci:** add mounting public asset to freshbite-proxy ([f31ecda](https://github.com/armandwipangestu/freshbite/commit/f31ecda0aafe2a7d1e167302f3a24aa48bab2bdb))
-* **ci:** add name and version to package.json ([f45c661](https://github.com/armandwipangestu/freshbite/commit/f45c661007fc0e5da6fba8605537497a006f05dc))
-* **ci:** adjust semantic release configuration and docker build ([94802ec](https://github.com/armandwipangestu/freshbite/commit/94802ec8132776c2d954603768e0dd37a05703fe))
-* **ci:** build, dockerfile and docker compose configuration ([c925a31](https://github.com/armandwipangestu/freshbite/commit/c925a3164c9741ef19af35613f37a513e0b17580))
-* **ci:** change exit return 0 ([6dad5fd](https://github.com/armandwipangestu/freshbite/commit/6dad5fdc767ae939b5199da65731091ff5ff95c5))
-* **ci:** copying assets file correctly ([1712e86](https://github.com/armandwipangestu/freshbite/commit/1712e860272398c18773baabe913cdae39c441e6))
-* **ci:** formatting stdout for some variable ([316631d](https://github.com/armandwipangestu/freshbite/commit/316631dbaa83f7518f2b978b3ef3d16921a71206))
-* **ci:** lint and docker build ([f0b0d8b](https://github.com/armandwipangestu/freshbite/commit/f0b0d8bd4220d0022dd29eb90cb4ac38b517c424))
-* **ci:** move ARG BASE_IMAGE to all stage declaration ([4c66c09](https://github.com/armandwipangestu/freshbite/commit/4c66c09e445a0dc98265f7eaa203255f690dad17))
-* **ci:** optimize composer install ([7afccd6](https://github.com/armandwipangestu/freshbite/commit/7afccd6caa308af76a6174c880ea87097699d20d))
-* **ci:** remove backslash to makesure newline command ([286d00e](https://github.com/armandwipangestu/freshbite/commit/286d00eefeb6bddfe7d7ce45769946034bc8a11f))
-* **ci:** remove needs workflow ([2739dd6](https://github.com/armandwipangestu/freshbite/commit/2739dd6382e03ab45583a4e6b897e9f5dea9e461))
-* **ci:** remove ssh-keyscan when setup ssh ([86e5b6d](https://github.com/armandwipangestu/freshbite/commit/86e5b6dc39ca6bb685a757ee96c1d0feeb434ae5))
-* **ci:** simplified cd workflow much cleaner and more robust ([c4e77a3](https://github.com/armandwipangestu/freshbite/commit/c4e77a315a872a1dd3f9eb901a120db0aa9d66ad))
-* **ci:** solve 404 not found asset filament ([9f907a1](https://github.com/armandwipangestu/freshbite/commit/9f907a1a42ed6a1c71f77c4201e365ec214fe4ee))
-* **ci:** update nginx configuration ([08ad925](https://github.com/armandwipangestu/freshbite/commit/08ad925db540fa0047c53b89606ca55b333539ea))
-* entrypoint.sh ([5918386](https://github.com/armandwipangestu/freshbite/commit/5918386ca5edca17186532affcae90d0a9ada1b2))
-* mismatch content HTTP Header & force HTTPS for production mode ([b0b70a0](https://github.com/armandwipangestu/freshbite/commit/b0b70a0c69ea380978427be87e5a77f17b931610))
+* **ci:** colission dns in production and staging env, which caused from container name ([981289d](https://github.com/armandwipangestu/freshbite/commit/981289d8e9cd704acef909f5e4091106c174e502))
+
+## [0.2.0-rc.2](https://github.com/armandwipangestu/freshbite/compare/v0.2.0-rc.1...v0.2.0-rc.2) (2026-01-10)
+
+### Bug Fixes
+
+* **ci:** colission dns in production and staging env, which caused from container name ([981289d](https://github.com/armandwipangestu/freshbite/commit/981289d8e9cd704acef909f5e4091106c174e502))
 
 ## [0.2.0-rc.1](https://github.com/armandwipangestu/freshbite/compare/v0.1.0...v0.2.0-rc.1) (2026-01-10)
 
