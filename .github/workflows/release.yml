@@ -250,113 +250,30 @@ jobs:
             echo "DOCKER_IMAGE_NAME=${{ env.GHCR_IMAGE }}:$VERSION" >> $GITHUB_OUTPUT
             echo "DOCKER_IMAGE_PROXY_NAME=${{ env.GHCR_IMAGE }}-proxy:$VERSION" >> $GITHUB_OUTPUT
 
+        - name: Transfer Docker Compose Template
+          run: |
+            scp -i ~/.ssh/id_ed25519 \
+              -o StrictHostKeyChecking=no \
+              -o ProxyCommand="cloudflared access ssh --hostname ${{ secrets.SSH_HOST }} --id ${{ secrets.CF_ACCESS_CLIENT_ID }} --secret ${{ secrets.CF_ACCESS_CLIENT_SECRET }}" \
+              docker/docker-compose.template.yml ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:${{ secrets.PROJECT_DIR }}/docker-compose.template.yml
+
         - name: Deploy to Server via SSH
           run: |
             echo "Deploying version $VERSION to ${{ github.ref_name }} environment..."
-            ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << EOF
+            ssh -i ~/.ssh/id_ed25519 \
+              -o StrictHostKeyChecking=no \
+              -o ProxyCommand="cloudflared access ssh --hostname ${{ secrets.SSH_HOST }} --id ${{ secrets.CF_ACCESS_CLIENT_ID }} --secret ${{ secrets.CF_ACCESS_CLIENT_SECRET }}" \
+              ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << EOF
               set -e
               if [[ "${{ secrets.SERVICE_TYPE }}" == "container" ]]; then
                 cd ${{ secrets.PROJECT_DIR }}
 
-                TEMPLATE_FILE="docker-compose.template.yml"
-
-                if [ ! -f "$TEMPLATE_FILE" ]; then
-                  echo "[INFO] $TEMPLATE_FILE not found"
-                  echo "[INFO] Creating $TEMPLATE_FILE ..."
-
-                  echo "services:" > "$TEMPLATE_FILE"
-
-                  echo "  __APP_CONTAINER_NAME__:" >> "$TEMPLATE_FILE"
-                  echo "    image: __APP_IMAGE__" >> "$TEMPLATE_FILE"
-                  echo "    container_name: __APP_CONTAINER_NAME__" >> "$TEMPLATE_FILE"
-                  echo "    restart: unless-stopped" >> "$TEMPLATE_FILE"
-                  echo "    env_file: .env.${{ secrets.CONTAINER_NAME_APP }}" >> "$TEMPLATE_FILE"
-                  echo "    environment:" >> "$TEMPLATE_FILE"
-                  echo "      - RUN_MIGRATIONS=true" >> "$TEMPLATE_FILE"
-                  echo "    volumes:" >> "$TEMPLATE_FILE"
-                  echo "      - ./storage:/var/www/html/storage" >> "$TEMPLATE_FILE"
-                  echo "    logging:" >> "$TEMPLATE_FILE"
-                  echo "      driver: \"json-file\"" >> "$TEMPLATE_FILE"
-                  echo "      options:" >> "$TEMPLATE_FILE"
-                  echo "        max-size: \"500M\"" >> "$TEMPLATE_FILE"
-                  echo "        max-file: \"3\"" >> "$TEMPLATE_FILE"
-                  echo "    networks:" >> "$TEMPLATE_FILE"
-                  echo "      - ubuntu24-server" >> "$TEMPLATE_FILE"
-                  echo "" >> "$TEMPLATE_FILE"
-
-                  echo "  __PROXY_CONTAINER_NAME__:" >> "$TEMPLATE_FILE"
-                  echo "    image: __PROXY_IMAGE__" >> "$TEMPLATE_FILE"
-                  echo "    container_name: __PROXY_CONTAINER_NAME__" >> "$TEMPLATE_FILE"
-                  echo "    restart: unless-stopped" >> "$TEMPLATE_FILE"
-                  echo "    ports:" >> "$TEMPLATE_FILE"
-                  echo "      - \"__PROXY_PORT__\"" >> "$TEMPLATE_FILE"
-                  echo "    volumes:" >> "$TEMPLATE_FILE"
-                  echo "      - ./storage/app/public:/var/www/html/public/storage" >> "$TEMPLATE_FILE"
-                  echo "      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf" >> "$TEMPLATE_FILE"
-                  echo "    logging:" >> "$TEMPLATE_FILE"
-                  echo "      driver: \"json-file\"" >> "$TEMPLATE_FILE"
-                  echo "      options:" >> "$TEMPLATE_FILE"
-                  echo "        max-size: \"500M\"" >> "$TEMPLATE_FILE"
-                  echo "        max-file: \"3\"" >> "$TEMPLATE_FILE"
-                  echo "    depends_on:" >> "$TEMPLATE_FILE"
-                  echo "      - __APP_CONTAINER_NAME__" >> "$TEMPLATE_FILE"
-                  echo "    networks:" >> "$TEMPLATE_FILE"
-                  echo "      - ubuntu24-server" >> "$TEMPLATE_FILE"
-                  echo "" >> "$TEMPLATE_FILE"
-
-                  echo "  __QUEUE_CONTAINER_NAME__:" >> "$TEMPLATE_FILE"
-                  echo "    image: __APP_IMAGE__" >> "$TEMPLATE_FILE"
-                  echo "    container_name: __QUEUE_CONTAINER_NAME__" >> "$TEMPLATE_FILE"
-                  echo "    restart: unless-stopped" >> "$TEMPLATE_FILE"
-                  echo "    env_file: .env.${{ secrets.CONTAINER_NAME_APP }}" >> "$TEMPLATE_FILE"
-                  echo "    environment:" >> "$TEMPLATE_FILE"
-                  echo "      - RUN_MIGRATIONS=false" >> "$TEMPLATE_FILE"
-                  echo "    volumes:" >> "$TEMPLATE_FILE"
-                  echo "      - ./storage:/var/www/html/storage" >> "$TEMPLATE_FILE"
-                  echo "    command: php artisan queue:work --verbose --tries=3 --timeout=90" >> "$TEMPLATE_FILE"
-                  echo "    logging:" >> "$TEMPLATE_FILE"
-                  echo "      driver: \"json-file\"" >> "$TEMPLATE_FILE"
-                  echo "      options:" >> "$TEMPLATE_FILE"
-                  echo "        max-size: \"500M\"" >> "$TEMPLATE_FILE"
-                  echo "        max-file: \"3\"" >> "$TEMPLATE_FILE"
-                  echo "    depends_on:" >> "$TEMPLATE_FILE"
-                  echo "      - __APP_CONTAINER_NAME__" >> "$TEMPLATE_FILE"
-                  echo "    networks:" >> "$TEMPLATE_FILE"
-                  echo "      - ubuntu24-server" >> "$TEMPLATE_FILE"
-                  echo "" >> "$TEMPLATE_FILE"
-
-                  echo "  __SCHEDULER_CONTAINER_NAME__:" >> "$TEMPLATE_FILE"
-                  echo "    image: __APP_IMAGE__" >> "$TEMPLATE_FILE"
-                  echo "    container_name: __SCHEDULER_CONTAINER_NAME__" >> "$TEMPLATE_FILE"
-                  echo "    restart: unless-stopped" >> "$TEMPLATE_FILE"
-                  echo "    env_file: .env.${{ secrets.CONTAINER_NAME_APP }}" >> "$TEMPLATE_FILE"
-                  echo "    environment:" >> "$TEMPLATE_FILE"
-                  echo "      - RUN_MIGRATIONS=false" >> "$TEMPLATE_FILE"
-                  echo "    volumes:" >> "$TEMPLATE_FILE"
-                  echo "      - ./storage:/var/www/html/storage" >> "$TEMPLATE_FILE"
-                  echo "    command: sh -c \"while true; do php artisan schedule:run --verbose; sleep 60; done\"" >> "$TEMPLATE_FILE"
-                  echo "    logging:" >> "$TEMPLATE_FILE"
-                  echo "      driver: \"json-file\"" >> "$TEMPLATE_FILE"
-                  echo "      options:" >> "$TEMPLATE_FILE"
-                  echo "        max-size: \"500M\"" >> "$TEMPLATE_FILE"
-                  echo "        max-file: \"3\"" >> "$TEMPLATE_FILE"
-                  echo "    depends_on:" >> "$TEMPLATE_FILE"
-                  echo "      - __APP_CONTAINER_NAME__" >> "$TEMPLATE_FILE"
-                  echo "    networks:" >> "$TEMPLATE_FILE"
-                  echo "      - ubuntu24-server" >> "$TEMPLATE_FILE"
-                  echo "" >> "$TEMPLATE_FILE"
-
-                  echo "networks:" >> "$TEMPLATE_FILE"
-                  echo "  ubuntu24-server:" >> "$TEMPLATE_FILE"
-                  echo "    external: true" >> "$TEMPLATE_FILE"
-
-                  echo "[SUCCESS] docker-compose.template.yml created successfully"
-                else
-                    echo "[INFO] docker-compose.template.yml already exists"
-                    echo "[INFO] Skipping template generation"
+                if [ ! -f "docker-compose.template.yml" ]; then
+                  echo "[ERROR] docker-compose.template.yml not found"
+                  exit 1
                 fi
 
-                cp $TEMPLATE_FILE docker-compose.yml
+                cp docker-compose.template.yml docker-compose.yml
 
                 echo "[INFO] Change placeholder in docker-compose.yml"
                 
@@ -364,6 +281,7 @@ jobs:
                 sed -i "s|__APP_IMAGE__|${{ steps.vars.outputs.DOCKER_IMAGE_NAME }}|" docker-compose.yml
                 sed -i "s|__APP_CONTAINER_NAME__|${{ secrets.CONTAINER_NAME_APP }}|g" docker-compose.yml
                 sed -i "s|__APP_CONTAINER_NAME__|${{ secrets.CONTAINER_NAME_APP }}|" docker-compose.yml
+                sed -i "s|__APP_ENV_FILE__|.env.${{ secrets.CONTAINER_NAME_APP }}|g" docker-compose.yml
 
                 echo "[INFO] Change Proxy section"
                 sed -i "s|__PROXY_IMAGE__|${{ steps.vars.outputs.DOCKER_IMAGE_PROXY_NAME }}|" docker-compose.yml
