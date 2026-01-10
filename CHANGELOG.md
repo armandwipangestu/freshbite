@@ -1,3 +1,9 @@
+## [0.1.0-rc.6](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.5...v0.1.0-rc.6) (2026-01-10)
+
+### Features
+
+* **ci:** add Dockerfile.based to improve pipeline execution time ([aec89c9](https://github.com/armandwipangestu/freshbite/commit/aec89c9a688c3ef8ca4837d6184f71b7d96861a0))
+
 ## [0.1.0-rc.5](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.4...v0.1.0-rc.5) (2026-01-10)
 
 ### Features
