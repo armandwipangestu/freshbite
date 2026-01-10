@@ -50,13 +50,13 @@ php artisan storage:link || true
 if [ ! -f "storage/app/public/assets/images/logo.png" ]; then
     log "entrypoint" "INFO" "Restoring default logo.png"
     mkdir -p storage/app/public/assets/images
-    cp -n public/storage/assets/images/logo.png storage/app/public/assets/images/logo.png || true
+    cp -n docker/defaults/logo.png storage/app/public/assets/images/logo.png || true
 fi
 
 if [ ! -f "storage/app/public/assets/images/favicon.png" ]; then
     log "entrypoint" "INFO" "Restoring default favicon.png"
     mkdir -p storage/app/public/assets/images
-    cp -n public/storage/assets/images/favicon.png storage/app/public/assets/images/favicon.png || true
+    cp -n docker/defaults/favicon.png storage/app/public/assets/images/favicon.png || true
 fi
 
 # Fix permission
