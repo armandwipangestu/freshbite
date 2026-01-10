@@ -1,3 +1,5 @@
+ARG BASE_IMAGE=php:8.3-fpm-alpine
+
 # =========================
 # Stage 1: Build frontend assets
 # =========================
@@ -27,7 +29,6 @@ RUN npm run build
 # Stage 2: PHP-FPM Laravel
 # =========================
 
-ARG BASE_IMAGE=php:8.3-fpm-alpine
 FROM ${BASE_IMAGE}
 
 WORKDIR /var/www/html
