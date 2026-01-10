@@ -1,3 +1,9 @@
+## [0.1.0-rc.8](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.7...v0.1.0-rc.8) (2026-01-10)
+
+### Bug Fixes
+
+* **ci:** remove ssh-keyscan when setup ssh ([86e5b6d](https://github.com/armandwipangestu/freshbite/commit/86e5b6dc39ca6bb685a757ee96c1d0feeb434ae5))
+
 ## [0.1.0-rc.7](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.6...v0.1.0-rc.7) (2026-01-10)
 
 ### Bug Fixes
