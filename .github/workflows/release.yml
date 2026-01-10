@@ -287,24 +287,18 @@ jobs:
                 echo "[INFO] Change App section"
                 sed -i "s|__APP_IMAGE__|${{ steps.vars.outputs.DOCKER_IMAGE_NAME }}|" docker-compose.yml
                 sed -i "s|__APP_CONTAINER_NAME__|${{ secrets.CONTAINER_NAME_APP }}|g" docker-compose.yml
-                sed -i "s|__APP_CONTAINER_NAME__|${{ secrets.CONTAINER_NAME_APP }}|" docker-compose.yml
                 sed -i "s|__APP_ENV_FILE__|.env.${{ secrets.CONTAINER_NAME_APP }}|g" docker-compose.yml
 
                 echo "[INFO] Change Proxy section"
                 sed -i "s|__PROXY_IMAGE__|${{ steps.vars.outputs.DOCKER_IMAGE_PROXY_NAME }}|" docker-compose.yml
                 sed -i "s|__PROXY_CONTAINER_NAME__|${{ secrets.CONTAINER_NAME_PROXY }}|g" docker-compose.yml
-                sed -i "s|__PROXY_CONTAINER_NAME__|${{ secrets.CONTAINER_NAME_PROXY }}|" docker-compose.yml
                 sed -i "s|__PROXY_PORT__|${{ secrets.PROXY_PORT }}|" docker-compose.yml
 
                 echo "[INFO] Change Queue section"
-                sed -i "s|__QUEUE_IMAGE__|${{ steps.vars.outputs.DOCKER_IMAGE_NAME }}|" docker-compose.yml
                 sed -i "s|__QUEUE_CONTAINER_NAME__|${{ secrets.CONTAINER_NAME_QUEUE }}|g" docker-compose.yml
-                sed -i "s|__QUEUE_CONTAINER_NAME__|${{ secrets.CONTAINER_NAME_QUEUE }}|" docker-compose.yml
 
                 echo "[INFO] Change Scheduler section"
-                sed -i "s|__SCHEDULER_IMAGE__|${{ steps.vars.outputs.DOCKER_IMAGE_NAME }}|" docker-compose.yml
                 sed -i "s|__SCHEDULER_CONTAINER_NAME__|${{ secrets.CONTAINER_NAME_SCHEDULER }}|g" docker-compose.yml
-                sed -i "s|__SCHEDULER_CONTAINER_NAME__|${{ secrets.CONTAINER_NAME_SCHEDULER }}|" docker-compose.yml
 
                 if [ -f ".env.${{ secrets.CONTAINER_NAME_APP }}" ]; then
                   cp .env.${{ secrets.CONTAINER_NAME_APP }} .env.tmp
