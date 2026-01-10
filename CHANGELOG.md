@@ -1,3 +1,11 @@
+## [0.1.0-rc.12](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.11...v0.1.0-rc.12) (2026-01-10)
+
+### Bug Fixes
+
+* add force HTTPS even if APP_ENV local ([7ef9075](https://github.com/armandwipangestu/freshbite/commit/7ef90753d4506e74a54b6073facbf08125dff093))
+* **ci:** add favicon and logo assets file ([d547935](https://github.com/armandwipangestu/freshbite/commit/d547935896ccca47f568a7b024b852101a21dc29))
+* **ci:** formatting stdout for some variable ([316631d](https://github.com/armandwipangestu/freshbite/commit/316631dbaa83f7518f2b978b3ef3d16921a71206))
+
 ## [0.1.0-rc.11](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.10...v0.1.0-rc.11) (2026-01-10)
 
 ### Bug Fixes
