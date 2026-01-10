@@ -1,3 +1,9 @@
+## [0.1.0-rc.11](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.10...v0.1.0-rc.11) (2026-01-10)
+
+### Bug Fixes
+
+* **ci:** simplified cd workflow much cleaner and more robust ([c4e77a3](https://github.com/armandwipangestu/freshbite/commit/c4e77a315a872a1dd3f9eb901a120db0aa9d66ad))
+
 ## [0.1.0-rc.10](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.9...v0.1.0-rc.10) (2026-01-10)
 
 ### Bug Fixes
