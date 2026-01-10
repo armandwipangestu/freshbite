@@ -60,7 +60,7 @@ export default function TypographySection() {
                                     </span>
                                 </div>
                                 <p className={`${size.class} ${variant.class}`}>
-                                    The quick brown fox jumps over the lazy dog
+                                    Lorem ipsum dolor sit amet.
                                 </p>
                             </div>
                         ))}

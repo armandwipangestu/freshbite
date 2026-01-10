@@ -7,7 +7,8 @@ on:
             - main
 
 env:
-    IMAGE_NAME: ghcr.io/armandwipangestu/freshbite
+    GHCR_IMAGE: ghcr.io/armandwipangestu/freshbite
+    DOCKERHUB_IMAGE: devvnull/freshbite
 
 jobs:
     # ------------------------------------------------------
@@ -33,14 +34,37 @@ jobs:
             - name: Log in to GitHub Container Registry
               run: echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GH_USERNAME }}" --password-stdin
 
+            - name: Log in to Docker Hub
+              run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
             - name: Build Docker Image with SHA tag
               run: |
                   docker build \
+                    --platform linux/amd64 \
                     -f Dockerfile \
-                    -t $IMAGE_NAME:${{ env.SHORT_SHA }} .
+                    --build-arg BASE_IMAGE=${{ env.GHCR_IMAGE }}-base:8.3-v1 \
+                    -t $GHCR_IMAGE:${{ env.SHORT_SHA }} \
+                    -t $DOCKERHUB_IMAGE:${{ env.SHORT_SHA }} .
 
             - name: Push Docker Image (SHA tag)
-              run: docker push $IMAGE_NAME:${{ env.SHORT_SHA }}
+              run: |
+                  docker push $GHCR_IMAGE:${{ env.SHORT_SHA }}
+                  docker push $DOCKERHUB_IMAGE:${{ env.SHORT_SHA }}
+
+            - name: Build Docker Image Proxy with SHA tag
+              run: |
+                  docker build \
+                    --platform linux/amd64 \
+                    -f Dockerfile.proxy \
+                    --build-arg APP_IMAGE_NAME=${{ env.GHCR_IMAGE }} \
+                    --build-arg APP_IMAGE_TAG=${{ env.SHORT_SHA }} \
+                    -t $GHCR_IMAGE-proxy:${{ env.SHORT_SHA }} \
+                    -t $DOCKERHUB_IMAGE-proxy:${{ env.SHORT_SHA }} .
+
+            - name: Push Docker Image Proxy (SHA tag)
+              run: |
+                  docker push $GHCR_IMAGE-proxy:${{ env.SHORT_SHA }}
+                  docker push $DOCKERHUB_IMAGE-proxy:${{ env.SHORT_SHA }}
 
             - name: Save SHA to file
               run: echo "${SHORT_SHA}" > sha.txt
@@ -57,7 +81,7 @@ jobs:
     release-and-tagging-version:
         name: Release and Tagging Version
         runs-on: ubuntu-latest
-        needs: build-docker-sha
+        # needs: build-docker-sha
         permissions:
             contents: write
             issues: write
@@ -73,21 +97,15 @@ jobs:
             - name: Setup Node.js for Semantic Release
               uses: actions/setup-node@v4
               with:
-                  node-version: "25"
+                  node-version: "22"
 
-            - name: Install semantic-release globally
-              run: |
-                  npm install -g \
-                    semantic-release \
-                    @semantic-release/changelog \
-                    @semantic-release/git \
-                    @semantic-release/exec \
-                    @semantic-release/github \
-                    conventional-changelog-conventionalcommits
+            - name: Install dependencies
+              run: npm ci
 
             - name: Run semantic-release
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NPM_TOKEN: false
               run: npx semantic-release
 
             - name: Upload version.txt artifact
@@ -109,42 +127,322 @@ jobs:
             contents: write
             issues: write
             pull-requests: write
+            packages: write
         environment: ${{ github.ref_name }}
-
+    
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
-
+    
             - name: Download version.txt artifact
               uses: actions/download-artifact@v4
               with:
                   name: release-version
-
-            - name: Set VERSION env
-              run: echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
-
+              continue-on-error: true # Prevents crash if no release happened
+    
+            - name: Check if version exists
+              id: check-version
+              run: |
+                  if [ -f "version.txt" ]; then
+                      echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
+                      echo "RELEASE_EXISTS=true" >> $GITHUB_OUTPUT
+                  else
+                      echo "No new version released. Skipping retag."
+                      echo "RELEASE_EXISTS=false" >> $GITHUB_OUTPUT
+                  fi
+    
             - name: Download sha.txt artifact
+              if: steps.check-version.outputs.RELEASE_EXISTS == 'true'
               uses: actions/download-artifact@v4
               with:
                   name: built-sha
-
+    
             - name: Set SHORT_SHA env
+              if: steps.check-version.outputs.RELEASE_EXISTS == 'true'
               run: echo "SHORT_SHA=$(cat sha.txt)" >> $GITHUB_ENV
-
+    
             - name: Log in to GitHub Container Registry
+              if: steps.check-version.outputs.RELEASE_EXISTS == 'true'
               run: echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GH_USERNAME }}" --password-stdin
 
-            - name: Pull SHA image
-              run: docker pull $IMAGE_NAME:${{ env.SHORT_SHA }}
-
-            - name: Retag SHA -> Version
-              run: docker tag $IMAGE_NAME:${{ env.SHORT_SHA }} $IMAGE_NAME:${{ env.VERSION }}
-
-            - name: Push Version Tag
-              run: docker push $IMAGE_NAME:${{ env.VERSION }}
-
-            - name: Retag latest (only on main)
-              if: github.ref_name == 'main'
+            - name: Log in to Docker Hub
+              if: steps.check-version.outputs.RELEASE_EXISTS == 'true'
+              run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+    
+            - name: Retag and Push
+              if: steps.check-version.outputs.RELEASE_EXISTS == 'true'
               run: |
-                  docker tag $IMAGE_NAME:${{ env.VERSION }} $IMAGE_NAME:latest
-                  docker push $IMAGE_NAME:latest
+                  # Pull from GHCR (using the SHA pushed in Job 1)
+                  docker pull --platform linux/amd64 $GHCR_IMAGE:${{ env.SHORT_SHA }}
+                  docker pull --platform linux/amd64 $GHCR_IMAGE-proxy:${{ env.SHORT_SHA }}
+
+                  # Retag and Push to GHCR
+                  docker tag $GHCR_IMAGE:${{ env.SHORT_SHA }} $GHCR_IMAGE:${{ env.VERSION }}
+                  docker push $GHCR_IMAGE:${{ env.VERSION }}
+
+                  # Retag and Push to Docker Hub
+                  docker tag $GHCR_IMAGE:${{ env.SHORT_SHA }} $DOCKERHUB_IMAGE:${{ env.VERSION }}
+                  docker push $DOCKERHUB_IMAGE:${{ env.VERSION }}
+
+                  # Retag and Push to GHCR Proxy
+                  docker tag $GHCR_IMAGE-proxy:${{ env.SHORT_SHA }} $GHCR_IMAGE-proxy:${{ env.VERSION }}
+                  docker push $GHCR_IMAGE-proxy:${{ env.VERSION }}
+
+                  # Retag and Push to Docker Hub Proxy
+                  docker tag $GHCR_IMAGE-proxy:${{ env.SHORT_SHA }} $DOCKERHUB_IMAGE-proxy:${{ env.VERSION }}
+                  docker push $DOCKERHUB_IMAGE-proxy:${{ env.VERSION }}
+    
+            - name: Retag latest (only on main)
+              if: steps.check-version.outputs.RELEASE_EXISTS == 'true' && github.ref_name == 'main'
+              run: |
+                  docker tag $GHCR_IMAGE:${{ env.VERSION }} $GHCR_IMAGE:latest
+                  docker tag $GHCR_IMAGE:${{ env.VERSION }} $DOCKERHUB_IMAGE:latest
+                  docker push $GHCR_IMAGE:latest
+                  docker push $DOCKERHUB_IMAGE:latest
+
+                  docker tag $GHCR_IMAGE-proxy:${{ env.VERSION }} $GHCR_IMAGE-proxy:latest
+                  docker tag $GHCR_IMAGE-proxy:${{ env.VERSION }} $DOCKERHUB_IMAGE-proxy:latest
+                  docker push $GHCR_IMAGE-proxy:latest
+                  docker push $DOCKERHUB_IMAGE-proxy:latest
+
+    # ------------------------------------------------------
+    # JOB 4 - DEPLOY
+    # ------------------------------------------------------
+    deploy:
+      name: Deploy to Server
+      needs: retag-and-push
+      runs-on: ubuntu-latest
+      permissions:
+        actions: read
+        contents: read
+      environment: ${{ github.ref_name }}
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+
+        - name: Download version.txt artifact
+          uses: actions/download-artifact@v4
+          with:
+            name: release-version
+          continue-on-error: true
+
+        - name: Set VERSION env
+          run: |
+            if [ -f "version.txt" ]; then
+              echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
+            else
+              echo "VERSION=latest" >> $GITHUB_ENV
+            fi
+
+        - name: Setup cloudflared
+          run: |
+            curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 \
+              -o cloudflared
+            chmod +x cloudflared
+            sudo mv cloudflared /usr/local/bin/cloudflared
+
+        - name: Setup SSH
+          run: |
+            mkdir -p ~/.ssh
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+            chmod 600 ~/.ssh/id_ed25519
+            # NOTE: We skip ssh-keyscan here because we use -o StrictHostKeyChecking=no 
+            #       and the host is unreachable directly (behind Cloudflare Tunnel).
+            # ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+            # chmod 644 ~/.ssh/known_hosts
+
+        - name: Set Docker image name
+          id: vars
+          run: |
+            echo "DOCKER_IMAGE_NAME=${{ env.GHCR_IMAGE }}:$VERSION" >> $GITHUB_OUTPUT
+            echo "DOCKER_IMAGE_PROXY_NAME=${{ env.GHCR_IMAGE }}-proxy:$VERSION" >> $GITHUB_OUTPUT
+
+        - name: Transfer Docker Compose Template
+          run: |
+            scp -i ~/.ssh/id_ed25519 \
+              -o StrictHostKeyChecking=no \
+              -o ProxyCommand="cloudflared access ssh --hostname ${{ secrets.SSH_HOST }} --id ${{ secrets.CF_ACCESS_CLIENT_ID }} --secret ${{ secrets.CF_ACCESS_CLIENT_SECRET }}" \
+              docker/docker-compose.template.yml ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:${{ secrets.PROJECT_DIR }}/docker-compose.template.yml
+
+        - name: Deploy to Server via SSH
+          run: |
+            echo "Deploying version $VERSION to ${{ github.ref_name }} environment..."
+            ssh -i ~/.ssh/id_ed25519 \
+              -o StrictHostKeyChecking=no \
+              -o ProxyCommand="cloudflared access ssh --hostname ${{ secrets.SSH_HOST }} --id ${{ secrets.CF_ACCESS_CLIENT_ID }} --secret ${{ secrets.CF_ACCESS_CLIENT_SECRET }}" \
+              ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << EOF
+              set -e
+              if [[ "${{ secrets.SERVICE_TYPE }}" == "container" ]]; then
+                cd ${{ secrets.PROJECT_DIR }}
+
+                if [ ! -f "docker-compose.template.yml" ]; then
+                  echo "[WARNING] docker-compose.template.yml not found"
+                  exit 0
+                fi
+
+                cp docker-compose.template.yml docker-compose.yml
+
+                echo "[INFO] Change placeholder in docker-compose.yml"
+                
+                echo "[INFO] Change App section"
+                sed -i "s|__APP_IMAGE__|${{ steps.vars.outputs.DOCKER_IMAGE_NAME }}|" docker-compose.yml
+                sed -i "s|__APP_CONTAINER_NAME__|${{ secrets.CONTAINER_NAME_APP }}|g" docker-compose.yml
+                sed -i "s|__APP_ENV_FILE__|.env.${{ secrets.CONTAINER_NAME_APP }}|g" docker-compose.yml
+
+                echo "[INFO] Change Proxy section"
+                sed -i "s|__PROXY_IMAGE__|${{ steps.vars.outputs.DOCKER_IMAGE_PROXY_NAME }}|" docker-compose.yml
+                sed -i "s|__PROXY_CONTAINER_NAME__|${{ secrets.CONTAINER_NAME_PROXY }}|g" docker-compose.yml
+                sed -i "s|__PROXY_PORT__|${{ secrets.PROXY_PORT }}|" docker-compose.yml
+
+                echo "[INFO] Change Queue section"
+                sed -i "s|__QUEUE_CONTAINER_NAME__|${{ secrets.CONTAINER_NAME_QUEUE }}|g" docker-compose.yml
+
+                echo "[INFO] Change Scheduler section"
+                sed -i "s|__SCHEDULER_CONTAINER_NAME__|${{ secrets.CONTAINER_NAME_SCHEDULER }}|g" docker-compose.yml
+
+                if [ -f ".env.${{ secrets.CONTAINER_NAME_APP }}" ]; then
+                  cp .env.${{ secrets.CONTAINER_NAME_APP }} .env.tmp
+                else
+                  echo "[WARNING] .env.${{ secrets.CONTAINER_NAME_APP }} not found"
+                fi
+
+                echo "[INFO] STDOUT .env.${{ secrets.CONTAINER_NAME_APP }}"
+                echo "# App Environment" > .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "APP_BUILD_VERSION=$VERSION" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "APP_NAME=${{ secrets.APP_NAME }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "APP_ENV=${{ secrets.APP_ENV }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "APP_KEY=${{ secrets.APP_KEY }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "APP_DEBUG=${{ secrets.APP_DEBUG }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "APP_TIMEZONE=${{ secrets.APP_TIMEZONE }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "APP_URL=${{ secrets.APP_URL }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "APP_LOCALE=${{ secrets.APP_LOCALE }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "APP_FALLBACK_LOCALE=${{ secrets.APP_FALLBACK_LOCALE }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "APP_FAKER_LOCALE=${{ secrets.APP_FAKER_LOCALE }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "APP_MAINTENANCE_DRIVER=${{ secrets.APP_MAINTENANCE_DRIVER }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+
+                echo "# Bcrypt Environment" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "BCRYPT_ROUNDS=${{ secrets.BCRYPT_ROUNDS }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+
+                echo "# Log Environment" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "LOG_CHANNEL=${{ secrets.LOG_CHANNEL }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "LOG_STACK=${{ secrets.LOG_STACK }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "LOG_DEPRECATIONS_CHANNEL=${{ secrets.LOG_DEPRECATIONS_CHANNEL }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "LOG_LEVEL=${{ secrets.LOG_LEVEL }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                
+                echo "# Database Environment" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "DB_CONNECTION=${{ secrets.DB_CONNECTION }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+
+                echo "# Session Environment" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "SESSION_DRIVER=${{ secrets.SESSION_DRIVER }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "SESSION_LIFETIME=${{ secrets.SESSION_LIFETIME }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "SESSION_ENCRYPT=${{ secrets.SESSION_ENCRYPT }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "SESSION_PATH=${{ secrets.SESSION_PATH }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "SESSION_DOMAIN=${{ secrets.SESSION_DOMAIN }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "SESSION_SECURE_COOKIE=${{ secrets.SESSION_SECURE_COOKIE }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "SESSION_SAME_SITE=${{ secrets.SESSION_SAME_SITE }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+
+                echo "# Utility Environment" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "BROADCAST_CONNECTION=${{ secrets.BROADCAST_CONNECTION }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "FILESYSTEM_DISK=${{ secrets.FILESYSTEM_DISK }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "QUEUE_CONNECTION=${{ secrets.QUEUE_CONNECTION }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+
+                echo "# Cache Environment" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "CACHE_STORE=${{ secrets.CACHE_STORE }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "CACHE_PREFIX=${{ secrets.CACHE_PREFIX }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "MEMCACHED_HOST=${{ secrets.MEMCACHED_HOST }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "REDIS_CLIENT=${{ secrets.REDIS_CLIENT }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "REDIS_HOST=${{ secrets.REDIS_HOST }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "REDIS_PORT=${{ secrets.REDIS_PORT }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+
+                echo "# Mail Environment" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "MAIL_MAILER=${{ secrets.MAIL_MAILER }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "MAIL_HOST=${{ secrets.MAIL_HOST }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "MAIL_PORT=${{ secrets.MAIL_PORT }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "MAIL_ENCRYPTION=${{ secrets.MAIL_ENCRYPTION }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "MAIL_FROM_ADDRESS=${{ secrets.MAIL_FROM_ADDRESS }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "MAIL_FROM_NAME=\"\${${{ secrets.MAIL_FROM_NAME }}}\"" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+
+                echo "# AWS Environment" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "AWS_DEFAULT_REGION=${{ secrets.AWS_DEFAULT_REGION }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "AWS_BUCKET=${{ secrets.AWS_BUCKET }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "AWS_USE_PATH_STYLE_ENDPOINT=${{ secrets.AWS_USE_PATH_STYLE_ENDPOINT }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+
+                echo "# Vite Environment" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "VITE_APP_NAME=\"\${${{ secrets.VITE_APP_NAME }}}\"" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                
+                echo "# Google Environment" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "GOOGLE_CLIENT_REDIRECT=${{ secrets.GOOGLE_CLIENT_REDIRECT }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+
+                echo "# Midtrans Environment" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "MIDTRANS_SERVER_KEY=${{ secrets.MIDTRANS_SERVER_KEY }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "MIDTRANS_CLIENT_KEY=${{ secrets.MIDTRANS_CLIENT_KEY }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "MIDTRANS_IS_PRODUCTION=${{ secrets.MIDTRANS_IS_PRODUCTION }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "MIDTRANS_IS_SANITIZED=${{ secrets.MIDTRANS_IS_SANITIZED }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "MIDTRANS_IS_3DS=${{ secrets.MIDTRANS_IS_3DS }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+
+                echo "# RajaOngkir Environment" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "RAJAONGKIR_API_KEY=${{ secrets.RAJAONGKIR_API_KEY }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+
+                echo "# Proxy Environment" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "TRUSTED_PROXIES=${{ secrets.TRUSTED_PROXIES }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+
+                echo "[INFO] Cleaning up empty secrets"
+                sed -i 's/=empty$/=/g' .env.${{ secrets.CONTAINER_NAME_APP }}
+                sed -i 's/="\${empty}"$/=/g' .env.${{ secrets.CONTAINER_NAME_APP }}
+
+                echo "Pulling and deploying new image version: ${{ steps.vars.outputs.DOCKER_IMAGE_NAME }}"
+                docker compose pull
+                docker compose up -d
+
+                if [ -f ".env.tmp" ]; then
+                  PREVIOUS_VERSION=\$(grep APP_BUILD_VERSION .env.tmp | cut -d '=' -f2)
+                  echo "Removing previous image version: ${{ env.GHCR_IMAGE }}:\$PREVIOUS_VERSION"
+                  if docker image inspect ${{ env.GHCR_IMAGE }}:\$PREVIOUS_VERSION > /dev/null 2>&1; then
+                    docker image rm ${{ env.GHCR_IMAGE }}:\$PREVIOUS_VERSION
+                  else
+                    echo "Previous image version not found locally. Skipping removal."
+                  fi
+                  
+                  echo "Removing previous image version: ${{ env.GHCR_IMAGE }}-proxy:\$PREVIOUS_VERSION"
+                  if docker image inspect ${{ env.GHCR_IMAGE }}-proxy:\$PREVIOUS_VERSION > /dev/null 2>&1; then
+                    docker image rm ${{ env.GHCR_IMAGE }}-proxy:\$PREVIOUS_VERSION
+                  else
+                    echo "Previous image version not found locally. Skipping removal."
+                  fi
+
+                  rm .env.tmp
+                else
+                  echo "[WARNING] .env.tmp not found"
+                fi
+
+              else
+                echo "[WARNING] Service type unknown"
+                exit 0
+              fi
+            EOF

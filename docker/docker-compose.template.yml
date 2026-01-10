@@ -1,0 +1,79 @@
+services:
+  app:
+    image: __APP_IMAGE__
+    container_name: __APP_CONTAINER_NAME__
+    restart: unless-stopped
+    env_file: __APP_ENV_FILE__
+    environment:
+      - RUN_MIGRATIONS=true
+    volumes:
+      - ./storage:/var/www/html/storage
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500M"
+        max-file: "3"
+    networks:
+      - ubuntu24-server
+
+  proxy:
+    image: __PROXY_IMAGE__
+    container_name: __PROXY_CONTAINER_NAME__
+    restart: unless-stopped
+    ports:
+      - "__PROXY_PORT__"
+    volumes:
+      - ./storage/app/public:/var/www/html/public/storage
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500M"
+        max-file: "3"
+    depends_on:
+      - app
+    networks:
+      - ubuntu24-server
+
+  queue:
+    image: __APP_IMAGE__
+    container_name: __QUEUE_CONTAINER_NAME__
+    restart: unless-stopped
+    env_file: __APP_ENV_FILE__
+    environment:
+      - RUN_MIGRATIONS=false
+    volumes:
+      - ./storage:/var/www/html/storage
+    command: php artisan queue:work --verbose --tries=3 --timeout=90
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500M"
+        max-file: "3"
+    depends_on:
+      - app
+    networks:
+      - ubuntu24-server
+
+  scheduler:
+    image: __APP_IMAGE__
+    container_name: __SCHEDULER_CONTAINER_NAME__
+    restart: unless-stopped
+    env_file: __APP_ENV_FILE__
+    environment:
+      - RUN_MIGRATIONS=false
+    volumes:
+      - ./storage:/var/www/html/storage
+    command: sh -c "while true; do php artisan schedule:run --verbose; sleep 60; done"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500M"
+        max-file: "3"
+    depends_on:
+      - app
+    networks:
+      - ubuntu24-server
+
+networks:
+  ubuntu24-server:
+    external: true

@@ -1,9 +1,10 @@
 'use client';
 
 import { Link } from '@inertiajs/react';
-import { Heart, ShoppingCart } from 'lucide-react';
+import { Heart, Search, ShoppingCart } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from './button';
+import { Input } from './input';
 
 interface NavbarProps {
     isAuthenticated: boolean;
@@ -41,12 +42,14 @@ export function Navbar({ isAuthenticated, userName }: NavbarProps) {
 
                 {/* Middle: Search bar */}
                 <div className="flex-1 px-6">
-                    <input
-                        type="text"
+                    <Input
+                        variant="default"
+                        size="md"
                         placeholder="Search..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        className="w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring focus:ring-green-200"
+                        icon={Search}
+                        iconPosition="right"
                     />
                 </div>
 

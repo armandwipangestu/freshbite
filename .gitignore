@@ -20,6 +20,8 @@ yarn-error.log
 /.vscode
 /.zed
 
+*storybook.log
+storybook-static
 # docker stuff
 /docker-data
 
