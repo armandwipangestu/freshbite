@@ -1,66 +1,218 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<h1 align="center">FreshBite: Fruit & Vegetable E-Commerce</h1>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<p align="center">An e-commerce (fruits & vegetables) build using Laravel, Filament, Inertia.js, React.js, Shadcn/ui, Midtrans, RajaOngkir, Google SSO </p>
 
-## About Laravel
+<div align="center">
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+![Docker](https://img.shields.io/badge/-Docker-131821?style=for-the-badge&logo=docker)&nbsp;
+![Laravel](https://img.shields.io/badge/-Laravel-131821?style=for-the-badge&logo=laravel)&nbsp;
+![Vite](https://img.shields.io/badge/-Vite-131821?style=for-the-badge&logo=vite)&nbsp;
+![React](https://img.shields.io/badge/-React-131821?style=for-the-badge&logo=react)&nbsp;
+![Inertia.js](https://img.shields.io/badge/-Inertia.js-131821?style=for-the-badge&logo=inertia)&nbsp;
+![TailwindCSS](https://img.shields.io/badge/-TailwindCSS-131821?style=for-the-badge&logo=tailwindcss)&nbsp;
+![Shadcn/ui](https://img.shields.io/badge/-Shadcn/ui-131821?style=for-the-badge&logo=shadcnui)&nbsp;
+![Filament](https://img.shields.io/badge/-Filament-131821?style=for-the-badge&logo=filament)&nbsp;
+![Midtrans](https://img.shields.io/badge/-Midtrans-131821?style=for-the-badge&logo=midtrans)&nbsp;
+![RajaOngkir](https://img.shields.io/badge/-RajaOngkir-131821?style=for-the-badge&logo=rajaongkir)&nbsp;
+![Google SSO](https://img.shields.io/badge/-Google_SSO-131821?style=for-the-badge&logo=googlecloud)&nbsp;
+![Cloudflare](https://img.shields.io/badge/-Cloudflare-131821?style=for-the-badge&logo=cloudflare)&nbsp;
+![CI/CD](https://img.shields.io/badge/-CI/CD-131821?style=for-the-badge&logo=githubactions)&nbsp;
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+</div>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features
 
-## Learning Laravel
+- **Modern E-Commerce**: Seamless shopping experience for fruits and vegetables.
+- **Payment Gateway**: Secure transactions integrated with **Midtrans**.
+- **Shipping Integration**: Real-time shipping cost calculations via **RajaOngkir**.
+- **Secure Auth**: One-tap login using **Google SSO** (Socialite).
+- **Admin Dashboard**: Powerful resource management with **Filament PHP**.
+- **Fast Frontend**: Reactive UI powered by **React.js**, **Inertia.js**, and **Shadcn/ui**.
+- **Docker Ready**: Optimized multi-stage builds and container orchestration.
+- **Automated CI/CD**: Seamless deployment to servers behind NAT using **Cloudflare Tunnel**.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Running the Application
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Option 1: Local Development (Native)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### 1. Prerequisites
+Ensure you have **PHP 8.2+**, **Composer**, **Node.js**, and **MySQL** installed.
 
-## Laravel Sponsors
+#### 2. Setup
+```bash
+# Clone the repository
+git clone https://github.com/armandwipangestu/freshbite.git
+cd freshbite
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+# Install PHP dependencies
+composer install
 
-### Premium Partners
+# Install JS dependencies
+npm install
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+# Setup environment
+cp .env.example .env
+php artisan key:generate
+```
 
-## Contributing
+#### 3. Database & Seeds
+Update your `.env` with your database credentials, then run:
+```bash
+php artisan migrate --seed
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### 4. Run Development Servers
+You will need two terminals running:
 
-## Code of Conduct
+**Terminal A (Vite):**
+```bash
+npm run dev
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**Terminal B (Laravel):**
+```bash
+php artisan serve
+```
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Option 2: Using Docker (Recommended)
 
-## License
+This project includes a fully containerized setup with Nginx, PHP-FPM, Queue Workers, and a Scheduler.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### 1. Setup Environment
+Create a `.env.docker` file or use your existing `.env`. Ensure `DB_HOST` is set to your database service name if using a shared network. Create a `.env.freshbite-db` file for the database service.
+
+Here an example of `.env.freshbite-db`:
+
+```env
+MYSQL_ROOT_PASSWORD=your_root_password
+MYSQL_DATABASE=freshbite
+MYSQL_USER=your_database_user
+MYSQL_PASSWORD=your_database_password
+```
+
+#### 2. Run with Docker Compose
+Use the following example as a guide for your `docker-compose.yml`:
+
+```yaml
+services:
+  db:
+    image: mariadb:12.0.2-noble
+    container_name: freshbite-db
+    restart: unless-stopped
+    env_file: .env.freshbite-db
+    volumes:
+      - ./docker-data/freshbite-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500M"
+        max-file: "3"
+    ports:
+      - "3309:3306"
+
+  app:
+    image: ghcr.io/armandwipangestu/freshbite:latest
+    container_name: freshbite-app
+    restart: unless-stopped
+    env_file: .env.production
+    environment:
+      - RUN_MIGRATIONS=true
+    volumes:
+      - ./storage:/var/www/html/storage
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500M"
+        max-file: "3"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  proxy:
+    image: ghcr.io/armandwipangestu/freshbite-proxy:latest
+    container_name: freshbite-proxy
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./storage/app/public:/var/www/html/public/storage
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500M"
+        max-file: "3"
+    depends_on:
+      - app
+    networks:
+      - app-network
+
+  queue:
+    image: ghcr.io/armandwipangestu/freshbite:latest
+    container_name: freshbite-queue
+    restart: unless-stopped
+    env_file: .env.production
+    environment:
+      - RUN_MIGRATIONS=false
+    volumes:
+      - ./storage:/var/www/html/storage
+    command: php artisan queue:work --verbose --tries=3 --timeout=90
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500M"
+        max-file: "3"
+    depends_on:
+      - app
+    networks:
+      - app-network
+
+  scheduler:
+    image: ghcr.io/armandwipangestu/freshbite:latest
+    container_name: freshbite-scheduler
+    restart: unless-stopped
+    env_file: .env.production
+    environment:
+      - RUN_MIGRATIONS=false
+    volumes:
+      - ./storage:/var/www/html/storage
+    command: php artisan schedule:run
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500M"
+        max-file: "3"
+    depends_on:
+      - app
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+```
+
+Run the stack:
+```bash
+docker compose up -d
+```
+
+## Infrastructure
+
+- **Optimization**: Uses a custom base image for PHP dependencies to reduce build times by >70%.
+- **Reverse Proxy**: Nginx is configured to serve static assets and proxy PHP requests to the FPM container.
+- **Workers**: A dedicated queue worker handles background jobs (emails, etc.).
+- **Scheduler**: A lightweight cron-like service runs Laravel schedule commands.
+
+## Sponsor this project
+
+- Saweria: https://saweria.co/armandwipangestu
