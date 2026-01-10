@@ -1,3 +1,14 @@
+## [0.1.0-rc.5](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.4...v0.1.0-rc.5) (2026-01-10)
+
+### Features
+
+* **cd:** add docker compose template for deployment ([ba64f73](https://github.com/armandwipangestu/freshbite/commit/ba64f731f62194c1da2efa51b32cba54882a6646))
+* **ci:** add deploy steps ([0afb2b9](https://github.com/armandwipangestu/freshbite/commit/0afb2b99de1d1bbe3f8c6310c302eca7d1a4019c))
+
+### Bug Fixes
+
+* **ci:** add cloudflare proxy command ([aa9e218](https://github.com/armandwipangestu/freshbite/commit/aa9e2185f0e4a43423304553f1524926ea6f2d2d))
+
 ## [0.1.0-rc.4](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.3...v0.1.0-rc.4) (2026-01-07)
 
 ### Bug Fixes
