@@ -42,6 +42,7 @@ jobs:
                   docker build \
                     --platform linux/amd64 \
                     -f Dockerfile \
+                    --build-arg BASE_IMAGE=${{ env.GHCR_IMAGE }}-base:latest \
                     -t $GHCR_IMAGE:${{ env.SHORT_SHA }} \
                     -t $DOCKERHUB_IMAGE:${{ env.SHORT_SHA }} .
 

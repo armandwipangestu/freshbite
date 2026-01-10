@@ -27,24 +27,10 @@ RUN npm run build
 # Stage 2: PHP-FPM Laravel
 # =========================
 
-FROM php:8.3-fpm-alpine
+ARG BASE_IMAGE=php:8.3-fpm-alpine
+FROM ${BASE_IMAGE}
 
 WORKDIR /var/www/html
-
-# Install PHP dependencies (OS Level)
-RUN apk add --no-cache \
-    bash git unzip curl libpng-dev libjpeg-turbo-dev \
-    libwebp-dev libxpm-dev freetype-dev oniguruma-dev \
-    zip libxml2-dev icu-dev mysql-client supervisor \
-    libzip-dev
-
-# Configure & install php extension
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp --with-xpm \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd intl opcache zip \
-    && rm -rf /var/cache/apk/*
-
-# Install Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Copy Laravel backend
 COPY . .
