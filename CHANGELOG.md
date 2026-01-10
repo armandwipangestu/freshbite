@@ -1,3 +1,9 @@
+## [0.1.0-rc.9](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.8...v0.1.0-rc.9) (2026-01-10)
+
+### Bug Fixes
+
+* **ci:** change exit return 0 ([6dad5fd](https://github.com/armandwipangestu/freshbite/commit/6dad5fdc767ae939b5199da65731091ff5ff95c5))
+
 ## [0.1.0-rc.8](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.7...v0.1.0-rc.8) (2026-01-10)
 
 ### Bug Fixes
