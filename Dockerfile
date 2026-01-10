@@ -48,6 +48,7 @@ RUN composer install \
     --no-interaction \
     --prefer-dist \
     # --no-scripts \
+    --optimize-autoloader \
     --classmap-authoritative
 
 # Copy entrypoint
