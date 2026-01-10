@@ -306,7 +306,11 @@ jobs:
                 sed -i "s|__SCHEDULER_CONTAINER_NAME__|${{ secrets.CONTAINER_NAME_SCHEDULER }}|g" docker-compose.yml
                 sed -i "s|__SCHEDULER_CONTAINER_NAME__|${{ secrets.CONTAINER_NAME_SCHEDULER }}|" docker-compose.yml
 
-                cp .env.${{ secrets.CONTAINER_NAME_APP }} .env.tmp
+                if [ -f ".env.${{ secrets.CONTAINER_NAME_APP }}" ]; then
+                  cp .env.${{ secrets.CONTAINER_NAME_APP }} .env.tmp
+                else
+                  echo "[WARNING] .env.${{ secrets.CONTAINER_NAME_APP }} not found"
+                fi
 
                 echo "[INFO] STDOUT .env.${{ secrets.CONTAINER_NAME_APP }}"
                 echo "# App Environment" > .env.${{ secrets.CONTAINER_NAME_APP }}
@@ -418,22 +422,26 @@ jobs:
                 docker compose pull
                 docker compose up -d
 
-                PREVIOUS_VERSION=\$(grep APP_BUILD_VERSION .env.tmp | cut -d '=' -f2)
-                echo "Removing previous image version: ${{ env.GHCR_IMAGE }}:\$PREVIOUS_VERSION"
-                if docker image inspect ${{ env.GHCR_IMAGE }}:\$PREVIOUS_VERSION > /dev/null 2>&1; then
-                  docker image rm ${{ env.GHCR_IMAGE }}:\$PREVIOUS_VERSION
-                else
-                  echo "Previous image version not found locally. Skipping removal."
-                fi
-                
-                echo "Removing previous image version: ${{ env.GHCR_IMAGE }}-proxy:\$PREVIOUS_VERSION"
-                if docker image inspect ${{ env.GHCR_IMAGE }}-proxy:\$PREVIOUS_VERSION > /dev/null 2>&1; then
-                  docker image rm ${{ env.GHCR_IMAGE }}-proxy:\$PREVIOUS_VERSION
-                else
-                  echo "Previous image version not found locally. Skipping removal."
-                fi
+                if [ -f ".env.tmp" ]; then
+                  PREVIOUS_VERSION=\$(grep APP_BUILD_VERSION .env.tmp | cut -d '=' -f2)
+                  echo "Removing previous image version: ${{ env.GHCR_IMAGE }}:\$PREVIOUS_VERSION"
+                  if docker image inspect ${{ env.GHCR_IMAGE }}:\$PREVIOUS_VERSION > /dev/null 2>&1; then
+                    docker image rm ${{ env.GHCR_IMAGE }}:\$PREVIOUS_VERSION
+                  else
+                    echo "Previous image version not found locally. Skipping removal."
+                  fi
+                  
+                  echo "Removing previous image version: ${{ env.GHCR_IMAGE }}-proxy:\$PREVIOUS_VERSION"
+                  if docker image inspect ${{ env.GHCR_IMAGE }}-proxy:\$PREVIOUS_VERSION > /dev/null 2>&1; then
+                    docker image rm ${{ env.GHCR_IMAGE }}-proxy:\$PREVIOUS_VERSION
+                  else
+                    echo "Previous image version not found locally. Skipping removal."
+                  fi
 
-                rm .env.tmp
+                  rm .env.tmp
+                else
+                  echo "[WARNING] .env.tmp not found"
+                fi
 
               else
                 echo "[WARNING] Service type unknown"
