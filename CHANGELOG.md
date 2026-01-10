@@ -1,3 +1,9 @@
+## [0.1.0-rc.13](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.12...v0.1.0-rc.13) (2026-01-10)
+
+### Bug Fixes
+
+* **ci:** copying assets file correctly ([1712e86](https://github.com/armandwipangestu/freshbite/commit/1712e860272398c18773baabe913cdae39c441e6))
+
 ## [0.1.0-rc.12](https://github.com/armandwipangestu/freshbite/compare/v0.1.0-rc.11...v0.1.0-rc.12) (2026-01-10)
 
 ### Bug Fixes
