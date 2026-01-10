@@ -375,7 +375,7 @@ jobs:
                 echo "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
                 echo "MAIL_ENCRYPTION=${{ secrets.MAIL_ENCRYPTION }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
                 echo "MAIL_FROM_ADDRESS=${{ secrets.MAIL_FROM_ADDRESS }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
-                echo "MAIL_FROM_NAME=${{ secrets.MAIL_FROM_NAME }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "MAIL_FROM_NAME=\"\${${{ secrets.MAIL_FROM_NAME }}}\"" >> .env.${{ secrets.CONTAINER_NAME_APP }}
                 echo "" >> .env.${{ secrets.CONTAINER_NAME_APP }}
 
                 echo "# AWS Environment" >> .env.${{ secrets.CONTAINER_NAME_APP }}
@@ -387,7 +387,7 @@ jobs:
                 echo "" >> .env.${{ secrets.CONTAINER_NAME_APP }}
 
                 echo "# Vite Environment" >> .env.${{ secrets.CONTAINER_NAME_APP }}
-                echo "VITE_APP_NAME=${{ secrets.VITE_APP_NAME }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+                echo "VITE_APP_NAME=\"\${${{ secrets.VITE_APP_NAME }}}\"" >> .env.${{ secrets.CONTAINER_NAME_APP }}
                 echo "" >> .env.${{ secrets.CONTAINER_NAME_APP }}
                 
                 echo "# Google Environment" >> .env.${{ secrets.CONTAINER_NAME_APP }}
@@ -411,6 +411,10 @@ jobs:
                 echo "# Proxy Environment" >> .env.${{ secrets.CONTAINER_NAME_APP }}
                 echo "TRUSTED_PROXIES=${{ secrets.TRUSTED_PROXIES }}" >> .env.${{ secrets.CONTAINER_NAME_APP }}
                 echo "" >> .env.${{ secrets.CONTAINER_NAME_APP }}
+
+                echo "[INFO] Cleaning up empty secrets"
+                sed -i 's/=empty$/=/g' .env.${{ secrets.CONTAINER_NAME_APP }}
+                sed -i 's/="\${empty}"$/=/g' .env.${{ secrets.CONTAINER_NAME_APP }}
 
                 echo "Pulling and deploying new image version: ${{ steps.vars.outputs.DOCKER_IMAGE_NAME }}"
                 docker compose pull

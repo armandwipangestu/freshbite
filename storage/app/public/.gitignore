@@ -1,2 +1,6 @@
 *
 !.gitignore
+!assets/
+!assets/images/
+!assets/images/logo.png
+!assets/images/favicon.png

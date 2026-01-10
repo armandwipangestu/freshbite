@@ -46,6 +46,19 @@ php artisan optimize
 # Storage symlink
 php artisan storage:link || true
 
+# Ensure default assets exist in volume
+if [ ! -f "storage/app/public/assets/images/logo.png" ]; then
+    log "entrypoint" "INFO" "Restoring default logo.png"
+    mkdir -p storage/app/public/assets/images
+    cp -n public/storage/assets/images/logo.png storage/app/public/assets/images/logo.png || true
+fi
+
+if [ ! -f "storage/app/public/assets/images/favicon.png" ]; then
+    log "entrypoint" "INFO" "Restoring default favicon.png"
+    mkdir -p storage/app/public/assets/images
+    cp -n public/storage/assets/images/favicon.png storage/app/public/assets/images/favicon.png || true
+fi
+
 # Fix permission
 chown -R www-data:www-data storage bootstrap/cache public/build
 
