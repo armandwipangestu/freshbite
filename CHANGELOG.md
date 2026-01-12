@@ -1,3 +1,9 @@
+## [0.3.0-rc.3](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.2...v0.3.0-rc.3) (2026-01-12)
+
+### Features
+
+* **page:** add auth prototype ([1fe7c21](https://github.com/armandwipangestu/freshbite/commit/1fe7c2126cd06c135dc306869f114de7fa6da667))
+
 ## [0.3.0-rc.2](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.1...v0.3.0-rc.2) (2026-01-12)
 
 ### Features
