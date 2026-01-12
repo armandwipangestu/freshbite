@@ -6,6 +6,7 @@ import { Heart, Menu, Search, ShoppingCart, X } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from './button';
 import { Input } from './input';
+import Dropdown from '../Dropdown';
 
 interface NavbarProps {
     isAuthenticated: boolean;
@@ -103,19 +104,29 @@ export function Navbar({ isAuthenticated, userName }: NavbarProps) {
                                     <ShoppingCart className="h-6 w-6 text-gray-600 transition-colors hover:text-green-600" />
                                 </Link>
 
-                                <Link
-                                    href="/settings"
-                                    className="flex items-center space-x-2 rounded-full border border-gray-100 py-1 pl-1 pr-4 transition-colors hover:bg-gray-50"
-                                >
-                                    <img
-                                        src={`https://ui-avatars.com/api/?name=${userName}&background=22C55E&color=fff`}
-                                        alt="avatar"
-                                        className="h-8 w-8 rounded-full"
-                                    />
-                                    <span className="font-semibold text-gray-700">
-                                        {userName}
-                                    </span>
-                                </Link>
+                                <Dropdown>
+                                    <Dropdown.Trigger>
+                                        <button className="flex items-center space-x-2 rounded-full border border-gray-100 py-1 pl-1 pr-4 transition-colors hover:bg-gray-50 focus:outline-none">
+                                            <img
+                                                src={`https://ui-avatars.com/api/?name=${userName}&background=22C55E&color=fff`}
+                                                alt="avatar"
+                                                className="h-8 w-8 rounded-full"
+                                            />
+                                            <span className="font-semibold text-gray-700">
+                                                {userName}
+                                            </span>
+                                        </button>
+                                    </Dropdown.Trigger>
+
+                                    <Dropdown.Content>
+                                        <Dropdown.Link href="/profile">
+                                            Settings
+                                        </Dropdown.Link>
+                                        <Dropdown.Link href="/logout" method="post" as="button">
+                                            Log Out
+                                        </Dropdown.Link>
+                                    </Dropdown.Content>
+                                </Dropdown>
                             </>
                         )}
                     </div>
