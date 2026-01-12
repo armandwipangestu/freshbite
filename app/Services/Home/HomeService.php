@@ -25,13 +25,33 @@ class HomeService
     /**
      * Get data for landing page.
      */
-    public function getLandingPageData()
+    public function getLandingPageData(?string $categorySlug = null)
     {
+        $activeCoupon = \App\Models\Coupon::where('is_active', true)
+            ->where('expired_at', '>', now())
+            ->first();
+
+        $flashSaleProducts = $activeCoupon
+            ? $this->productService->getProductsByCoupon($activeCoupon, 5)
+            : collect([]);
+
+        $categoryProducts = $categorySlug
+            ? $this->productService->getProductsByCategory($categorySlug, 10)
+            : $this->productService->getProductsByCategory('all', 10);
+
         return [
             'banners' => $this->bannerService->getActiveBanners(),
-            'flashSaleProducts' => $this->productService->getFlashSaleProducts(5),
-            'popularProducts' => $this->productService->getPopularProducts(4),
+            'activeCoupon' => $activeCoupon,
+            'flashSaleProducts' => $flashSaleProducts,
+            'popularProducts' => [
+                'most_popular' => $this->productService->getMostPopularLifetime(1)->first(),
+                'customer_favorite' => $this->productService->getCustomerFavorites(1)->first(),
+                'top_selling' => $this->productService->getTopSellingReviewBased(1)->first(),
+                'weekly_best_seller' => $this->productService->getWeeklyBestSeller(1)->first(),
+            ],
             'categories' => $this->categoryService->getAll(),
+            'categoryProducts' => $categoryProducts,
+            'selectedCategory' => $categorySlug,
         ];
     }
 }

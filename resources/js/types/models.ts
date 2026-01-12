@@ -27,6 +27,20 @@ export interface Product {
     updated_at?: string;
     images?: ProductImage[];
     categories?: Category[];
+    coupons?: Coupon[];
+    reviews_avg_star?: number;
+    weekly_sold?: number;
+}
+
+export interface Coupon {
+    id: number;
+    code: string;
+    discount: number;
+    stock: number;
+    expired_at: string;
+    is_active: boolean;
+    created_at?: string;
+    updated_at?: string;
 }
 
 export interface Banner {

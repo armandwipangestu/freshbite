@@ -71,11 +71,59 @@ class ProductService
     }
 
     /**
+     * Get products by coupon.
+     */
+    public function getProductsByCoupon(\App\Models\Coupon $coupon, int $limit = 5)
+    {
+        return $this->ProductRepository->getProductsByCoupon($coupon, $limit);
+    }
+
+    /**
+     * Get most popular products of all time.
+     */
+    public function getMostPopularLifetime(int $limit = 1)
+    {
+        return $this->ProductRepository->getMostPopularLifetime($limit);
+    }
+
+    /**
+     * Get customer favorites.
+     */
+    public function getCustomerFavorites(int $limit = 1)
+    {
+        return $this->ProductRepository->getCustomerFavorites($limit);
+    }
+
+    /**
+     * Get top selling products.
+     */
+    public function getTopSellingReviewBased(int $limit = 1)
+    {
+        return $this->ProductRepository->getTopSellingReviewBased($limit);
+    }
+
+    /**
+     * Get this week's best seller.
+     */
+    public function getWeeklyBestSeller(int $limit = 1)
+    {
+        return $this->ProductRepository->getWeeklyBestSeller($limit);
+    }
+
+    /**
      * Get popular products.
      */
     public function getPopularProducts(int $limit = 4)
     {
         return $this->ProductRepository->getPopularProducts($limit);
+    }
+
+    /**
+     * Get products by category slug.
+     */
+    public function getProductsByCategory(string $categorySlug, int $limit = 10)
+    {
+        return $this->ProductRepository->getProductsByCategory($categorySlug, $limit);
     }
 
     /**

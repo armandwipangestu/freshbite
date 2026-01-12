@@ -11,8 +11,7 @@ import TypographySection from './sections/TypographySection';
 
 export default function DesignSystem() {
     return (
-        <MainLayout>
-            <Head title="Design System" />
+        <>
             <div className="space-y-6 p-6">
                 <h1 className="flex items-center gap-2 text-2xl font-bold">
                     <img
@@ -32,6 +31,6 @@ export default function DesignSystem() {
                 <TabsSection />
                 <AuthSection />
             </div>
-        </MainLayout>
+        </>
     );
 }

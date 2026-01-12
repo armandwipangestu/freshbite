@@ -73,6 +73,82 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     /**
+     * Get products by coupon.
+     */
+    public function getProductsByCoupon(\App\Models\Coupon $coupon, int $limit = 5)
+    {
+        return $coupon->products()
+            ->with(['images', 'categories', 'coupons'])
+            ->withAvg('reviews', 'star')
+            ->where('is_published', true)
+            ->limit($limit)
+            ->get();
+    }
+
+    /**
+     * Get most popular products of all time.
+     */
+    public function getMostPopularLifetime(int $limit = 1)
+    {
+        return Product::with(['images', 'categories', 'coupons'])
+            ->withAvg('reviews', 'star')
+            ->where('is_published', true)
+            ->orderBy('total_sold', 'desc')
+            ->limit($limit)
+            ->get();
+    }
+
+    /**
+     * Get customer favorites (wishlist based).
+     */
+    public function getCustomerFavorites(int $limit = 1)
+    {
+        return Product::with(['images', 'categories', 'coupons'])
+            ->withAvg('reviews', 'star')
+            ->where('is_published', true)
+            ->withCount('wishlistItems')
+            ->orderBy('wishlist_items_count', 'desc')
+            ->limit($limit)
+            ->get();
+    }
+
+    /**
+     * Get top selling products (review based).
+     */
+    public function getTopSellingReviewBased(int $limit = 1)
+    {
+        return Product::with(['images', 'categories', 'coupons'])
+            ->where('is_published', true)
+            ->withAvg('reviews', 'star')
+            ->orderBy('reviews_avg_star', 'desc')
+            ->limit($limit)
+            ->get();
+    }
+
+    /**
+     * Get this week's best seller.
+     */
+    public function getWeeklyBestSeller(int $limit = 1)
+    {
+        return Product::with(['images', 'categories', 'coupons'])
+            ->withAvg('reviews', 'star')
+            ->where('is_published', true)
+            ->whereHas('orderItems', function ($query) {
+                $query->whereHas('order', function ($q) {
+                    $q->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+                });
+            })
+            ->withCount(['orderItems as weekly_sold' => function ($query) {
+                $query->whereHas('order', function ($q) {
+                    $q->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+                });
+            }])
+            ->orderBy('weekly_sold', 'desc')
+            ->limit($limit)
+            ->get();
+    }
+
+    /**
      * Get popular products.
      */
     public function getPopularProducts(int $limit = 4)
@@ -80,6 +156,26 @@ class ProductRepository implements ProductRepositoryInterface
         return Product::with(['images', 'categories'])
             ->where('is_published', true)
             ->orderBy('total_sold', 'desc')
+            ->limit($limit)
+            ->get();
+    }
+
+    /**
+     * Get products by category slug.
+     */
+    public function getProductsByCategory(string $categorySlug, int $limit = 10)
+    {
+        $query = Product::with(['images', 'categories'])
+            ->withAvg('reviews', 'star')
+            ->where('is_published', true);
+
+        if ($categorySlug !== 'all') {
+            $query->whereHas('categories', function ($query) use ($categorySlug) {
+                $query->where('slug', $categorySlug);
+            });
+        }
+
+        return $query->latest()
             ->limit($limit)
             ->get();
     }

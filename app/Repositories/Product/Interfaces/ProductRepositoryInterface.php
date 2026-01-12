@@ -44,9 +44,42 @@ interface ProductRepositoryInterface
     public function getFlashSaleProducts(int $limit = 5);
 
     /**
+     * Get products by coupon.
+     * 
+     * @param \App\Models\Coupon $coupon
+     * @param int $limit
+     */
+    public function getProductsByCoupon(\App\Models\Coupon $coupon, int $limit = 5);
+
+    /**
+     * Get most popular products of all time.
+     */
+    public function getMostPopularLifetime(int $limit = 1);
+
+    /**
+     * Get customer favorites (wishlist based).
+     */
+    public function getCustomerFavorites(int $limit = 1);
+
+    /**
+     * Get top selling products (review based).
+     */
+    public function getTopSellingReviewBased(int $limit = 1);
+
+    /**
+     * Get this week's best seller.
+     */
+    public function getWeeklyBestSeller(int $limit = 1);
+
+    /**
      * Get popular products.
      */
     public function getPopularProducts(int $limit = 4);
+
+    /**
+     * Get products by category.
+     */
+    public function getProductsByCategory(string $categorySlug, int $limit = 10);
 
     /**
      * Get products with relationships.

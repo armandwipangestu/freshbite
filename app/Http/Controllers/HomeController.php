@@ -18,7 +18,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $data = $this->homeService->getLandingPageData();
+        $data = $this->homeService->getLandingPageData(request('category'));
 
         return Inertia::render('Welcome', array_merge($data, [
             'canLogin' => Route::has('login'),

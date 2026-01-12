@@ -1,5 +1,5 @@
 import MainLayout from '@/Layouts/MainLayout';
-import { Banner, Category, Product } from '@/types/models';
+import { Banner, Category, Coupon, Product } from '@/types/models';
 import { Head, Link } from '@inertiajs/react';
 import ProductCard from '@/Components/ProductCard';
 import { cn } from '@/lib/utils';
@@ -12,9 +12,17 @@ interface WelcomeProps {
         user: User | null;
     };
     banners: Banner[];
+    activeCoupon: Coupon | null;
     flashSaleProducts: Product[];
-    popularProducts: Product[];
+    popularProducts: {
+        most_popular: Product;
+        customer_favorite: Product;
+        top_selling: Product;
+        weekly_best_seller: Product;
+    };
     categories: Category[];
+    categoryProducts: Product[];
+    selectedCategory: string | null;
 }
 
 const CATEGORY_COLORS = [
@@ -28,40 +36,76 @@ const CATEGORY_COLORS = [
 export default function Welcome({
     auth,
     banners,
+    activeCoupon,
     flashSaleProducts,
     popularProducts,
     categories,
+    categoryProducts,
+    selectedCategory,
 }: WelcomeProps) {
     const activeBanner = banners.find((b) => b.is_active) || banners[0];
 
+    // Helper to calculate discounted price
+    const getProductDiscount = (product: Product) => {
+        // Priority 1: Check for active coupon explicitly linked to flash sale
+        if (activeCoupon && flashSaleProducts.some(p => p.id === product.id)) {
+            return {
+                discountedPrice: product.price - (product.price * activeCoupon.discount / 100),
+                originalPrice: product.price,
+                activeCoupon: activeCoupon
+            };
+        }
+
+        // Priority 2: Check product's own coupons
+        const productCoupon = product.coupons?.find(c => c.is_active && new Date(c.expired_at) > new Date());
+        if (productCoupon) {
+            return {
+                discountedPrice: product.price - (product.price * productCoupon.discount / 100),
+                originalPrice: product.price,
+                activeCoupon: productCoupon
+            };
+        }
+
+        return { discountedPrice: product.price, originalPrice: undefined, activeCoupon: null };
+    };
+
     // Simple countdown timer for Flash Sale
     const [timeLeft, setTimeLeft] = useState({
-        hours: 3,
-        minutes: 51,
-        seconds: 49,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
     });
 
     useEffect(() => {
+        if (!activeCoupon) return;
+
+        const calculateTimeLeft = () => {
+            const difference = +new Date(activeCoupon.expired_at) - +new Date();
+            let timeLeft = { hours: 0, minutes: 0, seconds: 0 };
+
+            if (difference > 0) {
+                timeLeft = {
+                    hours: Math.floor(difference / (1000 * 60 * 60)),
+                    minutes: Math.floor((difference / 1000 / 60) % 60),
+                    seconds: Math.floor((difference / 1000) % 60),
+                };
+            }
+            return timeLeft;
+        };
+
         const timer = setInterval(() => {
-            setTimeLeft((prev) => {
-                if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1 };
-                if (prev.minutes > 0)
-                    return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
-                if (prev.hours > 0)
-                    return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
-                return prev;
-            });
+            setTimeLeft(calculateTimeLeft());
         }, 1000);
+
+        setTimeLeft(calculateTimeLeft());
+
         return () => clearInterval(timer);
-    }, []);
+    }, [activeCoupon]);
 
     const formatNumber = (num: number) => num.toString().padStart(2, '0');
 
     return (
-        <MainLayout
-            isAuthenticated={!!auth.user}
-            userName={auth.user?.name}
-        >
+        <>
             <Head title="FreshBite - Menyediakan Berbagai Macam Pilihan Buah dan Sayuran" />
 
             <div className="mx-auto max-w-7xl px-6 py-8">
@@ -83,112 +127,144 @@ export default function Welcome({
                 </div>
 
                 {/* Flash Sale Section */}
-                <section className="mb-16">
-                    <div className="mb-8 flex items-center gap-6">
-                        <h2 className="text-3xl font-black text-[#1A1A1A]">Flash Sale</h2>
-                        <div className="flex items-center gap-2 text-xl font-bold text-[#666666]">
-                            <span>Ended in</span>
-                            <div className="flex gap-1.5">
-                                <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#22C55E] text-white">
-                                    {formatNumber(timeLeft.hours)}
-                                </span>
-                                <span className="text-[#22C55E]">:</span>
-                                <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#22C55E] text-white">
-                                    {formatNumber(timeLeft.minutes)}
-                                </span>
-                                <span className="text-[#22C55E]">:</span>
-                                <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#22C55E] text-white">
-                                    {formatNumber(timeLeft.seconds)}
-                                </span>
+                {activeCoupon && flashSaleProducts.length > 0 && (
+                    <section className="mb-16">
+                        <div className="mb-8 flex items-center gap-6">
+                            <h2 className="text-2xl font-black text-[#1A1A1A] md:text-3xl">Flash Sale</h2>
+                            <div className="flex items-center gap-2 text-lg font-bold text-[#666666] md:text-xl">
+                                <span>Ended in</span>
+                                <div className="flex gap-1.5">
+                                    <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#22C55E] text-white">
+                                        {formatNumber(timeLeft.hours)}
+                                    </span>
+                                    <span className="text-[#22C55E]">:</span>
+                                    <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#22C55E] text-white">
+                                        {formatNumber(timeLeft.minutes)}
+                                    </span>
+                                    <span className="text-[#22C55E]">:</span>
+                                    <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#22C55E] text-white">
+                                        {formatNumber(timeLeft.seconds)}
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-5">
-                        {flashSaleProducts.map((product) => (
-                            <ProductCard
-                                key={product.id}
-                                variant="vertical"
-                                size="sm"
-                                title={product.name}
-                                price={product.price}
-                                image={`storage/${product.images?.[0]?.image}` || 'https://via.placeholder.com/300'}
-                                rating={4.5}
-                                sold={product.total_sold}
-                                className="w-full"
-                            />
-                        ))}
-                    </div>
-                </section>
+                        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-5">
+                            {flashSaleProducts.map((product) => {
+                                const { discountedPrice, originalPrice } = getProductDiscount(product);
+
+                                return (
+                                    <ProductCard
+                                        key={product.id}
+                                        variant="vertical"
+                                        size="sm"
+                                        title={product.name}
+                                        price={discountedPrice}
+                                        originalPrice={originalPrice}
+                                        image={`storage/${product.images?.[0]?.image}` || 'https://via.placeholder.com/300'}
+                                        rating={product.reviews_avg_star ? Number(Number(product.reviews_avg_star).toFixed(1)) : 4.5}
+                                        sold={product.total_sold}
+                                        className="w-full"
+                                    />
+                                );
+                            })}
+                        </div>
+                    </section>
+                )}
 
                 {/* Most Popular Section */}
                 <section className="mb-16">
                     <div className="mb-8">
-                        <h2 className="text-3xl font-black text-[#1A1A1A]">Most Popular</h2>
+                        <h2 className="text-2xl font-black text-[#1A1A1A] md:text-3xl">Most Popular</h2>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
                         {[
-                            { title: "Most Popular Product", description: "Get Freshness Today" },
-                            { title: "Customer's Favorite", description: "Fresh from the farm" },
-                            { title: "Top-Selling Fruits & Veggies", description: "Guaranteed Quality" },
-                            { title: "This Week's Best Seller", description: "Limited Stock, Order Now!" }
+                            { title: "Most Popular Product", description: "Get Freshness Today", product: popularProducts.most_popular, filter: 'most-popular' },
+                            { title: "Customer's Favorite", description: "Fresh from the farm", product: popularProducts.customer_favorite, filter: 'favorite' },
+                            { title: "Top-Selling Fruits & Veggies", description: "Guaranteed Quality", product: popularProducts.top_selling, filter: 'top-selling' },
+                            { title: "This Week's Best Seller", description: "Limited Stock, Order Now!", product: popularProducts.weekly_best_seller, filter: 'weekly-best-seller' }
                         ].map((item, idx) => {
-                            const product = popularProducts[idx] || popularProducts[0];
+                            const { discountedPrice, originalPrice } = item.product ? getProductDiscount(item.product) : { discountedPrice: 0, originalPrice: undefined };
+
+                            return (
+                                <Link key={idx} href={`/shop?filter=${item.filter}`}>
+                                    <ProductCard
+                                        variant="horizontal"
+                                        size="sm"
+                                        title={item.title}
+                                        description={item.description}
+                                        price={discountedPrice || undefined}
+                                        originalPrice={originalPrice}
+                                        image={item.product?.images?.[0]?.image ? `storage/${item.product.images[0].image}` : 'https://via.placeholder.com/300'}
+                                        className="w-full transition-transform hover:scale-105"
+                                    />
+                                </Link>
+                            );
+                        })}
+                    </div>
+                </section>
+
+                {/* Category Products */}
+                <section className="mb-16">
+                    <div className="mb-8">
+                        <h2 className="text-2xl font-black text-[#1A1A1A] md:text-3xl">Category</h2>
+                    </div>
+
+                    {/* Category Tabs/Buttons */}
+                    <div className="mb-10 flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+                        <Link
+                            href="/"
+                            preserveScroll
+                            className={cn(
+                                "flex min-w-[140px] flex-1 cursor-pointer items-center justify-center rounded-2xl border-2 px-6 py-4 transition-all duration-300",
+                                !selectedCategory
+                                    ? "border-[#22C55E] bg-[#22C55E] text-white shadow-md"
+                                    : "border-gray-200 bg-transparent text-gray-600 hover:border-[#22C55E] hover:text-[#22C55E]"
+                            )}
+                        >
+                            <span className="text-lg font-bold">Show All</span>
+                        </Link>
+                        {categories.map((cat) => (
+                            <Link
+                                key={cat.id}
+                                href={`/?category=${cat.slug}`}
+                                preserveScroll
+                                className={cn(
+                                    "flex min-w-[140px] flex-1 cursor-pointer items-center justify-center rounded-2xl border-2 px-6 py-4 transition-all duration-300",
+                                    selectedCategory === cat.slug
+                                        ? "border-[#22C55E] bg-[#22C55E] text-white shadow-md"
+                                        : "border-gray-200 bg-transparent text-gray-600 hover:border-[#22C55E] hover:text-[#22C55E]"
+                                )}
+                            >
+                                <span className="text-lg font-bold">{cat.name}</span>
+                            </Link>
+                        ))}
+                    </div>
+
+                    {/* Category Products */}
+                    <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-5">
+                        {categoryProducts.map((product, idx) => {
+                            const { discountedPrice, originalPrice } = getProductDiscount(product);
+
                             return (
                                 <ProductCard
-                                    key={idx}
-                                    variant="horizontal"
+                                    key={`${product.id}-${idx}`}
+                                    variant="vertical"
                                     size="sm"
-                                    title={item.title}
-                                    description={item.description}
-                                    image={`storage/${product?.images?.[0]?.image}` || 'https://via.placeholder.com/300'}
+                                    title={product.name}
+                                    price={discountedPrice}
+                                    originalPrice={originalPrice}
+                                    image={`storage/${product.images?.[0]?.image}` || 'https://via.placeholder.com/300'}
+                                    rating={product.reviews_avg_star ? Number(Number(product.reviews_avg_star).toFixed(1)) : 4.8}
+                                    sold={product.total_sold}
                                     className="w-full"
                                 />
                             );
                         })}
                     </div>
                 </section>
-
-                {/* Category Section */}
-                <section className="mb-16">
-                    <div className="mb-8">
-                        <h2 className="text-3xl font-black text-[#1A1A1A]">Category</h2>
-                    </div>
-
-                    {/* Category Tabs/Buttons */}
-                    <div className="mb-10 flex gap-4 overflow-x-auto pb-4">
-                        {categories.map((cat, idx) => (
-                            <div
-                                key={cat.id}
-                                className={cn(
-                                    "flex min-w-[200px] flex-1 cursor-pointer items-center justify-center rounded-2xl bg-gradient-to-r p-8 shadow-sm transition-transform hover:scale-105",
-                                    CATEGORY_COLORS[idx % CATEGORY_COLORS.length]
-                                )}
-                            >
-                                <span className="text-xl font-bold text-white">{cat.name}</span>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Category Products */}
-                    <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-5">
-                        {flashSaleProducts.concat(popularProducts).slice(0, 10).map((product, idx) => (
-                            <ProductCard
-                                key={`${product.id}-${idx}`}
-                                variant="vertical"
-                                size="sm"
-                                title={product.name}
-                                price={product.price}
-                                image={`storage/${product.images?.[0]?.image}` || 'https://via.placeholder.com/300'}
-                                rating={4.8}
-                                sold={product.total_sold}
-                                className="w-full"
-                            />
-                        ))}
-                    </div>
-                </section>
             </div>
-        </MainLayout>
+        </>
     );
 }
