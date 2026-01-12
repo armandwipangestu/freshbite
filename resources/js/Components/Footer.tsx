@@ -45,22 +45,6 @@ export default function Footer({ className }: FooterProps) {
                                     href="#"
                                     className="text-lg text-[#1A1A1A] transition-colors hover:text-[#22C55E]"
                                 >
-                                    Buy & Sell
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    className="text-lg text-[#1A1A1A] transition-colors hover:text-[#22C55E]"
-                                >
-                                    Merchant
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    className="text-lg text-[#1A1A1A] transition-colors hover:text-[#22C55E]"
-                                >
                                     Giving back
                                 </a>
                             </li>
@@ -103,14 +87,6 @@ export default function Footer({ className }: FooterProps) {
                                     className="text-lg text-[#1A1A1A] transition-colors hover:text-[#22C55E]"
                                 >
                                     Seeds
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    className="text-lg text-[#1A1A1A] transition-colors hover:text-[#22C55E]"
-                                >
-                                    Molds
                                 </a>
                             </li>
                         </ul>
