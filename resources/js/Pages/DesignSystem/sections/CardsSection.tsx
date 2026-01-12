@@ -117,7 +117,7 @@ export default function CardsSection() {
                         images={[
                             placeholderImg,
                             "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=800",
-                            placeholderImg
+                            "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=800"
                         ]}
                     />
                     <WishlistCard
@@ -126,8 +126,8 @@ export default function CardsSection() {
                         images={[
                             placeholderImg,
                             "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=800",
-                            placeholderImg,
-                            "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=800"
+                            "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=800",
+                            "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&q=80&w=800"
                         ]}
                     />
                 </div>
@@ -214,8 +214,8 @@ export default function CardsSection() {
                             images={[
                                 "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&q=80&w=1200",
                                 "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=800",
-                                "https://images.unsplash.com/photo-1543158181-e6f9f6766438?auto=format&fit=crop&q=80&w=800",
-                                "https://images.unsplash.com/photo-1591130901020-ef93616f7695?auto=format&fit=crop&q=80&w=800"
+                                "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=800",
+                                "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&q=80&w=800"
                             ]}
                         />
                     </div>
