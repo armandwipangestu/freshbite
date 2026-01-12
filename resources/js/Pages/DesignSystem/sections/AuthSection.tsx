@@ -1,4 +1,5 @@
 import AuthCard from "@/Components/AuthCard";
+import ForgotPasswordCard from "@/Components/ForgotPasswordCard";
 
 export default function AuthSection() {
     return (
@@ -14,6 +15,11 @@ export default function AuthSection() {
                         <p className="text-sm font-medium text-muted-foreground italic">Register Variant</p>
                         <AuthCard variant="register" />
                     </div>
+                </div>
+
+                <div className="mt-20 space-y-4 flex flex-col items-center bg-white p-12 rounded-[24px] border border-gray-100 max-w-2xl mx-auto shadow-sm">
+                    <p className="text-sm font-medium text-muted-foreground italic">Forgot Password Variant</p>
+                    <ForgotPasswordCard />
                 </div>
             </div>
             <div className="space-y-2">
