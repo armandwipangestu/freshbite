@@ -5,6 +5,7 @@ import NavbarSection from './sections/NavbarSection';
 import TypographySection from './sections/TypographySection';
 import CardsSection from './sections/CardsSection';
 import FooterSection from './sections/FooterSection';
+import TabsSection from './sections/TabsSection';
 
 export default function DesignSystem() {
     return (
@@ -26,6 +27,7 @@ export default function DesignSystem() {
                 <TypographySection />
                 <CardsSection />
                 <FooterSection />
+                <TabsSection />
             </div>
         </>
     );
