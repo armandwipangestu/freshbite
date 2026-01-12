@@ -85,7 +85,7 @@ export function Navbar({ isAuthenticated, userName }: NavbarProps) {
                                     </Button>
                                 </Link>
 
-                                <Link href="/login">
+                                <Link href="/register">
                                     <Button
                                         variant="default"
                                         className="h-11 bg-[#22C55E] px-6 shadow-none"

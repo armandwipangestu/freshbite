@@ -1,3 +1,4 @@
+import InputError from '@/Components/InputError';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent } from '@/Components/ui/card';
 import { Input } from '@/Components/ui/input';
@@ -12,6 +13,7 @@ interface AuthCardProps {
     onSwitchVariant?: () => void;
     onGoogleContinue?: () => void;
     className?: string;
+    errors?: Record<string, string>;
 }
 
 export default function AuthCard({
@@ -20,6 +22,7 @@ export default function AuthCard({
     onSwitchVariant,
     onGoogleContinue,
     className,
+    errors = {},
 }: AuthCardProps) {
     const [showPassword, setShowPassword] = React.useState(false);
 
@@ -28,24 +31,24 @@ export default function AuthCard({
     return (
         <Card
             className={cn(
-                'w-full max-w-[480px] overflow-hidden rounded-[32px] border border-gray-100 bg-white shadow-sm',
+                'w-full max-w-[640px] overflow-hidden rounded-[32px] border border-gray-100 bg-white shadow-sm',
                 className,
             )}
         >
-            <CardContent className="p-8 sm:p-12">
-                <div className="mb-10 text-center">
-                    <h2 className="mb-2 text-3xl font-bold text-[#1A1A1A]">
+            <CardContent className="p-6 sm:p-10">
+                <div className="mb-8 text-center">
+                    <h2 className="mb-2 text-2xl font-bold text-[#1A1A1A]">
                         {isLogin ? 'Login' : 'Register'}
                     </h2>
                     {isLogin && (
-                        <p className="text-2xl font-semibold text-[#1A1A1A]">
+                        <p className="text-xl font-semibold text-[#1A1A1A]">
                             Welcome back!
                         </p>
                     )}
                 </div>
 
                 <form
-                    className="space-y-6"
+                    className="space-y-4"
                     onSubmit={(e) => {
                         e.preventDefault();
                         const formData = new FormData(e.currentTarget);
@@ -58,10 +61,10 @@ export default function AuthCard({
                     }}
                 >
                     {!isLogin && (
-                        <div className="space-y-2">
+                        <div className="space-y-1.5">
                             <Label
                                 htmlFor="name"
-                                className="text-lg font-medium text-[#1A1A1A]"
+                                className="text-sm font-medium text-[#1A1A1A]"
                             >
                                 Name
                             </Label>
@@ -69,16 +72,20 @@ export default function AuthCard({
                                 id="name"
                                 name="name"
                                 placeholder="Foo Bar"
-                                className="h-14 rounded-[16px] border-gray-200 px-6 text-lg"
+                                className="h-11 rounded-xl border-gray-200 px-4 text-base"
                                 required
+                            />
+                            <InputError
+                                message={errors.name}
+                                className="mt-2"
                             />
                         </div>
                     )}
 
-                    <div className="space-y-2">
+                    <div className="space-y-1.5">
                         <Label
                             htmlFor="email"
-                            className="text-lg font-medium text-[#1A1A1A]"
+                            className="text-sm font-medium text-[#1A1A1A]"
                         >
                             Email
                         </Label>
@@ -87,15 +94,16 @@ export default function AuthCard({
                             name="email"
                             type="email"
                             placeholder="foobar@example.com"
-                            className="h-14 rounded-[16px] border-gray-200 px-6 text-lg"
+                            className="h-11 rounded-xl border-gray-200 px-4 text-base"
                             required
                         />
+                        <InputError message={errors.email} className="mt-2" />
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-1.5">
                         <Label
                             htmlFor="password"
-                            className="text-lg font-medium text-[#1A1A1A]"
+                            className="text-sm font-medium text-[#1A1A1A]"
                         >
                             Password
                         </Label>
@@ -105,28 +113,55 @@ export default function AuthCard({
                                 name="password"
                                 type={showPassword ? 'text' : 'password'}
                                 placeholder="******"
-                                className="h-14 rounded-[16px] border-gray-200 px-6 pr-14 text-lg"
+                                className="h-11 rounded-xl border-gray-200 px-4 pr-10 text-base"
                                 required
                             />
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600"
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                             >
                                 {showPassword ? (
-                                    <EyeOff className="h-6 w-6" />
+                                    <EyeOff className="h-4 w-4" />
                                 ) : (
-                                    <Eye className="h-6 w-6" />
+                                    <Eye className="h-4 w-4" />
                                 )}
                             </button>
                         </div>
+                        <InputError
+                            message={errors.password}
+                            className="mt-2"
+                        />
                     </div>
+
+                    {!isLogin && (
+                        <div className="space-y-1.5">
+                            <Label
+                                htmlFor="password_confirmation"
+                                className="text-sm font-medium text-[#1A1A1A]"
+                            >
+                                Confirm Password
+                            </Label>
+                            <Input
+                                id="password_confirmation"
+                                name="password_confirmation"
+                                type="password"
+                                placeholder="******"
+                                className="h-11 rounded-xl border-gray-200 px-4 text-base"
+                                required
+                            />
+                            <InputError
+                                message={errors.password_confirmation}
+                                className="mt-2"
+                            />
+                        </div>
+                    )}
 
                     {isLogin && (
                         <div className="text-right">
                             <a
-                                href="#"
-                                className="text-lg font-bold text-[#22C55E] hover:underline"
+                                href="/forgot-password"
+                                className="text-sm font-bold text-[#22C55E] hover:underline"
                             >
                                 Forgot password?
                             </a>
@@ -135,14 +170,14 @@ export default function AuthCard({
 
                     <Button
                         type="submit"
-                        className="h-16 w-full rounded-[18px] bg-[#22C55E] text-xl font-bold text-white shadow-none hover:bg-[#1AAA4B]"
+                        className="h-12 w-full rounded-xl bg-[#22C55E] text-base font-bold text-white shadow-none hover:bg-[#1AAA4B]"
                     >
                         {isLogin ? 'Login' : 'Register'}
                     </Button>
                 </form>
 
                 <div className="mt-6 text-center">
-                    <p className="text-lg text-[#1A1A1A]">
+                    <p className="text-base text-[#1A1A1A]">
                         {isLogin
                             ? "Don't have an account? "
                             : 'Already have an account? '}
@@ -155,11 +190,11 @@ export default function AuthCard({
                     </p>
                 </div>
 
-                <div className="relative my-10">
+                <div className="relative my-8">
                     <div className="absolute inset-0 flex items-center">
                         <span className="w-full border-t border-gray-300" />
                     </div>
-                    <div className="relative flex justify-center text-lg uppercase">
+                    <div className="relative flex justify-center text-sm uppercase">
                         <span className="bg-white px-4 text-[#1A1A1A]">OR</span>
                     </div>
                 </div>
@@ -168,9 +203,9 @@ export default function AuthCard({
                     variant="outline"
                     type="button"
                     onClick={onGoogleContinue}
-                    className="flex h-16 w-full items-center justify-center gap-4 rounded-[18px] border-gray-300 text-lg font-bold text-[#1A1A1A] hover:bg-gray-50"
+                    className="flex h-12 w-full items-center justify-center gap-3 rounded-xl border-gray-300 text-base font-bold text-[#1A1A1A] hover:bg-gray-50 hover:text-[#1A1A1A]"
                 >
-                    <svg className="h-6 w-6" viewBox="0 0 24 24">
+                    <svg className="h-5 w-5" viewBox="0 0 24 24">
                         <path
                             d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                             fill="#4285F4"
