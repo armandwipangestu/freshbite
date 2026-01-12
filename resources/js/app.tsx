@@ -5,10 +5,10 @@ import '@fontsource/manrope/700.css';
 import '../css/app.css';
 import './bootstrap';
 
+import MainLayout from '@/Layouts/MainLayout';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
-import MainLayout from '@/Layouts/MainLayout';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -31,7 +31,7 @@ createInertiaApp({
                 (name.startsWith('Filament/')
                     ? undefined
                     : (pageContent: React.ReactNode) => (
-                        <MainLayout children={pageContent} />
+                        <MainLayout>{pageContent}</MainLayout>
                     ));
             return page;
         }),

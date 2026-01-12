@@ -1,8 +1,8 @@
 import Footer from '@/Components/Footer';
 import { Navbar } from '@/Components/ui/navbar';
+import { User } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { PropsWithChildren } from 'react';
-import { User } from '@/types';
 
 interface PageProps {
     auth: {

@@ -4,9 +4,9 @@ import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { Heart, Menu, Search, ShoppingCart, X } from 'lucide-react';
 import { useState } from 'react';
+import Dropdown from '../Dropdown';
 import { Button } from './button';
 import { Input } from './input';
-import Dropdown from '../Dropdown';
 
 interface NavbarProps {
     isAuthenticated: boolean;
@@ -122,7 +122,11 @@ export function Navbar({ isAuthenticated, userName }: NavbarProps) {
                                         <Dropdown.Link href="/profile">
                                             Settings
                                         </Dropdown.Link>
-                                        <Dropdown.Link href="/logout" method="post" as="button">
+                                        <Dropdown.Link
+                                            href="/logout"
+                                            method="post"
+                                            as="button"
+                                        >
                                             Log Out
                                         </Dropdown.Link>
                                     </Dropdown.Content>

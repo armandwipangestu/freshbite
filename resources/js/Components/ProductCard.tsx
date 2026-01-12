@@ -42,7 +42,9 @@ const formatRupiah = (amount: number) => {
         currency: 'IDR',
         minimumFractionDigits: 0,
         maximumFractionDigits: 0,
-    }).format(amount).replace('Rp', 'Rp ');
+    })
+        .format(amount)
+        .replace('Rp', 'Rp ');
 };
 
 export default function ProductCard({
@@ -89,8 +91,8 @@ export default function ProductCard({
                         size === 'sm'
                             ? 'min-h-[100px] p-4'
                             : size === 'lg'
-                                ? 'min-h-[180px] p-8'
-                                : 'min-h-[140px] p-6',
+                              ? 'min-h-[180px] p-8'
+                              : 'min-h-[140px] p-6',
                     )}
                 >
                     <h3 className={cn('font-medium text-[#1A1A1A]', titleSize)}>
@@ -111,12 +113,12 @@ export default function ProductCard({
                 <CardContent className="flex flex-col p-0 sm:flex-row">
                     <div
                         className={cn(
-                            'flex-shrink-0 overflow-hidden self-stretch',
+                            'flex-shrink-0 self-stretch overflow-hidden',
                             size === 'sm'
                                 ? 'w-[100px] sm:w-[120px]'
                                 : size === 'lg'
-                                    ? 'w-full sm:w-3/5'
-                                    : 'w-full sm:w-1/2',
+                                  ? 'w-full sm:w-3/5'
+                                  : 'w-full sm:w-1/2',
                         )}
                     >
                         <img
@@ -127,18 +129,18 @@ export default function ProductCard({
                     </div>
                     <div
                         className={cn(
-                            'flex flex-col flex-grow justify-center overflow-hidden',
+                            'flex flex-grow flex-col justify-center overflow-hidden',
                             paddingSize,
                             size === 'sm'
                                 ? 'min-w-0'
                                 : size === 'lg'
-                                    ? 'w-full sm:w-2/5'
-                                    : 'w-full sm:w-1/2',
+                                  ? 'w-full sm:w-2/5'
+                                  : 'w-full sm:w-1/2',
                         )}
                     >
                         <h3
                             className={cn(
-                                'font-semibold leading-tight text-[#1A1A1A] line-clamp-2',
+                                'line-clamp-2 font-semibold leading-tight text-[#1A1A1A]',
                                 titleSize,
                                 size === 'lg' ? 'mb-4' : 'mb-1',
                             )}
@@ -151,8 +153,8 @@ export default function ProductCard({
                                 size === 'sm'
                                     ? 'line-clamp-2 text-xs md:text-sm'
                                     : size === 'lg'
-                                        ? 'text-lg md:text-xl'
-                                        : 'text-base md:text-lg',
+                                      ? 'text-lg md:text-xl'
+                                      : 'text-base md:text-lg',
                             )}
                         >
                             {description}
@@ -180,8 +182,8 @@ export default function ProductCard({
                         size === 'md'
                             ? 'pt-6'
                             : size === 'lg'
-                                ? 'pt-8'
-                                : 'pt-4',
+                              ? 'pt-8'
+                              : 'pt-4',
                     )}
                 >
                     <h3
@@ -201,11 +203,12 @@ export default function ProductCard({
                             )}
                         >
                             <span>{formatRupiah(Number(price))}</span>
-                            {originalPrice && Number(originalPrice) > Number(price) && (
-                                <span className="text-sm font-normal text-gray-400 line-through">
-                                    {formatRupiah(Number(originalPrice))}
-                                </span>
-                            )}
+                            {originalPrice &&
+                                Number(originalPrice) > Number(price) && (
+                                    <span className="text-sm font-normal text-gray-400 line-through">
+                                        {formatRupiah(Number(originalPrice))}
+                                    </span>
+                                )}
                         </div>
                     )}
                     {(rating !== undefined || sold !== undefined) && (

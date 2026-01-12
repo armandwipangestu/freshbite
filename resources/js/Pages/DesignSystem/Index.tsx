@@ -1,5 +1,3 @@
-import MainLayout from '@/Layouts/MainLayout';
-import { Head } from '@inertiajs/react';
 import AuthSection from './sections/AuthSection';
 import ButtonsSection from './sections/ButtonsSection';
 import CardsSection from './sections/CardsSection';
