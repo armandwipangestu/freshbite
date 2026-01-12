@@ -6,6 +6,7 @@ import TypographySection from './sections/TypographySection';
 import CardsSection from './sections/CardsSection';
 import FooterSection from './sections/FooterSection';
 import TabsSection from './sections/TabsSection';
+import AuthSection from './sections/AuthSection';
 
 export default function DesignSystem() {
     return (
@@ -28,6 +29,7 @@ export default function DesignSystem() {
                 <CardsSection />
                 <FooterSection />
                 <TabsSection />
+                <AuthSection />
             </div>
         </>
     );
