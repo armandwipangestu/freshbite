@@ -1,3 +1,16 @@
+## [0.3.0-rc.2](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.1...v0.3.0-rc.2) (2026-01-12)
+
+### Features
+
+* **page:** add landing page prototype ([dd1ebe2](https://github.com/armandwipangestu/freshbite/commit/dd1ebe28d9fd6eb9b1d919177f0a00f1a4266651))
+* **page:** adjust landing page ([35e5b83](https://github.com/armandwipangestu/freshbite/commit/35e5b834166352c76f935d3e1784b6dba38ecbcc))
+
+### Bug Fixes
+
+* add dropdown to navbar profile section ([1a84df1](https://github.com/armandwipangestu/freshbite/commit/1a84df18461646d382fef28bca96d85c291456f2))
+* **ci:** build ([baad95f](https://github.com/armandwipangestu/freshbite/commit/baad95f064e5a487422143466a5214a62e0b6e5b))
+* **ci:** lint ([4fd7552](https://github.com/armandwipangestu/freshbite/commit/4fd75529f0cca3fd5c163d419100b32dc61c7eec))
+
 ## [0.3.0-rc.1](https://github.com/armandwipangestu/freshbite/compare/v0.2.1-rc.1...v0.3.0-rc.1) (2026-01-12)
 
 ### Features
