@@ -31,8 +31,8 @@ createInertiaApp({
                 (name.startsWith('Filament/')
                     ? undefined
                     : (pageContent: React.ReactNode) => (
-                        <MainLayout>{pageContent}</MainLayout>
-                    ));
+                          <MainLayout>{pageContent}</MainLayout>
+                      ));
             return page;
         }),
     setup({ el, App, props }) {

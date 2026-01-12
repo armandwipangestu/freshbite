@@ -1,5 +1,5 @@
-import { Button } from '@/Components/ui/button';
 import InputError from '@/Components/InputError';
+import { Button } from '@/Components/ui/button';
 import { Card, CardContent } from '@/Components/ui/card';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
@@ -97,10 +97,7 @@ export default function AuthCard({
                             className="h-11 rounded-xl border-gray-200 px-4 text-base"
                             required
                         />
-                        <InputError
-                            message={errors.email}
-                            className="mt-2"
-                        />
+                        <InputError message={errors.email} className="mt-2" />
                     </div>
 
                     <div className="space-y-1.5">
