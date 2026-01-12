@@ -1,3 +1,24 @@
+## [0.3.0-rc.1](https://github.com/armandwipangestu/freshbite/compare/v0.2.1-rc.1...v0.3.0-rc.1) (2026-01-12)
+
+### Features
+
+* **components:** add auth card ([341041f](https://github.com/armandwipangestu/freshbite/commit/341041fd0686be9d687497a9c2f4122878b0cf5d))
+* **components:** add avatar upload card ([12d610d](https://github.com/armandwipangestu/freshbite/commit/12d610d3046b0a73d14be32f1ed159ffcde92695))
+* **components:** add card products ([9dde73d](https://github.com/armandwipangestu/freshbite/commit/9dde73d44783caed71a1838b28434c4c591b0a7c))
+* **components:** add footer ([011f71e](https://github.com/armandwipangestu/freshbite/commit/011f71e0b2c8d43bfab70de97692adfc948d660e))
+* **components:** add forgot password ([49217fa](https://github.com/armandwipangestu/freshbite/commit/49217fa720175c2b20a76e47c626eac0f7e37c64))
+* **components:** add main layout template ([80af082](https://github.com/armandwipangestu/freshbite/commit/80af08222b445672ed474e0594c88183bc5a103d))
+* **components:** add navbar mobile version ([b87a485](https://github.com/armandwipangestu/freshbite/commit/b87a48537ee3c97e5a897270ad3a008905c788cc))
+* **components:** add order summary card ([90c5ea2](https://github.com/armandwipangestu/freshbite/commit/90c5ea2fb5f11fe60b0ca98c9ea5edd226e205a9))
+* **components:** add product gallery card ([a265397](https://github.com/armandwipangestu/freshbite/commit/a2653979fb6d52fa4aea5cbb67bf1a3ce0cc9050))
+* **components:** add tab settings ([d24f7fe](https://github.com/armandwipangestu/freshbite/commit/d24f7fedf1ef88c5aaddcd3d0093478f29c513f2))
+* **components:** add theme preview card ([9b59835](https://github.com/armandwipangestu/freshbite/commit/9b59835a43f9c24ecc1d5de50bc363be6948566c))
+* **components:** add wishlist card ([0f8066d](https://github.com/armandwipangestu/freshbite/commit/0f8066d5d5534cdc68e8a30fade23118a01f04a3))
+
+### Bug Fixes
+
+* **ci:** change any data type to make lint correct ([76e850b](https://github.com/armandwipangestu/freshbite/commit/76e850bafa165636ed64d831a745ee143a565609))
+
 ## [0.2.1-rc.1](https://github.com/armandwipangestu/freshbite/compare/v0.2.0...v0.2.1-rc.1) (2026-01-10)
 
 ### Bug Fixes
