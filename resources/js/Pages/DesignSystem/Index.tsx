@@ -1,4 +1,5 @@
 import { Head } from '@inertiajs/react';
+import MainLayout from '@/Layouts/MainLayout';
 import ButtonsSection from './sections/ButtonsSection';
 import InputsSection from './sections/InputsSection';
 import NavbarSection from './sections/NavbarSection';
@@ -10,7 +11,7 @@ import AuthSection from './sections/AuthSection';
 
 export default function DesignSystem() {
     return (
-        <>
+        <MainLayout>
             <Head title="Design System" />
             <div className="space-y-6 p-6">
                 <h1 className="flex items-center gap-2 text-2xl font-bold">
@@ -31,6 +32,6 @@ export default function DesignSystem() {
                 <TabsSection />
                 <AuthSection />
             </div>
-        </>
+        </MainLayout>
     );
 }
