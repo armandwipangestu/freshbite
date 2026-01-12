@@ -1,6 +1,9 @@
 import ProductCard from "@/Components/ProductCard";
 import WishlistCard from "@/Components/WishlistCard";
 import OrderSummaryCard from "@/Components/OrderSummaryCard";
+import AvatarUploadCard from "@/Components/AvatarUploadCard";
+import ProductGalleryCard from "@/Components/ProductGalleryCard";
+import ThemePreviewCard from "@/Components/ThemePreviewCard";
 
 export default function CardsSection() {
     const placeholderImg = "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&q=80&w=800";
@@ -182,6 +185,38 @@ export default function CardsSection() {
                             size="lg"
                             price="Rp134.000"
                             itemCount={1}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div className="space-y-12">
+                <h2 className="text-xl font-semibold -mb-6">Cards - Specialized</h2>
+
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 items-start">
+                    <div className="space-y-4">
+                        <p className="text-sm font-medium text-muted-foreground">Avatar Upload (User Settings)</p>
+                        <AvatarUploadCard
+                            currentAvatar="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=800"
+                        />
+                    </div>
+
+                    <div className="space-y-4">
+                        <p className="text-sm font-medium text-muted-foreground">Theme Preview (App Appearance)</p>
+                        <ThemePreviewCard
+                            previewImage="https://images.unsplash.com/photo-1614332287897-cdc485fa562d?auto=format&fit=crop&q=80&w=800"
+                        />
+                    </div>
+
+                    <div className="space-y-4 col-span-1 xl:col-span-2">
+                        <p className="text-sm font-medium text-muted-foreground">Product Gallery (Product Detail - Interative)</p>
+                        <ProductGalleryCard
+                            images={[
+                                "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&q=80&w=1200",
+                                "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=800",
+                                "https://images.unsplash.com/photo-1543158181-e6f9f6766438?auto=format&fit=crop&q=80&w=800",
+                                "https://images.unsplash.com/photo-1591130901020-ef93616f7695?auto=format&fit=crop&q=80&w=800"
+                            ]}
                         />
                     </div>
                 </div>
