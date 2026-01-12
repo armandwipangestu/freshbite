@@ -1,5 +1,6 @@
 import ProductCard from "@/Components/ProductCard";
 import WishlistCard from "@/Components/WishlistCard";
+import OrderSummaryCard from "@/Components/OrderSummaryCard";
 
 export default function CardsSection() {
     const placeholderImg = "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&q=80&w=800";
@@ -126,6 +127,63 @@ export default function CardsSection() {
                             "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=800"
                         ]}
                     />
+                </div>
+            </div>
+
+            <div className="space-y-12">
+                <h2 className="text-xl font-semibold -mb-6">Cards - Order Summary</h2>
+
+                {/* Checkout Sizes */}
+                <div className="space-y-4">
+                    <p className="text-sm font-medium text-muted-foreground">Checkout Variant (sm, md, lg)</p>
+                    <div className="flex flex-wrap items-start gap-8">
+                        <OrderSummaryCard
+                            variant="checkout"
+                            size="sm"
+                            productName="Navel Orange"
+                            price="Rp28.400"
+                            stock={6}
+                        />
+                        <OrderSummaryCard
+                            variant="checkout"
+                            size="md"
+                            productName="Navel Orange"
+                            price="Rp28.400"
+                            stock={6}
+                        />
+                        <OrderSummaryCard
+                            variant="checkout"
+                            size="lg"
+                            productName="Navel Orange"
+                            price="Rp28.400"
+                            stock={6}
+                        />
+                    </div>
+                </div>
+
+                {/* Summary Sizes */}
+                <div className="space-y-4">
+                    <p className="text-sm font-medium text-muted-foreground">Shopping Summary Variant (sm, md, lg)</p>
+                    <div className="flex flex-wrap items-start gap-8">
+                        <OrderSummaryCard
+                            variant="summary"
+                            size="sm"
+                            price="Rp134.000"
+                            itemCount={1}
+                        />
+                        <OrderSummaryCard
+                            variant="summary"
+                            size="md"
+                            price="Rp134.000"
+                            itemCount={1}
+                        />
+                        <OrderSummaryCard
+                            variant="summary"
+                            size="lg"
+                            price="Rp134.000"
+                            itemCount={1}
+                        />
+                    </div>
                 </div>
             </div>
         </section>
