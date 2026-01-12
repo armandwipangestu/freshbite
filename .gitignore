@@ -27,3 +27,4 @@ storybook-static
 
 # app stuff
 .env.freshbite*
+/.ai

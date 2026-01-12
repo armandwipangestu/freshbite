@@ -23,7 +23,7 @@ export default function CardsSection() {
                         <ProductCard
                             size="sm"
                             title="Small Card Product"
-                            price="Rp15.000"
+                            price={15000}
                             rating={4.8}
                             sold="100"
                             image={placeholderImg}
@@ -31,7 +31,7 @@ export default function CardsSection() {
                         <ProductCard
                             size="md"
                             title="Medium Card Product"
-                            price="Rp67.000"
+                            price={67000}
                             rating={4.9}
                             sold="250"
                             image={placeholderImg}
@@ -39,7 +39,7 @@ export default function CardsSection() {
                         <ProductCard
                             size="lg"
                             title="Large Card Product"
-                            price="Rp125.000"
+                            price={125000}
                             rating={5.0}
                             sold="500"
                             image={placeholderImg}

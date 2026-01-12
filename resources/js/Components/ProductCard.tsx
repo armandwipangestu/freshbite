@@ -8,9 +8,9 @@ const productCardVariants = cva(
     {
         variants: {
             size: {
-                sm: 'max-w-[200px]',
-                md: 'max-w-[300px]',
-                lg: 'max-w-[400px]',
+                sm: 'max-w-[190px] md:max-w-[220px]',
+                md: 'max-w-[280px] md:max-w-[320px]',
+                lg: 'max-w-[350px] md:max-w-[450px]',
             },
             variant: {
                 vertical: '',
@@ -28,12 +28,24 @@ const productCardVariants = cva(
 interface ProductCardProps extends VariantProps<typeof productCardVariants> {
     image?: string;
     title: string;
-    price?: string | number;
+    price?: number;
+    originalPrice?: number;
     rating?: number;
     sold?: string | number;
     description?: string;
     className?: string;
 }
+
+const formatRupiah = (amount: number) => {
+    return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+    })
+        .format(amount)
+        .replace('Rp', 'Rp ');
+};
 
 export default function ProductCard({
     variant = 'vertical',
@@ -41,6 +53,7 @@ export default function ProductCard({
     image,
     title,
     price,
+    originalPrice,
     rating,
     sold,
     description,
@@ -100,9 +113,9 @@ export default function ProductCard({
                 <CardContent className="flex flex-col p-0 sm:flex-row">
                     <div
                         className={cn(
-                            'flex-shrink-0 overflow-hidden',
+                            'flex-shrink-0 self-stretch overflow-hidden',
                             size === 'sm'
-                                ? 'w-full sm:w-1/3'
+                                ? 'w-[100px] sm:w-[120px]'
                                 : size === 'lg'
                                   ? 'w-full sm:w-3/5'
                                   : 'w-full sm:w-1/2',
@@ -116,10 +129,10 @@ export default function ProductCard({
                     </div>
                     <div
                         className={cn(
-                            'flex flex-col justify-center',
+                            'flex flex-grow flex-col justify-center overflow-hidden',
                             paddingSize,
                             size === 'sm'
-                                ? 'w-full sm:w-2/3'
+                                ? 'min-w-0'
                                 : size === 'lg'
                                   ? 'w-full sm:w-2/5'
                                   : 'w-full sm:w-1/2',
@@ -127,9 +140,9 @@ export default function ProductCard({
                     >
                         <h3
                             className={cn(
-                                'font-semibold leading-tight text-[#1A1A1A]',
+                                'line-clamp-2 font-semibold leading-tight text-[#1A1A1A]',
                                 titleSize,
-                                size === 'lg' ? 'mb-4' : 'mb-2',
+                                size === 'lg' ? 'mb-4' : 'mb-1',
                             )}
                         >
                             {title}
@@ -138,10 +151,10 @@ export default function ProductCard({
                             className={cn(
                                 'leading-relaxed text-[#666666]',
                                 size === 'sm'
-                                    ? 'line-clamp-2 text-sm'
+                                    ? 'line-clamp-2 text-xs md:text-sm'
                                     : size === 'lg'
-                                      ? 'text-xl'
-                                      : 'text-lg',
+                                      ? 'text-lg md:text-xl'
+                                      : 'text-base md:text-lg',
                             )}
                         >
                             {description}
@@ -184,14 +197,18 @@ export default function ProductCard({
                     {price && (
                         <div
                             className={cn(
-                                'font-bold text-[#1A1A1A]',
+                                'flex items-baseline gap-2 font-bold text-[#1A1A1A]',
                                 priceSize,
                                 size === 'lg' ? 'mb-4' : 'mb-3',
                             )}
                         >
-                            {typeof price === 'number'
-                                ? `Rp${price.toLocaleString('id-ID')}`
-                                : price}
+                            <span>{formatRupiah(Number(price))}</span>
+                            {originalPrice &&
+                                Number(originalPrice) > Number(price) && (
+                                    <span className="text-sm font-normal text-gray-400 line-through">
+                                        {formatRupiah(Number(originalPrice))}
+                                    </span>
+                                )}
                         </div>
                     )}
                     {(rating !== undefined || sold !== undefined) && (
