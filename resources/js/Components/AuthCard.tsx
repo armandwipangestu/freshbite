@@ -1,99 +1,133 @@
-import * as React from "react"
-import { Eye, EyeOff } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/Components/ui/button"
-import { Input } from "@/Components/ui/input"
-import { Label } from "@/Components/ui/label"
-import { Card, CardContent } from "@/Components/ui/card"
+import { Button } from '@/Components/ui/button';
+import { Card, CardContent } from '@/Components/ui/card';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
+import { cn } from '@/lib/utils';
+import { Eye, EyeOff } from 'lucide-react';
+import * as React from 'react';
 
 interface AuthCardProps {
-    variant?: "login" | "register"
-    onSubmit?: (data: any) => void
-    onSwitchVariant?: () => void
-    onGoogleContinue?: () => void
-    className?: string
+    variant?: 'login' | 'register';
+    onSubmit?: (data: Record<string, string>) => void;
+    onSwitchVariant?: () => void;
+    onGoogleContinue?: () => void;
+    className?: string;
 }
 
 export default function AuthCard({
-    variant = "login",
+    variant = 'login',
     onSubmit,
     onSwitchVariant,
     onGoogleContinue,
     className,
 }: AuthCardProps) {
-    const [showPassword, setShowPassword] = React.useState(false)
+    const [showPassword, setShowPassword] = React.useState(false);
 
-    const isLogin = variant === "login"
+    const isLogin = variant === 'login';
 
     return (
-        <Card className={cn("rounded-[32px] border border-gray-100 bg-white shadow-sm overflow-hidden w-full max-w-[480px]", className)}>
+        <Card
+            className={cn(
+                'w-full max-w-[480px] overflow-hidden rounded-[32px] border border-gray-100 bg-white shadow-sm',
+                className,
+            )}
+        >
             <CardContent className="p-8 sm:p-12">
-                <div className="text-center mb-10">
-                    <h2 className="text-3xl font-bold text-[#1A1A1A] mb-2">
-                        {isLogin ? "Login" : "Register"}
+                <div className="mb-10 text-center">
+                    <h2 className="mb-2 text-3xl font-bold text-[#1A1A1A]">
+                        {isLogin ? 'Login' : 'Register'}
                     </h2>
                     {isLogin && (
-                        <p className="text-2xl font-semibold text-[#1A1A1A]">Welcome back!</p>
+                        <p className="text-2xl font-semibold text-[#1A1A1A]">
+                            Welcome back!
+                        </p>
                     )}
                 </div>
 
                 <form
                     className="space-y-6"
                     onSubmit={(e) => {
-                        e.preventDefault()
-                        const formData = new FormData(e.currentTarget)
-                        onSubmit?.(Object.fromEntries(formData))
+                        e.preventDefault();
+                        const formData = new FormData(e.currentTarget);
+                        onSubmit?.(
+                            Object.fromEntries(formData) as Record<
+                                string,
+                                string
+                            >,
+                        );
                     }}
                 >
                     {!isLogin && (
                         <div className="space-y-2">
-                            <Label htmlFor="name" className="text-lg text-[#1A1A1A] font-medium">Name</Label>
+                            <Label
+                                htmlFor="name"
+                                className="text-lg font-medium text-[#1A1A1A]"
+                            >
+                                Name
+                            </Label>
                             <Input
                                 id="name"
                                 name="name"
                                 placeholder="Foo Bar"
-                                className="h-14 rounded-[16px] border-gray-200 text-lg px-6"
+                                className="h-14 rounded-[16px] border-gray-200 px-6 text-lg"
                                 required
                             />
                         </div>
                     )}
 
                     <div className="space-y-2">
-                        <Label htmlFor="email" className="text-lg text-[#1A1A1A] font-medium">Email</Label>
+                        <Label
+                            htmlFor="email"
+                            className="text-lg font-medium text-[#1A1A1A]"
+                        >
+                            Email
+                        </Label>
                         <Input
                             id="email"
                             name="email"
                             type="email"
                             placeholder="foobar@example.com"
-                            className="h-14 rounded-[16px] border-gray-200 text-lg px-6"
+                            className="h-14 rounded-[16px] border-gray-200 px-6 text-lg"
                             required
                         />
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="password" className="text-lg text-[#1A1A1A] font-medium">Password</Label>
+                        <Label
+                            htmlFor="password"
+                            className="text-lg font-medium text-[#1A1A1A]"
+                        >
+                            Password
+                        </Label>
                         <div className="relative">
                             <Input
                                 id="password"
                                 name="password"
-                                type={showPassword ? "text" : "password"}
+                                type={showPassword ? 'text' : 'password'}
                                 placeholder="******"
-                                className="h-14 rounded-[16px] border-gray-200 text-lg px-6 pr-14"
+                                className="h-14 rounded-[16px] border-gray-200 px-6 pr-14 text-lg"
                                 required
                             />
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1"
+                                className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600"
                             >
-                                {showPassword ? <EyeOff className="h-6 w-6" /> : <Eye className="h-6 w-6" />}
+                                {showPassword ? (
+                                    <EyeOff className="h-6 w-6" />
+                                ) : (
+                                    <Eye className="h-6 w-6" />
+                                )}
                             </button>
                         </div>
                     </div>
 
                     {isLogin && (
                         <div className="text-right">
-                            <a href="#" className="text-[#22C55E] font-bold text-lg hover:underline">
+                            <a
+                                href="#"
+                                className="text-lg font-bold text-[#22C55E] hover:underline"
+                            >
                                 Forgot password?
                             </a>
                         </div>
@@ -101,20 +135,22 @@ export default function AuthCard({
 
                     <Button
                         type="submit"
-                        className="w-full h-16 rounded-[18px] bg-[#22C55E] hover:bg-[#1AAA4B] text-white text-xl font-bold shadow-none"
+                        className="h-16 w-full rounded-[18px] bg-[#22C55E] text-xl font-bold text-white shadow-none hover:bg-[#1AAA4B]"
                     >
-                        {isLogin ? "Login" : "Register"}
+                        {isLogin ? 'Login' : 'Register'}
                     </Button>
                 </form>
 
                 <div className="mt-6 text-center">
                     <p className="text-lg text-[#1A1A1A]">
-                        {isLogin ? "Don't have an account? " : "Already have an account? "}
+                        {isLogin
+                            ? "Don't have an account? "
+                            : 'Already have an account? '}
                         <button
                             onClick={onSwitchVariant}
-                            className="text-[#22C55E] font-bold hover:underline"
+                            className="font-bold text-[#22C55E] hover:underline"
                         >
-                            {isLogin ? "Sign up" : "Sign in"}
+                            {isLogin ? 'Sign up' : 'Sign in'}
                         </button>
                     </p>
                 </div>
@@ -132,7 +168,7 @@ export default function AuthCard({
                     variant="outline"
                     type="button"
                     onClick={onGoogleContinue}
-                    className="w-full h-16 rounded-[18px] border-gray-300 text-[#1A1A1A] text-lg font-bold flex items-center justify-center gap-4 hover:bg-gray-50"
+                    className="flex h-16 w-full items-center justify-center gap-4 rounded-[18px] border-gray-300 text-lg font-bold text-[#1A1A1A] hover:bg-gray-50"
                 >
                     <svg className="h-6 w-6" viewBox="0 0 24 24">
                         <path
@@ -156,5 +192,5 @@ export default function AuthCard({
                 </Button>
             </CardContent>
         </Card>
-    )
+    );
 }

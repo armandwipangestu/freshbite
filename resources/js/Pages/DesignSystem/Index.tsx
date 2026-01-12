@@ -1,13 +1,13 @@
-import { Head } from '@inertiajs/react';
 import MainLayout from '@/Layouts/MainLayout';
+import { Head } from '@inertiajs/react';
+import AuthSection from './sections/AuthSection';
 import ButtonsSection from './sections/ButtonsSection';
-import InputsSection from './sections/InputsSection';
-import NavbarSection from './sections/NavbarSection';
-import TypographySection from './sections/TypographySection';
 import CardsSection from './sections/CardsSection';
 import FooterSection from './sections/FooterSection';
+import InputsSection from './sections/InputsSection';
+import NavbarSection from './sections/NavbarSection';
 import TabsSection from './sections/TabsSection';
-import AuthSection from './sections/AuthSection';
+import TypographySection from './sections/TypographySection';
 
 export default function DesignSystem() {
     return (

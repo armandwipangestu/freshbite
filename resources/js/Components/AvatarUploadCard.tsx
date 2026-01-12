@@ -1,24 +1,29 @@
-import { cn } from "@/lib/utils"
-import { Card, CardContent } from "@/Components/ui/card"
-import { Button } from "@/Components/ui/button"
+import { Button } from '@/Components/ui/button';
+import { Card, CardContent } from '@/Components/ui/card';
+import { cn } from '@/lib/utils';
 
 interface AvatarUploadCardProps {
-    currentAvatar?: string
-    onUpload?: (file: File) => void
-    maxSize?: string
-    allowedExtensions?: string
-    className?: string
+    currentAvatar?: string;
+    onUpload?: (file: File) => void;
+    maxSize?: string;
+    allowedExtensions?: string;
+    className?: string;
 }
 
 export default function AvatarUploadCard({
     currentAvatar,
     onUpload,
-    maxSize = "10MB",
-    allowedExtensions = ".JPG, .JPEG, .PNG",
+    maxSize = '10MB',
+    allowedExtensions = '.JPG, .JPEG, .PNG',
     className,
 }: AvatarUploadCardProps) {
     return (
-        <Card className={cn("rounded-[24px] border border-gray-100 bg-white shadow-sm overflow-hidden max-w-[400px]", className)}>
+        <Card
+            className={cn(
+                'max-w-[400px] overflow-hidden rounded-[24px] border border-gray-100 bg-white shadow-sm',
+                className,
+            )}
+        >
             <CardContent className="p-6">
                 <div className="mb-6 aspect-square w-full overflow-hidden rounded-[20px] bg-gray-100">
                     {currentAvatar ? (
@@ -36,13 +41,17 @@ export default function AvatarUploadCard({
 
                 <Button
                     variant="outline"
-                    className="w-full h-14 rounded-[16px] border-gray-300 text-[#1A1A1A] text-lg font-semibold mb-8 hover:bg-gray-50"
+                    className="mb-8 h-14 w-full rounded-[16px] border-gray-300 text-lg font-semibold text-[#1A1A1A] hover:bg-gray-50"
                     onClick={() => {
                         const input = document.createElement('input');
                         input.type = 'file';
-                        input.accept = allowedExtensions.split(',').map(ext => ext.trim().toLowerCase()).join(',');
+                        input.accept = allowedExtensions
+                            .split(',')
+                            .map((ext) => ext.trim().toLowerCase())
+                            .join(',');
                         input.onchange = (e) => {
-                            const file = (e.target as HTMLInputElement).files?.[0];
+                            const file = (e.target as HTMLInputElement)
+                                .files?.[0];
                             if (file) onUpload?.(file);
                         };
                         input.click();
@@ -69,5 +78,5 @@ export default function AvatarUploadCard({
                 </ul>
             </CardContent>
         </Card>
-    )
+    );
 }

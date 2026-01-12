@@ -1,28 +1,35 @@
-import { cn } from "@/lib/utils"
-import { Card, CardContent } from "@/Components/ui/card"
+import { Card, CardContent } from '@/Components/ui/card';
+import { cn } from '@/lib/utils';
 
 interface ThemePreviewCardProps {
-    title?: string
-    description?: string
-    previewImage: string
-    className?: string
+    title?: string;
+    description?: string;
+    previewImage: string;
+    className?: string;
 }
 
 export default function ThemePreviewCard({
-    title = "Preview appearance",
+    title = 'Preview appearance',
     description,
     previewImage,
     className,
 }: ThemePreviewCardProps) {
     return (
-        <Card className={cn("rounded-[24px] border border-gray-100 bg-white shadow-sm overflow-hidden w-full max-w-[600px]", className)}>
+        <Card
+            className={cn(
+                'w-full max-w-[600px] overflow-hidden rounded-[24px] border border-gray-100 bg-white shadow-sm',
+                className,
+            )}
+        >
             <CardContent className="p-0">
                 <div className="p-8 pb-4">
                     <h2 className="text-3xl font-semibold text-[#1A1A1A]">
                         {title}
                     </h2>
                     {description && (
-                        <p className="mt-2 text-lg text-gray-500">{description}</p>
+                        <p className="mt-2 text-lg text-gray-500">
+                            {description}
+                        </p>
                     )}
                 </div>
 
@@ -33,11 +40,11 @@ export default function ThemePreviewCard({
                         <img
                             src={previewImage}
                             alt="Theme Preview"
-                            className="h-full w-full object-contain rounded-[16px] shadow-lg"
+                            className="h-full w-full rounded-[16px] object-contain shadow-lg"
                         />
                     </div>
                 </div>
             </CardContent>
         </Card>
-    )
+    );
 }
