@@ -1,4 +1,5 @@
 import ProductCard from "@/Components/ProductCard";
+import WishlistCard from "@/Components/WishlistCard";
 
 export default function CardsSection() {
     const placeholderImg = "https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&q=80&w=800";
@@ -87,6 +88,44 @@ export default function CardsSection() {
                             title="Large Category"
                         />
                     </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 className="text-xl font-semibold mb-6">Cards - Wishlist</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <WishlistCard
+                        title="Placeholder"
+                        itemCount={1}
+                        images={[placeholderImg]}
+                    />
+                    <WishlistCard
+                        title="Placeholder"
+                        itemCount={2}
+                        images={[
+                            placeholderImg,
+                            "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=800"
+                        ]}
+                    />
+                    <WishlistCard
+                        title="Placeholder"
+                        itemCount={3}
+                        images={[
+                            placeholderImg,
+                            "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=800",
+                            placeholderImg
+                        ]}
+                    />
+                    <WishlistCard
+                        title="Placeholder"
+                        itemCount={4}
+                        images={[
+                            placeholderImg,
+                            "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=800",
+                            placeholderImg,
+                            "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=800"
+                        ]}
+                    />
                 </div>
             </div>
         </section>
