@@ -13,6 +13,18 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::factory(10)->create();
+        $categories = [
+            'Fruits',
+            'Vegetables',
+            'Import',
+            'Local',
+            'Seeds',
+        ];
+
+        foreach ($categories as $category) {
+            Category::create([
+                'name' => $category,
+            ]);
+        }
     }
 }
