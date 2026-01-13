@@ -1,3 +1,9 @@
+## [0.3.0-rc.6](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.5...v0.3.0-rc.6) (2026-01-13)
+
+### Bug Fixes
+
+* **ci:** copy default images for banner and product ([9a69521](https://github.com/armandwipangestu/freshbite/commit/9a69521cf1599b3f5e00c0a794950078134b79e1))
+
 ## [0.3.0-rc.5](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.4...v0.3.0-rc.5) (2026-01-13)
 
 ### Bug Fixes
