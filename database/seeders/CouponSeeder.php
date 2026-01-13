@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Coupon;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class CouponSeeder extends Seeder
 {
@@ -13,6 +15,12 @@ class CouponSeeder extends Seeder
      */
     public function run(): void
     {
-        Coupon::factory(10)->create();
+        Coupon::updateOrCreate([
+            'code'          => strtoupper(Str::random(10)),
+            'discount'      => 9.00,
+            'stock'         => 10,
+            'expired_at'    => Carbon::now()->addDays(2),
+            'is_active'     => true,
+        ]);
     }
 }
