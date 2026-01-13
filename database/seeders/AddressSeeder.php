@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Address;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,26 @@ class AddressSeeder extends Seeder
      */
     public function run(): void
     {
-        Address::factory()->count(20)->create();
+        $admin = User::where('email', 'admin@freshbite.com')->first();
+
+        if (! $admin) {
+            $this->command->warn('Admin user not found.');
+            return;
+        }
+
+        $admin->addresses()->delete();
+
+        Address::factory()
+            ->for($admin)
+            ->default()
+            ->create([
+                'label_name' => 'Primary Address',
+            ]);
+
+        Address::factory()
+            ->for($admin)
+            ->create([
+                'label_name' => 'Secondary Address',
+            ]);
     }
 }
