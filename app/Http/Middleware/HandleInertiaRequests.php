@@ -34,6 +34,9 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'social' => [
+                'google_client_id' => config('services.google.client_id'),
+            ],
         ];
     }
 }

@@ -30,3 +30,6 @@ docker-data
 # Misc / OS
 .DS_Store
 Thumbs.db
+
+# App Stuff
+/.ai

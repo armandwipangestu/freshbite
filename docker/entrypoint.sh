@@ -59,6 +59,32 @@ if [ ! -f "storage/app/public/assets/images/favicon.png" ]; then
     cp -n docker/defaults/favicon.png storage/app/public/assets/images/favicon.png || true
 fi
 
+# Copy default banner images if missing
+if [ -d "docker/defaults/banner-images" ]; then
+    for img in docker/defaults/banner-images/*; do
+        base=$(basename "$img")
+        target="storage/app/public/banner-images/$base"
+        if [ ! -f "$target" ]; then
+            log "entrypoint" "INFO" "Restoring default banner image $base"
+            mkdir -p "$(dirname "$target")"
+            cp -n "$img" "$target" || true
+        fi
+    done
+fi
+
+# Copy default product images if missing
+if [ -d "docker/defaults/product-images" ]; then
+    for img in docker/defaults/product-images/*; do
+        base=$(basename "$img")
+        target="storage/app/public/product-images/$base"
+        if [ ! -f "$target" ]; then
+            log "entrypoint" "INFO" "Restoring default product image $base"
+            mkdir -p "$(dirname "$target")"
+            cp -n "$img" "$target" || true
+        fi
+    done
+fi
+
 # Fix permission
 chown -R www-data:www-data storage bootstrap/cache public/build
 
