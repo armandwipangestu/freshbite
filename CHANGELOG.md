@@ -1,3 +1,13 @@
+## [0.3.0-rc.4](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.3...v0.3.0-rc.4) (2026-01-13)
+
+### Features
+
+* **auth:** add register verification email ([8074787](https://github.com/armandwipangestu/freshbite/commit/8074787133c7a9cdac2846ce73253ebda7b07410))
+
+### Bug Fixes
+
+* remove active border ([91f43dc](https://github.com/armandwipangestu/freshbite/commit/91f43dc46ee70de778f9fc5681cb366f5515d4fd))
+
 ## [0.3.0-rc.3](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.2...v0.3.0-rc.3) (2026-01-12)
 
 ### Features
