@@ -1,3 +1,5 @@
+## [0.3.0-rc.8](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.7...v0.3.0-rc.8) (2026-01-13)
+
 ## [0.3.0-rc.7](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.6...v0.3.0-rc.7) (2026-01-13)
 
 ### Features
