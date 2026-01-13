@@ -18,7 +18,7 @@ export default function Register() {
                         router.get(route('login'));
                     }}
                     onGoogleContinue={() => {
-                        console.log('Google continue');
+                        window.location.href = route('social.redirect');
                     }}
                 />
             </div>

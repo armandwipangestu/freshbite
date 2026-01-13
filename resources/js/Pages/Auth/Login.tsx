@@ -27,8 +27,7 @@ export default function Login({ status }: { status?: string }) {
                         router.get(route('register'));
                     }}
                     onGoogleContinue={() => {
-                        // Implement Google login logic if needed, or leave generic for now
-                        console.log('Google login');
+                        window.location.href = route('social.redirect');
                     }}
                 />
             </div>

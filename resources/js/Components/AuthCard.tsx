@@ -24,7 +24,9 @@ export default function AuthCard({
     className,
     errors = {},
 }: AuthCardProps) {
-    const [showPassword, setShowPassword] = React.useState(false);
+    const [showPassword, setShowPassword] = React.useState<boolean>(false);
+    const [showConfirmPassword, setShowConfirmPassword] =
+        React.useState<boolean>(false);
 
     const isLogin = variant === 'login';
 
@@ -142,14 +144,40 @@ export default function AuthCard({
                             >
                                 Confirm Password
                             </Label>
-                            <Input
-                                id="password_confirmation"
-                                name="password_confirmation"
-                                type="password"
-                                placeholder="******"
-                                className="h-11 rounded-xl border-gray-200 px-4 text-base"
-                                required
-                            />
+                            <div className="relative">
+                                <Input
+                                    id="password_confirmation"
+                                    name="password_confirmation"
+                                    type={
+                                        showConfirmPassword
+                                            ? 'text'
+                                            : 'password'
+                                    }
+                                    placeholder="******"
+                                    className="h-11 rounded-xl border-gray-200 px-4 pr-10 text-base"
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        setShowConfirmPassword(
+                                            !showConfirmPassword,
+                                        )
+                                    }
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                    aria-label={
+                                        showConfirmPassword
+                                            ? 'Hide confirm password'
+                                            : 'Show confirm password'
+                                    }
+                                >
+                                    {showConfirmPassword ? (
+                                        <EyeOff className="h-4 w-4" />
+                                    ) : (
+                                        <Eye className="h-4 w-4" />
+                                    )}
+                                </button>
+                            </div>
                             <InputError
                                 message={errors.password_confirmation}
                                 className="mt-2"
