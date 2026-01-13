@@ -13,6 +13,10 @@ class BannerSeeder extends Seeder
      */
     public function run(): void
     {
-        Banner::factory(5)->create();
+        Banner::create([
+            'image'      => 'banner-home-1.jpg',
+            'is_active'  => true,
+            'target_url' => '/products',
+        ]);
     }
 }
