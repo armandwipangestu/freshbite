@@ -1,3 +1,9 @@
+## [0.3.0-rc.5](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.4...v0.3.0-rc.5) (2026-01-13)
+
+### Bug Fixes
+
+* add copy default images ([b4c3432](https://github.com/armandwipangestu/freshbite/commit/b4c3432215306459368fab253608427ad09e6507))
+
 ## [0.3.0-rc.4](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.3...v0.3.0-rc.4) (2026-01-13)
 
 ### Features
