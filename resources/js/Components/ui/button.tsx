@@ -9,8 +9,7 @@ const buttonVariants = cva(
     {
         variants: {
             variant: {
-                default:
-                    'bg-primary text-ground shadow hover:bg-primary-1000',
+                default: 'bg-primary text-ground shadow hover:bg-primary-1000',
                 hover: 'bg-primary-1000 text-ground shadow hover:bg-primary-1000',
                 active: 'bg-primary-800 text-ground shadow hover:bg-primary-1000 border border-ground-50 border-4 shadow',
                 destructive:
@@ -39,7 +38,7 @@ const buttonVariants = cva(
 
 export interface ButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+        VariantProps<typeof buttonVariants> {
     asChild?: boolean;
     icon?: React.ElementType;
     iconPosition?: 'left' | 'right';

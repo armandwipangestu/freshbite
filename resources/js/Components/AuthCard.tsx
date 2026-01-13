@@ -25,7 +25,8 @@ export default function AuthCard({
     errors = {},
 }: AuthCardProps) {
     const [showPassword, setShowPassword] = React.useState<boolean>(false);
-    const [showConfirmPassword, setShowConfirmPassword] = React.useState<boolean>(false);
+    const [showConfirmPassword, setShowConfirmPassword] =
+        React.useState<boolean>(false);
 
     const isLogin = variant === 'login';
 
@@ -147,7 +148,11 @@ export default function AuthCard({
                                 <Input
                                     id="password_confirmation"
                                     name="password_confirmation"
-                                    type={showConfirmPassword ? 'text' : 'password'}
+                                    type={
+                                        showConfirmPassword
+                                            ? 'text'
+                                            : 'password'
+                                    }
                                     placeholder="******"
                                     className="h-11 rounded-xl border-gray-200 px-4 pr-10 text-base"
                                     required
@@ -155,7 +160,9 @@ export default function AuthCard({
                                 <button
                                     type="button"
                                     onClick={() =>
-                                        setShowConfirmPassword(!showConfirmPassword)
+                                        setShowConfirmPassword(
+                                            !showConfirmPassword,
+                                        )
                                     }
                                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                                     aria-label={

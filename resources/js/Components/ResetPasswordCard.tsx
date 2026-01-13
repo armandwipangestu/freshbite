@@ -1,5 +1,5 @@
-import { Button } from '@/Components/ui/button';
 import InputError from '@/Components/InputError';
+import { Button } from '@/Components/ui/button';
 import { Card, CardContent } from '@/Components/ui/card';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
@@ -123,7 +123,9 @@ export default function ResetPasswordCard({
                             />
                             <button
                                 type="button"
-                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                onClick={() =>
+                                    setShowConfirmPassword(!showConfirmPassword)
+                                }
                                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                             >
                                 {showConfirmPassword ? (
