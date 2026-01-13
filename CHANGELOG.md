@@ -1,3 +1,14 @@
+## [0.3.0-rc.7](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.6...v0.3.0-rc.7) (2026-01-13)
+
+### Features
+
+* **auth:** add sign in with google, using redirect & one tap method ([cb02bcb](https://github.com/armandwipangestu/freshbite/commit/cb02bcb9fcddfd88689db73d34dd221a60577a2f))
+* **page:** redesign reset password ([e2c0fdf](https://github.com/armandwipangestu/freshbite/commit/e2c0fdfd198fbbc4b43a74b16d6a0951389c9069))
+
+### Bug Fixes
+
+* **ci:** remove any data type ([287b89b](https://github.com/armandwipangestu/freshbite/commit/287b89b93d1456818f589fb143f08135ef38ba3a))
+
 ## [0.3.0-rc.6](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.5...v0.3.0-rc.6) (2026-01-13)
 
 ### Bug Fixes
