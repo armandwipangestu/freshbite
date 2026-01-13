@@ -54,7 +54,7 @@ class ProductSeeder extends Seeder
                 'description' => $data['description'],
                 'price' => $data['price'],
                 'stock' => $data['stock'],
-                'total_sold' => 0,
+                'total_sold' => rand(1, 20),
                 'is_published' => true,
             ]);
         }
