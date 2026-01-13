@@ -17,20 +17,21 @@ class ProductImageSeeder extends Seeder
     {
         $images = [
             'Fresh Apple Fuji' => [
-                'product-images/apple-fuji-1.jpg',
-                'product-images/apple-fuji-2.jpg',
+                'product-images/apple-fuji-1.png',
+                'product-images/apple-fuji-2.png',
             ],
             'Local Banana Cavendish' => [
-                'product-images/banana-cavendish-1.jpg',
+                'product-images/banana-cavendish-1.png',
+                'product-images/banana-cavendish-2.png',
             ],
             'Organic Carrot' => [
-                'product-images/carrot-organic-1.jpg',
+                'product-images/carrot-organic-1.png',
             ],
             'Imported Broccoli' => [
-                'product-images/broccoli-import-1.jpg',
+                'product-images/broccoli-import-1.png',
             ],
             'Chili Seeds Premium' => [
-                'product-images/chili-seeds-1.jpg',
+                'product-images/chili-seeds-1.png',
             ],
         ];
 
