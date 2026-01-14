@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn, resolveAvatarUrl } from '@/lib/utils';
 import type { AppPageProps } from '@/types/page';
 import { Link, usePage } from '@inertiajs/react';
 import { Heart, Menu, Search, ShoppingCart, X } from 'lucide-react';
@@ -15,18 +15,7 @@ export function Navbar() {
     const isAuthenticated = Boolean(auth.user);
     const userName = auth.user?.name;
 
-    /**
-     * Avatar logic
-     * - local avatar → /storage/avatars/xxx.png
-     * - fallback → ui-avatars
-     */
-    const avatarUrl = auth.user?.avatar
-        ? `/storage/${auth.user.avatar}`
-        : auth.user?.name
-          ? `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                auth.user.name,
-            )}&background=22C55E&color=fff`
-          : undefined;
+    const avatarUrl = resolveAvatarUrl(auth.user?.avatar);
 
     const [search, setSearch] = useState('');
     const [isMenuOpen, setIsMenuOpen] = useState(false);

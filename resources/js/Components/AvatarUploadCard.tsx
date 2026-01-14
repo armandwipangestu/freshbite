@@ -1,6 +1,6 @@
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent } from '@/Components/ui/card';
-import { cn } from '@/lib/utils';
+import { cn, resolveAvatarUrl } from '@/lib/utils';
 import * as React from 'react';
 
 interface AvatarUploadCardProps {
@@ -70,16 +70,6 @@ export default function AvatarUploadCard({
             handleFileSelect(file);
         };
         input.click();
-    };
-
-    const resolveAvatarUrl = (avatar?: string | null) => {
-        if (!avatar) return null;
-
-        if (/^https?:\/\//i.test(avatar)) {
-            return avatar;
-        }
-
-        return `/storage/${avatar}`;
     };
 
     const displayImage = preview ? preview : resolveAvatarUrl(currentAvatar);
