@@ -7,7 +7,7 @@ import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
 import { cn } from '@/lib/utils';
-import { useForm } from '@inertiajs/react';
+import { router, useForm } from '@inertiajs/react';
 import { Edit2, Plus, Search, Trash2 } from 'lucide-react';
 import * as React from 'react';
 import { FormEventHandler } from 'react';
@@ -257,63 +257,31 @@ function AddressTab() {
         fetchAddresses(1);
     }, [fetchAddresses]);
 
-    const handleDeleteAddress = async (addressId: number) => {
-        if (!window.confirm('Are you sure you want to delete this address?')) {
-            return;
-        }
+    const handleDeleteAddress = (id: number) => {
+        if (!confirm('Delete this address?')) return;
 
-        setDeleting(addressId);
-        try {
-            const response = await fetch(
-                route('addresses.destroy', addressId),
-                {
-                    method: 'DELETE',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Content-Type': 'application/json',
-                    },
-                },
-            );
-
-            if (response.ok) {
-                await fetchAddresses(pagination.current_page);
-            }
-        } catch (error) {
-            console.error('Error deleting address:', error);
-        } finally {
-            setDeleting(null);
-        }
+        router.delete(route('addresses.destroy', id), {
+            preserveScroll: true,
+            onStart: () => setDeleting(id),
+            onFinish: () => setDeleting(null),
+            onSuccess: () => fetchAddresses(pagination.current_page),
+        });
     };
 
-    const handleSetDefault = async (addressId: number) => {
-        try {
-            const csrf = (
-                document.querySelector(
-                    'meta[name="csrf-token"]',
-                ) as HTMLMetaElement
-            )?.content;
-            const response = await fetch(
-                route('addresses.set-default', addressId),
-                {
-                    method: 'PATCH',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': csrf || '',
-                        Accept: 'application/json',
-                    },
-                    body: JSON.stringify({}),
+    const handleSetDefault = (addressId: number) => {
+        router.patch(
+            route('addresses.set-default', addressId),
+            {},
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    fetchAddresses(pagination.current_page);
                 },
-            );
-
-            if (response.ok) {
-                await fetchAddresses(pagination.current_page);
-            } else {
-                console.error('Failed to set default address');
-            }
-        } catch (error) {
-            console.error('Error setting default address:', error);
-        }
+                onError: (errors) => {
+                    console.error(errors);
+                },
+            },
+        );
     };
 
     const handleAddressFormClose = () => {
@@ -542,7 +510,7 @@ function AddressTab() {
                 show={showAddressForm}
                 onClose={handleAddressFormClose}
                 onSuccess={handleAddressFormSuccess}
-                initialData={editingAddress}
+                initialData={editingAddress ?? undefined}
             />
         </div>
     );
