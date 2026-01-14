@@ -1,3 +1,10 @@
+## [0.3.0-rc.10](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.9...v0.3.0-rc.10) (2026-01-14)
+
+### Bug Fixes
+
+* **ci:** adjust unit testing feature ([b348713](https://github.com/armandwipangestu/freshbite/commit/b34871352c5f0133e8eccea293fdc746b196355e))
+* **ci:** remove sending props to navbar component ([e11afa7](https://github.com/armandwipangestu/freshbite/commit/e11afa70a9f61cc1d0cbd2ea98a499a9df2d0379))
+
 ## [0.3.0-rc.9](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.8...v0.3.0-rc.9) (2026-01-14)
 
 ### Features
