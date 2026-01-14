@@ -71,17 +71,18 @@ class UserResource extends Resource
                             ->password()
                             ->revealable()
                             ->maxLength(255)
-                            ->rules([
-                                'min:8',
-                                'regex:/[a-z]/',
-                                'regex:/[A-Z]/',
-                                'regex:/[0-9]/',
-                                'regex:/[@$!%*?&]/',
-                            ])
-                            ->validationMessages([
-                                'min' => 'Password must be at least 8 characters long.',
-                                'regex' => 'Password must contain at least 1 lowercase letter, 1 uppercase letter, 1 number, and 1 special character.',
-                            ]),
+                        // ->rules([
+                        //     'min:8',
+                        //     'regex:/[a-z]/',
+                        //     'regex:/[A-Z]/',
+                        //     'regex:/[0-9]/',
+                        //     'regex:/[@$!%*?&]/',
+                        // ])
+                        // ->validationMessages([
+                        //     'min' => 'Password must be at least 8 characters long.',
+                        //     'regex' => 'Password must contain at least 1 lowercase letter, 1 uppercase letter, 1 number, and 1 special character.',
+                        // ])
+                        ,
 
                         Forms\Components\Select::make('roles')
                             ->suffixIcon('heroicon-m-shield-check')

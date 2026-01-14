@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Services\User\UserService;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,6 +14,13 @@ use Inertia\Response;
 
 class ProfileController extends Controller
 {
+    protected $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     /**
      * Display the user's profile form.
      */
@@ -29,15 +37,22 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $validated = $request->validated();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // Remove email from data if present (shouldn't be, but just in case)
+        unset($validated['email']);
+
+        if (!$request->hasFile('avatar')) {
+            unset($validated['avatar']);
         }
 
-        $request->user()->save();
+        if ($request->hasFile('avatar')) {
+            $validated['avatar'] = $request->file('avatar');
+        }
 
-        return Redirect::route('profile.edit');
+        $this->userService->updateProfile($request->user(), $validated);
+
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**

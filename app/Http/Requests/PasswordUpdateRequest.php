@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
-class ProfileUpdateRequest extends FormRequest
+class PasswordUpdateRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,8 +15,8 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string', 'max:255'],
-            'avatar' => ['nullable', 'image', 'max:10240', 'mimes:jpg,jpeg,png'],
+            'current_password' => ['required', 'current_password'],
+            'password' => ['required', Password::defaults(), 'confirmed'],
         ];
     }
 }
