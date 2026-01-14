@@ -7,12 +7,12 @@ export default function NavbarSection() {
 
             <p className="text-sm text-gray-500">Variant: Before Login</p>
             <div className="overflow-hidden rounded-lg border">
-                <Navbar isAuthenticated={false} />
+                <Navbar />
             </div>
 
             <p className="text-sm text-gray-500">Variant: After Login</p>
             <div className="overflow-hidden rounded-lg border">
-                <Navbar isAuthenticated={true} userName="John Doe" />
+                <Navbar />
             </div>
         </section>
     );
