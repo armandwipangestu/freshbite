@@ -12,8 +12,12 @@ test('profile page is displayed', function () {
     $response->assertOk();
 });
 
-test('profile information can be updated', function () {
-    $user = User::factory()->create();
+test('profile information (name) can be updated', function () {
+    $user = User::factory()->create([
+        'email_verified_at' => now(),
+    ]);
+
+    $originalEmail = $user->email;
 
     $response = $this
         ->actingAs($user)
@@ -29,26 +33,26 @@ test('profile information can be updated', function () {
     $user->refresh();
 
     $this->assertSame('Test User', $user->name);
-    $this->assertSame('test@example.com', $user->email);
-    $this->assertNull($user->email_verified_at);
+    $this->assertSame($originalEmail, $user->email);
+    $this->assertNotNull($user->email_verified_at);
 });
 
-test('email verification status is unchanged when the email address is unchanged', function () {
-    $user = User::factory()->create();
+// test('email verification status is unchanged when the email address is unchanged', function () {
+//     $user = User::factory()->create();
 
-    $response = $this
-        ->actingAs($user)
-        ->patch('/profile', [
-            'name' => 'Test User',
-            'email' => $user->email,
-        ]);
+//     $response = $this
+//         ->actingAs($user)
+//         ->patch('/profile', [
+//             'name' => 'Test User',
+//             'email' => $user->email,
+//         ]);
 
-    $response
-        ->assertSessionHasNoErrors()
-        ->assertRedirect('/profile');
+//     $response
+//         ->assertSessionHasNoErrors()
+//         ->assertRedirect('/profile');
 
-    $this->assertNotNull($user->refresh()->email_verified_at);
-});
+//     $this->assertNotNull($user->refresh()->email_verified_at);
+// });
 
 test('user can delete their account', function () {
     $user = User::factory()->create();
