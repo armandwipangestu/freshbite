@@ -1,3 +1,17 @@
+## [0.3.0-rc.9](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.8...v0.3.0-rc.9) (2026-01-14)
+
+### Features
+
+* **auth:** disable google one tap method ([e9f6eaf](https://github.com/armandwipangestu/freshbite/commit/e9f6eaf474411cabacf50b548af28a6a8767822c))
+* **components:** change navbar using real avatar from data user ([205dfb8](https://github.com/armandwipangestu/freshbite/commit/205dfb8d8e2912968b4c383a25f7755e8947ac7e))
+* **page:** add profile settings ([25f5a59](https://github.com/armandwipangestu/freshbite/commit/25f5a59f46e30281e2e939c514c7b40534254095))
+
+### Bug Fixes
+
+* navbar with avatar user ([b92d232](https://github.com/armandwipangestu/freshbite/commit/b92d2320a87cc70acecbb83fe3a62c53be81f13d))
+* resolve avatar url ([286e01d](https://github.com/armandwipangestu/freshbite/commit/286e01d8c9ff4441650d7a60cc5946acafcaf7bb))
+* resolve relative with absolute path ([218d713](https://github.com/armandwipangestu/freshbite/commit/218d713a18e9734955e4fd5f815dd2f0e1fe51fa))
+
 ## [0.3.0-rc.8](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.7...v0.3.0-rc.8) (2026-01-13)
 
 ## [0.3.0-rc.7](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.6...v0.3.0-rc.7) (2026-01-13)
