@@ -35,5 +35,35 @@ class AddressSeeder extends Seeder
             ->create([
                 'label_name' => 'Secondary Address',
             ]);
+
+        Address::factory()
+            ->for($admin)
+            ->create([
+                'label_name' => 'Third Address',
+            ]);
+
+        Address::factory()
+            ->for($admin)
+            ->create([
+                'label_name' => 'Fourth Address',
+            ]);
+
+        Address::factory()
+            ->for($admin)
+            ->create([
+                'label_name' => 'Fifth Address',
+            ]);
+
+        Address::factory()
+            ->for($admin)
+            ->create([
+                'label_name' => 'Sixth Address',
+            ]);
+
+        Address::factory()
+            ->for($admin)
+            ->create([
+                'label_name' => 'Seventh Address',
+            ]);
     }
 }
