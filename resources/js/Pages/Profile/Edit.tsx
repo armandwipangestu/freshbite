@@ -1,11 +1,7 @@
 import SettingsTabs from '@/Components/SettingsTabs';
-import { PageProps } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 
-export default function Edit({
-    mustVerifyEmail,
-    status,
-}: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
+export default function Edit() {
     const user = usePage().props.auth.user!;
 
     return (

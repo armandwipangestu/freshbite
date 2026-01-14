@@ -1,6 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
+import type { AppPageProps } from '@/types/page';
 import { Link, usePage } from '@inertiajs/react';
 import { Heart, Menu, Search, ShoppingCart, X } from 'lucide-react';
 import { useState } from 'react';
@@ -8,18 +9,8 @@ import Dropdown from '../Dropdown';
 import { Button } from './button';
 import { Input } from './input';
 
-interface PageProps {
-    auth: {
-        user: {
-            id: number;
-            name: string;
-            avatar?: string | null;
-        } | null;
-    };
-}
-
 export function Navbar() {
-    const { auth } = usePage<PageProps>().props;
+    const { auth } = usePage<AppPageProps>().props;
 
     const isAuthenticated = Boolean(auth.user);
     const userName = auth.user?.name;
