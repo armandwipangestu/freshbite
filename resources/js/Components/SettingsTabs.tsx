@@ -1,15 +1,25 @@
 import AvatarUploadCard from '@/Components/AvatarUploadCard';
+import InputError from '@/Components/InputError';
+import PasswordChangeDialog from '@/Components/PasswordChangeDialog';
 import ThemePreviewCard from '@/Components/ThemePreviewCard';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
 import { cn } from '@/lib/utils';
+import { useForm } from '@inertiajs/react';
 import { Plus, Search } from 'lucide-react';
 import * as React from 'react';
+import { FormEventHandler } from 'react';
+
+import { User } from '@/types';
 
 type TabType = 'profile' | 'address' | 'preferences';
 
-export default function SettingsTabs() {
+interface SettingsTabsProps {
+    user: User;
+}
+
+export default function SettingsTabs({ user }: SettingsTabsProps) {
     const [activeTab, setActiveTab] = React.useState<TabType>('profile');
 
     const tabs = [
@@ -43,7 +53,7 @@ export default function SettingsTabs() {
 
             {/* Tab Content */}
             <div className="p-4 sm:p-8">
-                {activeTab === 'profile' && <ProfileTab />}
+                {activeTab === 'profile' && <ProfileTab user={user} />}
                 {activeTab === 'address' && <AddressTab />}
                 {activeTab === 'preferences' && <PreferencesTab />}
             </div>
@@ -51,63 +61,132 @@ export default function SettingsTabs() {
     );
 }
 
-function ProfileTab() {
+function ProfileTab({ user }: { user: User }) {
+    const [showPasswordDialog, setShowPasswordDialog] = React.useState(false);
+    const [initialName] = React.useState(user.name || '');
+
+    const { data, setData, post, processing, errors, recentlySuccessful } =
+        useForm({
+            name: user.name || '',
+            avatar: null as File | null,
+        });
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+
+        // Check if there are actual changes
+        const hasNameChange = data.name !== initialName;
+        const hasAvatarChange = data.avatar !== null;
+
+        if (!hasNameChange && !hasAvatarChange) {
+            return;
+        }
+
+        post(route('profile.update'), {
+            preserveScroll: true,
+            forceFormData: true,
+            data: {
+                ...data,
+                _method: 'PATCH',
+            },
+            onSuccess: () => setData('avatar', null),
+        });
+    };
+
+    // Get avatar URL - check if user has avatar property
+    const avatarUrl = (user as User & { avatar?: string }).avatar || undefined;
+
     return (
-        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12">
-            <div className="lg:col-span-4">
-                <AvatarUploadCard currentAvatar="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800" />
-            </div>
-            <div className="space-y-8 lg:col-span-8">
-                <div className="space-y-4">
-                    <h3 className="text-xl font-bold text-[#1A1A1A] sm:text-2xl">
-                        Change information
-                    </h3>
-                    <hr className="border-gray-100" />
-                </div>
-
-                <div className="grid grid-cols-1 gap-6">
-                    <div className="space-y-2">
-                        <Label
-                            htmlFor="name"
-                            className="text-base text-[#666666] sm:text-lg"
-                        >
-                            Name
-                        </Label>
-                        <Input
-                            id="name"
-                            defaultValue="Jane Doe"
-                            className="h-12 rounded-[16px] px-6 text-base sm:h-14 sm:text-lg"
+        <>
+            <form onSubmit={submit}>
+                <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12">
+                    <div className="lg:col-span-4">
+                        <AvatarUploadCard
+                            currentAvatar={avatarUrl}
+                            value={data.avatar}
+                            onChange={(file) => setData('avatar', file)}
+                            error={errors.avatar}
                         />
                     </div>
-                    <div className="space-y-2">
-                        <Label
-                            htmlFor="email"
-                            className="text-base text-[#666666] sm:text-lg"
-                        >
-                            Email
-                        </Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            defaultValue="jane.doe@example.com"
-                            className="h-12 rounded-[16px] px-6 text-base sm:h-14 sm:text-lg"
-                        />
+                    <div className="space-y-8 lg:col-span-8">
+                        <div className="space-y-4">
+                            <h3 className="text-xl font-bold text-[#1A1A1A] sm:text-2xl">
+                                Change information
+                            </h3>
+                            <hr className="border-gray-100" />
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-6">
+                            <div className="space-y-2">
+                                <Label
+                                    htmlFor="name"
+                                    className="text-base text-[#666666] sm:text-lg"
+                                >
+                                    Name
+                                </Label>
+                                <Input
+                                    id="name"
+                                    value={data.name}
+                                    onChange={(e) =>
+                                        setData('name', e.target.value)
+                                    }
+                                    className="h-12 rounded-[16px] px-6 text-base sm:h-14 sm:text-lg"
+                                    disabled={processing}
+                                />
+                                <InputError
+                                    message={errors.name}
+                                    className="mt-2"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label
+                                    htmlFor="email"
+                                    className="text-base text-[#666666] sm:text-lg"
+                                >
+                                    Email
+                                </Label>
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    value={user.email}
+                                    className="h-12 cursor-not-allowed rounded-[16px] bg-gray-50 px-6 text-base text-gray-500 sm:h-14 sm:text-lg"
+                                    disabled
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col gap-4 pt-4 sm:flex-row">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                className="h-14 flex-1 rounded-[16px] border-gray-300 px-8 text-lg font-semibold sm:flex-none"
+                                onClick={() => setShowPasswordDialog(true)}
+                            >
+                                Change password
+                            </Button>
+                            <Button
+                                type="submit"
+                                disabled={processing}
+                                className="h-14 flex-1 rounded-[16px] bg-[#22C55E] px-8 text-lg font-semibold text-white shadow-none hover:bg-[#1AAA4B] disabled:opacity-50 sm:flex-none"
+                            >
+                                {processing ? 'Updating...' : 'Update profile'}
+                            </Button>
+                        </div>
+
+                        {recentlySuccessful && (
+                            <div className="rounded-[12px] border border-green-200 bg-green-50 p-4 text-sm text-green-700">
+                                ✓ Profile updated successfully.
+                            </div>
+                        )}
                     </div>
                 </div>
+            </form>
 
-                <div className="flex flex-col items-center justify-between gap-4 pt-4 sm:flex-row">
-                    <Button
-                        variant="outline"
-                        className="h-14 w-full rounded-[16px] border-gray-300 px-8 text-lg font-semibold sm:w-auto"
-                    >
-                        Change password
-                    </Button>
-                    <Button className="h-14 w-full rounded-[16px] bg-[#22C55E] px-8 text-lg font-semibold text-white shadow-none hover:bg-[#1AAA4B] sm:w-auto">
-                        Update profile
-                    </Button>
-                </div>
-            </div>
-        </div>
+            <PasswordChangeDialog
+                show={showPasswordDialog}
+                onClose={() => setShowPasswordDialog(false)}
+            />
+        </>
     );
 }
 

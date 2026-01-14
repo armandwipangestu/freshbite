@@ -1,19 +1,22 @@
 'use client';
 
-import { cn } from '@/lib/utils';
-import { Link } from '@inertiajs/react';
+import { cn, resolveAvatarUrl } from '@/lib/utils';
+import type { AppPageProps } from '@/types/page';
+import { Link, usePage } from '@inertiajs/react';
 import { Heart, Menu, Search, ShoppingCart, X } from 'lucide-react';
 import { useState } from 'react';
 import Dropdown from '../Dropdown';
 import { Button } from './button';
 import { Input } from './input';
 
-interface NavbarProps {
-    isAuthenticated: boolean;
-    userName?: string;
-}
+export function Navbar() {
+    const { auth } = usePage<AppPageProps>().props;
 
-export function Navbar({ isAuthenticated, userName }: NavbarProps) {
+    const isAuthenticated = Boolean(auth.user);
+    const userName = auth.user?.name;
+
+    const avatarUrl = resolveAvatarUrl(auth.user?.avatar);
+
     const [search, setSearch] = useState('');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -108,7 +111,7 @@ export function Navbar({ isAuthenticated, userName }: NavbarProps) {
                                     <Dropdown.Trigger>
                                         <button className="flex items-center space-x-2 rounded-full border border-gray-100 py-1 pl-1 pr-4 transition-colors hover:bg-gray-50 focus:outline-none">
                                             <img
-                                                src={`https://ui-avatars.com/api/?name=${userName}&background=22C55E&color=fff`}
+                                                src={avatarUrl}
                                                 alt="avatar"
                                                 className="h-8 w-8 rounded-full"
                                             />
@@ -214,7 +217,7 @@ export function Navbar({ isAuthenticated, userName }: NavbarProps) {
                                     className="flex items-center space-x-4 rounded-3xl bg-gray-50 p-4"
                                 >
                                     <img
-                                        src={`https://ui-avatars.com/api/?name=${userName}&background=22C55E&color=fff`}
+                                        src={avatarUrl}
                                         alt="avatar"
                                         className="h-14 w-14 rounded-full"
                                     />
