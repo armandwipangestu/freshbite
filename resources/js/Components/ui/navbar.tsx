@@ -1,19 +1,42 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { Heart, Menu, Search, ShoppingCart, X } from 'lucide-react';
 import { useState } from 'react';
 import Dropdown from '../Dropdown';
 import { Button } from './button';
 import { Input } from './input';
 
-interface NavbarProps {
-    isAuthenticated: boolean;
-    userName?: string;
+interface PageProps {
+    auth: {
+        user: {
+            id: number;
+            name: string;
+            avatar?: string | null;
+        } | null;
+    };
 }
 
-export function Navbar({ isAuthenticated, userName }: NavbarProps) {
+export function Navbar() {
+    const { auth } = usePage<PageProps>().props;
+
+    const isAuthenticated = Boolean(auth.user);
+    const userName = auth.user?.name;
+
+    /**
+     * Avatar logic
+     * - local avatar → /storage/avatars/xxx.png
+     * - fallback → ui-avatars
+     */
+    const avatarUrl = auth.user?.avatar
+        ? `/storage/${auth.user.avatar}`
+        : auth.user?.name
+          ? `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                auth.user.name,
+            )}&background=22C55E&color=fff`
+          : undefined;
+
     const [search, setSearch] = useState('');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -108,7 +131,7 @@ export function Navbar({ isAuthenticated, userName }: NavbarProps) {
                                     <Dropdown.Trigger>
                                         <button className="flex items-center space-x-2 rounded-full border border-gray-100 py-1 pl-1 pr-4 transition-colors hover:bg-gray-50 focus:outline-none">
                                             <img
-                                                src={`https://ui-avatars.com/api/?name=${userName}&background=22C55E&color=fff`}
+                                                src={avatarUrl}
                                                 alt="avatar"
                                                 className="h-8 w-8 rounded-full"
                                             />
@@ -214,7 +237,7 @@ export function Navbar({ isAuthenticated, userName }: NavbarProps) {
                                     className="flex items-center space-x-4 rounded-3xl bg-gray-50 p-4"
                                 >
                                     <img
-                                        src={`https://ui-avatars.com/api/?name=${userName}&background=22C55E&color=fff`}
+                                        src={avatarUrl}
                                         alt="avatar"
                                         className="h-14 w-14 rounded-full"
                                     />
