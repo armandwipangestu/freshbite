@@ -72,11 +72,17 @@ export default function AvatarUploadCard({
         input.click();
     };
 
-    const displayImage = preview
-        ? preview
-        : currentAvatar
-          ? `/storage/${currentAvatar}`
-          : null;
+    const resolveAvatarUrl = (avatar?: string | null) => {
+        if (!avatar) return null;
+
+        if (/^https?:\/\//i.test(avatar)) {
+            return avatar;
+        }
+
+        return `/storage/${avatar}`;
+    };
+
+    const displayImage = preview ? preview : resolveAvatarUrl(currentAvatar);
 
     return (
         <Card
