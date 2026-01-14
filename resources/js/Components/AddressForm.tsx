@@ -163,7 +163,7 @@ export default function AddressForm({
     return (
         <Modal show={show} onClose={handleClose} maxWidth="lg">
             <div className="max-h-[90vh] overflow-y-auto p-6 sm:p-8">
-                <div className="sticky top-0 z-10 -mx-6 -mt-6 mb-6 bg-white px-6 py-4 sm:-mx-8 sm:px-8">
+                <div className="mb-5">
                     <h2 className="mb-2 text-2xl font-bold text-[#1A1A1A]">
                         {isEditing ? 'Edit Address' : 'Add New Address'}
                     </h2>
@@ -257,13 +257,14 @@ export default function AddressForm({
                         >
                             Province
                         </Label>
+                        <br />
                         <select
                             id="province_id"
                             value={data.province_id}
                             onChange={(e) =>
                                 handleProvinceChange(e.target.value)
                             }
-                            className="h-12 rounded-[16px] border border-gray-200 px-6 text-base"
+                            className="h-12 w-full rounded-[16px] border border-gray-200 px-6 text-base"
                             disabled={processing}
                         >
                             <option value="">Select Province</option>
@@ -290,11 +291,12 @@ export default function AddressForm({
                         >
                             City
                         </Label>
+                        <br />
                         <select
                             id="city_id"
                             value={data.city_id}
                             onChange={(e) => setData('city_id', e.target.value)}
-                            className="h-12 rounded-[16px] border border-gray-200 px-6 text-base"
+                            className="h-12 w-full rounded-[16px] border border-gray-200 px-6 text-base"
                             disabled={
                                 processing || loadingGeo || !data.province_id
                             }
@@ -381,7 +383,7 @@ export default function AddressForm({
                         </label>
                     </div>
 
-                    <div className="sticky bottom-0 -mx-6 -mb-6 flex justify-end gap-3 bg-gray-50 px-6 py-4 sm:-mx-8 sm:px-8">
+                    <div className="flex justify-end gap-3 pt-4">
                         <Button
                             type="button"
                             variant="outline"
