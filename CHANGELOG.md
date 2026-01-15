@@ -1,3 +1,10 @@
+## [0.3.0-rc.14](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.13...v0.3.0-rc.14) (2026-01-15)
+
+### Bug Fixes
+
+* adjust dark color in auth page ([875c62f](https://github.com/armandwipangestu/freshbite/commit/875c62fcd7ee9a00cb52d7fefbe69b0ef48de05e))
+* restore assets entrypoint ([009ceb5](https://github.com/armandwipangestu/freshbite/commit/009ceb5319d738ec5f815b565904a3b73e614961))
+
 ## [0.3.0-rc.13](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.12...v0.3.0-rc.13) (2026-01-15)
 
 ### Bug Fixes
