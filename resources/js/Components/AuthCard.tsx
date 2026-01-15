@@ -33,17 +33,17 @@ export default function AuthCard({
     return (
         <Card
             className={cn(
-                'w-full max-w-[640px] overflow-hidden rounded-[32px] border border-gray-100 bg-white shadow-sm',
+                'w-full max-w-[640px] overflow-hidden rounded-[32px] border border-gray-100 shadow-sm dark:border-muted-foreground dark:bg-primary-50',
                 className,
             )}
         >
             <CardContent className="p-6 sm:p-10">
                 <div className="mb-8 text-center">
-                    <h2 className="mb-2 text-2xl font-bold text-[#1A1A1A]">
+                    <h2 className="mb-2 text-2xl font-bold text-foreground">
                         {isLogin ? 'Login' : 'Register'}
                     </h2>
                     {isLogin && (
-                        <p className="text-xl font-semibold text-[#1A1A1A]">
+                        <p className="text-xl font-semibold text-foreground">
                             Welcome back!
                         </p>
                     )}
@@ -66,7 +66,7 @@ export default function AuthCard({
                         <div className="space-y-1.5">
                             <Label
                                 htmlFor="name"
-                                className="text-sm font-medium text-[#1A1A1A]"
+                                className="text-sm font-medium text-foreground"
                             >
                                 Name
                             </Label>
@@ -87,7 +87,7 @@ export default function AuthCard({
                     <div className="space-y-1.5">
                         <Label
                             htmlFor="email"
-                            className="text-sm font-medium text-[#1A1A1A]"
+                            className="text-sm font-medium text-foreground"
                         >
                             Email
                         </Label>
@@ -105,7 +105,7 @@ export default function AuthCard({
                     <div className="space-y-1.5">
                         <Label
                             htmlFor="password"
-                            className="text-sm font-medium text-[#1A1A1A]"
+                            className="text-sm font-medium text-foreground"
                         >
                             Password
                         </Label>
@@ -140,7 +140,7 @@ export default function AuthCard({
                         <div className="space-y-1.5">
                             <Label
                                 htmlFor="password_confirmation"
-                                className="text-sm font-medium text-[#1A1A1A]"
+                                className="text-sm font-medium text-foreground"
                             >
                                 Confirm Password
                             </Label>
@@ -205,7 +205,7 @@ export default function AuthCard({
                 </form>
 
                 <div className="mt-6 text-center">
-                    <p className="text-base text-[#1A1A1A]">
+                    <p className="text-base text-foreground">
                         {isLogin
                             ? "Don't have an account? "
                             : 'Already have an account? '}
@@ -223,7 +223,9 @@ export default function AuthCard({
                         <span className="w-full border-t border-gray-300" />
                     </div>
                     <div className="relative flex justify-center text-sm uppercase">
-                        <span className="bg-white px-4 text-[#1A1A1A]">OR</span>
+                        <span className="bg-primary-50 px-4 text-foreground">
+                            OR
+                        </span>
                     </div>
                 </div>
 
@@ -231,7 +233,7 @@ export default function AuthCard({
                     variant="outline"
                     type="button"
                     onClick={onGoogleContinue}
-                    className="flex h-12 w-full items-center justify-center gap-3 rounded-xl border-gray-300 text-base font-bold text-[#1A1A1A] hover:bg-gray-50 hover:text-[#1A1A1A]"
+                    className="flex h-12 w-full items-center justify-center gap-3 rounded-xl border-gray-300 text-base font-bold text-foreground hover:bg-gray-50 hover:text-foreground dark:hover:bg-primary-200"
                 >
                     <svg className="h-5 w-5" viewBox="0 0 24 24">
                         <path
