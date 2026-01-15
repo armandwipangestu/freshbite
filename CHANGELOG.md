@@ -1,3 +1,9 @@
+## [0.3.0-rc.13](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.12...v0.3.0-rc.13) (2026-01-15)
+
+### Bug Fixes
+
+* assets preview light and dark theme ([a20fdf1](https://github.com/armandwipangestu/freshbite/commit/a20fdf1843afeb45da09ab870ca202229b7f8b46))
+
 ## [0.3.0-rc.12](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.11...v0.3.0-rc.12) (2026-01-15)
 
 ### Features
