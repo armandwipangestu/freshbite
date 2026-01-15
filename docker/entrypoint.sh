@@ -47,16 +47,16 @@ php artisan optimize
 php artisan storage:link || true
 
 # Ensure default assets exist in volume
-if [ ! -f "storage/app/public/assets/images/logo.png" ]; then
-    log "entrypoint" "INFO" "Restoring default logo.png"
-    mkdir -p storage/app/public/assets/images
-    cp -n docker/defaults/logo.png storage/app/public/assets/images/logo.png || true
-fi
-
-if [ ! -f "storage/app/public/assets/images/favicon.png" ]; then
-    log "entrypoint" "INFO" "Restoring default favicon.png"
-    mkdir -p storage/app/public/assets/images
-    cp -n docker/defaults/favicon.png storage/app/public/assets/images/favicon.png || true
+if [ -d "docker/defaults/assets/images" ]; then
+    for img in docker/defaults/assets/images/*; do
+        base=$(basename "$img")
+        target="storage/app/public/assets/images/$base"
+        if [ ! -f "$target" ]; then
+            log "entrypoint" "INFO" "Restoring default assets image $base"
+            mkdir -p "$(dirname "$target")"
+            cp -n "$img" "$target" || true
+        fi
+    done
 fi
 
 # Copy default banner images if missing
