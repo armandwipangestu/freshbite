@@ -1,3 +1,17 @@
+## [0.3.0-rc.11](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.10...v0.3.0-rc.11) (2026-01-15)
+
+### Features
+
+* **page:** add address profile settings prototype ([75b4029](https://github.com/armandwipangestu/freshbite/commit/75b4029c4bca7ec4e19bfd7440fe1c50efcc12a9))
+
+### Bug Fixes
+
+* adjust sticky and w-full select option ([e373cc2](https://github.com/armandwipangestu/freshbite/commit/e373cc22de42807117a4f595abe7ed9a148fb29f))
+* debounce focused and icon trash color ([329bc24](https://github.com/armandwipangestu/freshbite/commit/329bc245b2027d287a2529bd13f9977ba510f856))
+* remove tinyint to json or boolean value ([eb6261b](https://github.com/armandwipangestu/freshbite/commit/eb6261b052b1cdffcc5a5ba50b40f453c61463a6))
+* select option province ([3bf3e49](https://github.com/armandwipangestu/freshbite/commit/3bf3e49ee21cd7681ef70831dbf68bdc176cbe9b))
+* set as default address ([ae544c6](https://github.com/armandwipangestu/freshbite/commit/ae544c63f7d6f6773f52c3ecfbbd3d5c1b5fc73c))
+
 ## [0.3.0-rc.10](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.9...v0.3.0-rc.10) (2026-01-14)
 
 ### Bug Fixes
