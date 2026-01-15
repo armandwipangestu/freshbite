@@ -331,7 +331,7 @@ function AddressTab() {
                         className="h-12 rounded-[16px] border-gray-200 pl-4 pr-6 text-base sm:h-14 sm:text-lg"
                         icon={Search}
                         iconPosition="right"
-                        disabled={loading}
+                        // disabled={loading}
                     />
                 </div>
                 <Button
@@ -408,7 +408,7 @@ function AddressTab() {
                                             handleDeleteAddress(addr.id)
                                         }
                                         disabled={deleting === addr.id}
-                                        className="h-9 rounded-lg border-red-300 px-3 text-red-600 hover:bg-red-50 sm:px-4"
+                                        className="h-9 rounded-lg border-red-300 px-3 text-red-600 hover:bg-red-500 sm:px-4"
                                     >
                                         <Trash2 className="h-4 w-4" />
                                     </Button>
