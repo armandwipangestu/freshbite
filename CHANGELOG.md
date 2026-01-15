@@ -1,3 +1,31 @@
+## [0.4.0](https://github.com/armandwipangestu/freshbite/compare/v0.3.0...v0.4.0) (2026-01-15)
+
+### Features
+
+* **auth:** disable google one tap method ([e9f6eaf](https://github.com/armandwipangestu/freshbite/commit/e9f6eaf474411cabacf50b548af28a6a8767822c))
+* **components:** change navbar using real avatar from data user ([205dfb8](https://github.com/armandwipangestu/freshbite/commit/205dfb8d8e2912968b4c383a25f7755e8947ac7e))
+* **page:** add address profile settings prototype ([75b4029](https://github.com/armandwipangestu/freshbite/commit/75b4029c4bca7ec4e19bfd7440fe1c50efcc12a9))
+* **page:** add preferences setting prototype ([a03da7a](https://github.com/armandwipangestu/freshbite/commit/a03da7a1876211a7d52d1338c1484e81e002aa8b))
+* **page:** add profile settings ([25f5a59](https://github.com/armandwipangestu/freshbite/commit/25f5a59f46e30281e2e939c514c7b40534254095))
+* **page:** add prototype appearance setting (light, dark, system theme) ([7dbcaf2](https://github.com/armandwipangestu/freshbite/commit/7dbcaf2b22701e93f121d5858bfca44e3f2b1190))
+
+### Bug Fixes
+
+* adjust dark color in auth page ([875c62f](https://github.com/armandwipangestu/freshbite/commit/875c62fcd7ee9a00cb52d7fefbe69b0ef48de05e))
+* adjust sticky and w-full select option ([e373cc2](https://github.com/armandwipangestu/freshbite/commit/e373cc22de42807117a4f595abe7ed9a148fb29f))
+* assets preview light and dark theme ([a20fdf1](https://github.com/armandwipangestu/freshbite/commit/a20fdf1843afeb45da09ab870ca202229b7f8b46))
+* **ci:** adjust unit testing feature ([b348713](https://github.com/armandwipangestu/freshbite/commit/b34871352c5f0133e8eccea293fdc746b196355e))
+* **ci:** remove sending props to navbar component ([e11afa7](https://github.com/armandwipangestu/freshbite/commit/e11afa70a9f61cc1d0cbd2ea98a499a9df2d0379))
+* debounce focused and icon trash color ([329bc24](https://github.com/armandwipangestu/freshbite/commit/329bc245b2027d287a2529bd13f9977ba510f856))
+* mobile nav and adjust some color on dark mode ([2ab2eb3](https://github.com/armandwipangestu/freshbite/commit/2ab2eb3bcb3597d4373e20d845bfad145f63dece))
+* navbar with avatar user ([b92d232](https://github.com/armandwipangestu/freshbite/commit/b92d2320a87cc70acecbb83fe3a62c53be81f13d))
+* remove tinyint to json or boolean value ([eb6261b](https://github.com/armandwipangestu/freshbite/commit/eb6261b052b1cdffcc5a5ba50b40f453c61463a6))
+* resolve avatar url ([286e01d](https://github.com/armandwipangestu/freshbite/commit/286e01d8c9ff4441650d7a60cc5946acafcaf7bb))
+* resolve relative with absolute path ([218d713](https://github.com/armandwipangestu/freshbite/commit/218d713a18e9734955e4fd5f815dd2f0e1fe51fa))
+* restore assets entrypoint ([009ceb5](https://github.com/armandwipangestu/freshbite/commit/009ceb5319d738ec5f815b565904a3b73e614961))
+* select option province ([3bf3e49](https://github.com/armandwipangestu/freshbite/commit/3bf3e49ee21cd7681ef70831dbf68bdc176cbe9b))
+* set as default address ([ae544c6](https://github.com/armandwipangestu/freshbite/commit/ae544c63f7d6f6773f52c3ecfbbd3d5c1b5fc73c))
+
 ## [0.3.0-rc.15](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.14...v0.3.0-rc.15) (2026-01-15)
 
 ### Bug Fixes
