@@ -44,12 +44,11 @@ class AddressFactory extends Factory
             'city_id' => $city->id,
 
             'address' => sprintf(
-                '%s No. %d, RT %02d/RW %02d, %s',
+                '%s No. %d, RT %02d/RW %02d',
                 fake()->randomElement($streets),
                 fake()->numberBetween(1, 200),
                 fake()->numberBetween(1, 10),
                 fake()->numberBetween(1, 10),
-                $city->name,
             ),
 
             'note_for_courier' => fake()->randomElement($courierNotes),
