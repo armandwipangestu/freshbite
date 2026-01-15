@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
         $superAdminRole->syncPermissions($permissions);
         $superAdminUser = User::create([
             'name' => 'Admin',
-            'avatar' => 'https://i.pravatar.cc/200?img=' . fake()->numberBetween(1, 70),
+            'avatar' => 'avatars/admin.jpg',
             'email' => 'admin@freshbite.com',
             'email_verified_at' => now(),
             'password' => Hash::make('password'),

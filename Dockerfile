@@ -39,6 +39,7 @@ COPY . .
 # Backup default assets
 RUN mkdir -p /var/www/html/docker/defaults && \
     cp -r storage/app/public/assets/images /var/www/html/docker/defaults/ && \
+    cp -r storage/app/public/avatars /var/www/html/docker/defaults/ || true && \
     cp -r storage/app/public/banner-images /var/www/html/docker/defaults/ || true && \
     cp -r storage/app/public/product-images /var/www/html/docker/defaults/ || true
 

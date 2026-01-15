@@ -63,10 +63,13 @@ restore_assets() {
 # 1. Restore Main Images
 restore_assets "docker/defaults/images" "storage/app/public/assets/images" "General"
 
-# 2. Restore Banner Images
+# 2. Restore Avatars
+restore_assets "docker/defaults/avatars" "storage/app/public/avatars" "Avatar"
+
+# 3. Restore Banner Images
 restore_assets "docker/defaults/banner-images" "storage/app/public/banner-images" "Banner"
 
-# 3. Restore Product Images
+# 4. Restore Product Images
 restore_assets "docker/defaults/product-images" "storage/app/public/product-images" "Product"
 
 # Fix permission
