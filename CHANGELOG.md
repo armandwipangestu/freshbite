@@ -1,3 +1,9 @@
+## [0.3.0-rc.15](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.14...v0.3.0-rc.15) (2026-01-15)
+
+### Bug Fixes
+
+* mobile nav and adjust some color on dark mode ([2ab2eb3](https://github.com/armandwipangestu/freshbite/commit/2ab2eb3bcb3597d4373e20d845bfad145f63dece))
+
 ## [0.3.0-rc.14](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.13...v0.3.0-rc.14) (2026-01-15)
 
 ### Bug Fixes
