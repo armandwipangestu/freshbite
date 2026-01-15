@@ -1,3 +1,10 @@
+## [0.3.0-rc.12](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.11...v0.3.0-rc.12) (2026-01-15)
+
+### Features
+
+* **page:** add preferences setting prototype ([a03da7a](https://github.com/armandwipangestu/freshbite/commit/a03da7a1876211a7d52d1338c1484e81e002aa8b))
+* **page:** add prototype appearance setting (light, dark, system theme) ([7dbcaf2](https://github.com/armandwipangestu/freshbite/commit/7dbcaf2b22701e93f121d5858bfca44e3f2b1190))
+
 ## [0.3.0-rc.11](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.10...v0.3.0-rc.11) (2026-01-15)
 
 ### Features
