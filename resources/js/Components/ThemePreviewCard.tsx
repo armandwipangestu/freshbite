@@ -22,8 +22,8 @@ export default function ThemePreviewCard({
             )}
         >
             <CardContent className="p-0">
-                <div className="p-8 pb-4">
-                    <h2 className="text-3xl font-semibold text-foreground">
+                <div className="p-6 pb-4">
+                    <h2 className="text-lg font-semibold text-foreground">
                         {title}
                     </h2>
                     {description && (

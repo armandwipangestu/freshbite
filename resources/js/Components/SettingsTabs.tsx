@@ -174,7 +174,7 @@ function ProfileTab({ user }: { user: User }) {
                             <Button
                                 type="button"
                                 variant="outline"
-                                className="h-14 flex-1 rounded-[16px] border-gray-300 px-8 text-lg font-semibold sm:flex-none"
+                                className="h-14 flex-1 rounded-[16px] border px-8 text-lg font-semibold hover:bg-green-700 dark:border-muted-foreground dark:hover:bg-green-700 dark:hover:text-white sm:flex-none"
                                 onClick={() => setShowPasswordDialog(true)}
                             >
                                 Change password
@@ -350,7 +350,7 @@ function AddressTab() {
                     </p>
                 </div>
             ) : addresses.length === 0 ? (
-                <div className="rounded-[24px] border border-border bg-card p-8 text-center dark:border-border dark:bg-card">
+                <div className="rounded-[24px] border border-border bg-card p-8 text-center dark:border-border dark:bg-primary-50">
                     <p className="mb-4 text-muted-foreground dark:text-muted-foreground">
                         No addresses found. Add your first address to get
                         started.

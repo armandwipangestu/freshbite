@@ -394,7 +394,7 @@ export default function AddressForm({
                             variant="outline"
                             onClick={handleClose}
                             disabled={processing}
-                            className="h-12 rounded-[16px] border-gray-300 px-8 font-semibold sm:h-14"
+                            className="h-12 rounded-[16px] border-muted-foreground px-8 font-semibold hover:bg-green-700 dark:border-muted-foreground dark:hover:bg-green-700 dark:hover:text-white sm:h-14"
                         >
                             Cancel
                         </Button>
