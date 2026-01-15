@@ -111,7 +111,7 @@ export default function Welcome({
         <>
             <Head title="FreshBite - Menyediakan Berbagai Macam Pilihan Buah dan Sayuran" />
 
-            <div className="mx-auto max-w-7xl px-6 py-8">
+            <div className="mx-auto max-w-7xl bg-background/95 px-6 py-8">
                 {/* Banner Section */}
                 <div className="mb-12 overflow-hidden rounded-[40px] shadow-sm">
                     {activeBanner ? (
@@ -133,7 +133,7 @@ export default function Welcome({
                 {activeCoupon && flashSaleProducts.length > 0 && (
                     <section className="mb-16">
                         <div className="mb-8 flex items-center gap-6">
-                            <h2 className="text-2xl font-black text-[#1A1A1A] md:text-3xl">
+                            <h2 className="text-2xl font-black text-foreground md:text-3xl">
                                 Flash Sale
                             </h2>
                             <div className="flex items-center gap-2 text-lg font-bold text-[#666666] md:text-xl">
@@ -192,7 +192,7 @@ export default function Welcome({
                 {/* Most Popular Section */}
                 <section className="mb-16">
                     <div className="mb-8">
-                        <h2 className="text-2xl font-black text-[#1A1A1A] md:text-3xl">
+                        <h2 className="text-2xl font-black text-foreground md:text-3xl">
                             Most Popular
                         </h2>
                     </div>
@@ -260,7 +260,7 @@ export default function Welcome({
                 {/* Category Products */}
                 <section className="mb-16">
                     <div className="mb-8">
-                        <h2 className="text-2xl font-black text-[#1A1A1A] md:text-3xl">
+                        <h2 className="text-2xl font-black text-foreground md:text-3xl">
                             Category
                         </h2>
                     </div>

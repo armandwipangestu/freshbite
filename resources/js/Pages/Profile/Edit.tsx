@@ -8,11 +8,11 @@ export default function Edit() {
         <>
             <Head title="Profile" />
 
-            <div className="bg-gray-50/50 py-12">
+            <div className="bg-background/95 py-12">
                 <div className="mx-auto max-w-7xl space-y-6 px-4 sm:px-6 lg:px-8">
                     {/* Header Section */}
                     <div className="flex flex-col gap-2">
-                        <h2 className="text-3xl font-bold tracking-tight text-[#1A1A1A]">
+                        <h2 className="text-3xl font-bold tracking-tight text-foreground">
                             Settings
                         </h2>
                         <p className="text-lg text-gray-500">

@@ -4,9 +4,9 @@ import { PropsWithChildren } from 'react';
 
 export default function MainLayout({ children }: PropsWithChildren) {
     return (
-        <div className="flex min-h-screen flex-col bg-white">
+        <div className="flex min-h-screen flex-col">
             <Navbar />
-            <main className="flex-grow">{children}</main>
+            <main className="flex-grow bg-background">{children}</main>
             <Footer />
         </div>
     );

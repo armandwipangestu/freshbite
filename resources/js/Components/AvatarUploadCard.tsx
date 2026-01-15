@@ -77,12 +77,12 @@ export default function AvatarUploadCard({
     return (
         <Card
             className={cn(
-                'max-w-[400px] overflow-hidden rounded-[24px] border border-gray-100 bg-white shadow-sm',
+                'max-w-[400px] overflow-hidden rounded-[24px] border bg-background shadow-sm dark:border-muted-foreground',
                 className,
             )}
         >
             <CardContent className="p-6">
-                <div className="mb-6 aspect-square w-full overflow-hidden rounded-[20px] bg-gray-100">
+                <div className="bg-muted-fborder-muted-foreground mb-6 aspect-square w-full overflow-hidden rounded-[20px]">
                     {displayImage ? (
                         <img
                             src={displayImage}
@@ -101,25 +101,25 @@ export default function AvatarUploadCard({
                 <Button
                     variant="outline"
                     type="button"
-                    className="mb-8 h-14 w-full rounded-[16px] border-gray-300 text-lg font-semibold text-[#1A1A1A] hover:bg-gray-50 hover:text-[#1A1A1A]"
+                    className="mb-8 h-14 w-full rounded-[16px] border-muted-foreground bg-card text-lg font-semibold text-foreground hover:bg-gray-50 hover:text-foreground dark:text-ground-50"
                     onClick={handleClick}
                 >
                     Choose photo
                 </Button>
 
                 <ul className="space-y-4">
-                    <li className="flex items-center justify-between text-[#1A1A1A]">
+                    <li className="flex items-center justify-between text-foreground">
                         <span className="flex items-center gap-2">
-                            <span className="h-1.5 w-1.5 rounded-full bg-[#1A1A1A]" />
+                            <span className="h-1.5 w-1.5 rounded-full bg-foreground" />
                             Max upload file size:
                         </span>
                         <span className="font-bold">
                             {(maxSize / (1024 * 1024)).toFixed(0)}MB
                         </span>
                     </li>
-                    <li className="flex items-center justify-between text-[#1A1A1A]">
+                    <li className="flex items-center justify-between text-foreground">
                         <span className="flex items-center gap-2">
-                            <span className="h-1.5 w-1.5 rounded-full bg-[#1A1A1A]" />
+                            <span className="h-1.5 w-1.5 rounded-full bg-foreground" />
                             Allowed extension:
                         </span>
                         <span className="font-bold">

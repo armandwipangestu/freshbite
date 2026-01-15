@@ -65,8 +65,8 @@ export default function PasswordChangeDialog({
 
     return (
         <Modal show={show} onClose={onClose} maxWidth="md">
-            <div className="p-6 sm:p-8">
-                <h2 className="mb-2 text-2xl font-bold text-[#1A1A1A]">
+            <div className="bg-background p-6 sm:p-8">
+                <h2 className="mb-2 text-2xl font-bold text-foreground">
                     Change Password
                 </h2>
 

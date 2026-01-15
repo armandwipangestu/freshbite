@@ -169,9 +169,9 @@ export default function AddressForm({
 
     return (
         <Modal show={show} onClose={handleClose} maxWidth="lg">
-            <div className="max-h-[90vh] overflow-y-auto p-6 sm:p-8">
+            <div className="max-h-[90vh] overflow-y-auto bg-background p-6 sm:p-8">
                 <div className="mb-5">
-                    <h2 className="mb-2 text-2xl font-bold text-[#1A1A1A]">
+                    <h2 className="mb-2 text-2xl font-bold text-foreground">
                         {isEditing ? 'Edit Address' : 'Add New Address'}
                     </h2>
 
@@ -269,7 +269,7 @@ export default function AddressForm({
                             id="province_id"
                             value={data.province_id ?? ''}
                             onChange={handleProvinceChange} // Gunakan fungsi yang dibuat di atas
-                            className="h-12 w-full rounded-[16px] border border-gray-200 px-6 text-base"
+                            className="h-12 w-full rounded-[16px] border border-gray-200 px-6 text-base dark:border-primary dark:bg-background dark:text-foreground"
                         >
                             <option value="">Select Province</option>
                             {provinces.map((province) => (
@@ -304,7 +304,7 @@ export default function AddressForm({
                                         : null,
                                 )
                             }
-                            className="h-12 w-full rounded-[16px] border border-gray-200 px-6 text-base"
+                            className="h-12 w-full rounded-[16px] border border-gray-200 px-6 text-base dark:border-primary dark:bg-background dark:text-foreground"
                             disabled={
                                 processing || loadingGeo || !data.province_id
                             }
@@ -337,7 +337,7 @@ export default function AddressForm({
                             onChange={(e) => setData('address', e.target.value)}
                             placeholder="Enter your full address"
                             rows={4}
-                            className="w-full rounded-[16px] border border-gray-200 px-6 py-3 text-base"
+                            className="w-full rounded-[16px] border border-gray-200 px-6 py-3 text-base dark:border-primary dark:bg-background dark:text-foreground"
                             disabled={processing}
                         />
                         <InputError message={errors.address} className="mt-2" />
@@ -359,7 +359,7 @@ export default function AddressForm({
                             }
                             placeholder="e.g., Ring the doorbell twice"
                             rows={3}
-                            className="w-full rounded-[16px] border border-gray-200 px-6 py-3 text-base"
+                            className="w-full rounded-[16px] border border-gray-200 px-6 py-3 text-base dark:border-primary dark:bg-background dark:text-foreground"
                             disabled={processing}
                         />
                         <InputError

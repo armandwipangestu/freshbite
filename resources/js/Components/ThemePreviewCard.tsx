@@ -17,13 +17,13 @@ export default function ThemePreviewCard({
     return (
         <Card
             className={cn(
-                'w-full max-w-[600px] overflow-hidden rounded-[24px] border border-gray-100 bg-white shadow-sm',
+                'w-full max-w-[600px] overflow-hidden rounded-[24px] border bg-background shadow-sm dark:border-muted-foreground',
                 className,
             )}
         >
             <CardContent className="p-0">
                 <div className="p-8 pb-4">
-                    <h2 className="text-3xl font-semibold text-[#1A1A1A]">
+                    <h2 className="text-3xl font-semibold text-foreground">
                         {title}
                     </h2>
                     {description && (
@@ -36,11 +36,12 @@ export default function ThemePreviewCard({
                 <hr className="border-gray-100" />
 
                 <div className="p-8">
-                    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[24px] border border-gray-200 bg-[#E9EEF5] p-6 shadow-inner">
+                    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[24px] p-6">
                         <img
                             src={previewImage}
+                            key={previewImage}
                             alt="Theme Preview"
-                            className="h-full w-full rounded-[16px] object-contain shadow-lg"
+                            className="rounded-lg object-contain shadow-lg"
                         />
                     </div>
                 </div>
