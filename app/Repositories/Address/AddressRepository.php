@@ -31,7 +31,8 @@ class AddressRepository implements AddressRepositoryInterface
      */
     public function getPaginatedByUserId(int $userId, ?string $search = null, int $perPage = 5)
     {
-        $query = Address::where('user_id', $userId);
+        $query = Address::with(['province', 'city'])
+            ->where('user_id', $userId);
 
         if ($search) {
             $query->where(function ($q) use ($search) {

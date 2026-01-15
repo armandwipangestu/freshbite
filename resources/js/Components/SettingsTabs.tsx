@@ -26,6 +26,8 @@ interface AddressData {
     is_default: boolean;
     province_id: number;
     city_id: number;
+    province?: { name: string };
+    city?: { name: string };
 }
 
 interface SettingsTabsProps {
@@ -415,6 +417,11 @@ function AddressTab() {
 
                             <p className="mb-4 leading-relaxed text-gray-600">
                                 {addr.address}
+                                {addr.city && addr.province && (
+                                    <span className="text-gray-500">
+                                        . {addr.city.name}, {addr.province.name}
+                                    </span>
+                                )}
                             </p>
 
                             {addr.note_for_courier && (
