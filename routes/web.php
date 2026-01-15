@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\PreferencesController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,6 +44,10 @@ Route::middleware('auth')->group(function () {
     // Address API endpoints for dropdowns
     Route::get('/api/provinces', [AddressController::class, 'getProvinces'])->name('api.provinces');
     Route::get('/api/cities', [AddressController::class, 'getCities'])->name('api.cities');
+
+    // Preferences routes
+    Route::get('/api/preferences', [PreferencesController::class, 'show'])->name('preferences.show');
+    Route::patch('/preferences', [PreferencesController::class, 'update'])->name('preferences.update');
 });
 
 Route::get('/design-system', function () {

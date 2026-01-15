@@ -44,9 +44,9 @@ export default function SettingsTabs({ user }: SettingsTabsProps) {
     ];
 
     return (
-        <div className="w-full overflow-hidden rounded-[24px] border border-gray-100 bg-white shadow-sm">
+        <div className="w-full overflow-hidden rounded-[24px] border border-border bg-background shadow-sm dark:border dark:border-muted-foreground dark:bg-background">
             {/* Tab Headers */}
-            <div className="scrollbar-hide flex flex-nowrap overflow-x-auto border-b border-gray-100 px-4 pt-6 sm:px-8">
+            <div className="scrollbar-hide flex flex-nowrap overflow-x-auto border-b border-border px-4 pt-6 dark:border-border sm:px-8">
                 {tabs.map((tab) => (
                     <button
                         key={tab.id}
@@ -54,13 +54,13 @@ export default function SettingsTabs({ user }: SettingsTabsProps) {
                         className={cn(
                             'relative whitespace-nowrap px-4 py-4 text-lg font-medium transition-all sm:px-8 sm:text-xl',
                             activeTab === tab.id
-                                ? 'text-[#22C55E]'
-                                : 'text-gray-400 hover:text-gray-600',
+                                ? 'text-green-600 dark:text-green-500'
+                                : 'text-muted-foreground hover:text-foreground dark:text-muted-foreground dark:hover:text-foreground',
                         )}
                     >
                         {tab.label}
                         {activeTab === tab.id && (
-                            <div className="absolute bottom-0 left-0 right-0 h-1 rounded-t-full bg-[#22C55E]" />
+                            <div className="absolute bottom-0 left-0 right-0 h-1 rounded-t-full bg-green-600 dark:bg-green-500" />
                         )}
                     </button>
                 ))}
@@ -125,7 +125,7 @@ function ProfileTab({ user }: { user: User }) {
                     </div>
                     <div className="space-y-8 lg:col-span-8">
                         <div className="space-y-4">
-                            <h3 className="text-xl font-bold text-[#1A1A1A] sm:text-2xl">
+                            <h3 className="text-xl font-bold text-foreground sm:text-2xl">
                                 Change information
                             </h3>
                             <hr className="border-gray-100" />
@@ -135,7 +135,7 @@ function ProfileTab({ user }: { user: User }) {
                             <div className="space-y-2">
                                 <Label
                                     htmlFor="name"
-                                    className="text-base text-[#666666] sm:text-lg"
+                                    className="text-base text-muted-foreground sm:text-lg"
                                 >
                                     Name
                                 </Label>
@@ -156,7 +156,7 @@ function ProfileTab({ user }: { user: User }) {
                             <div className="space-y-2">
                                 <Label
                                     htmlFor="email"
-                                    className="text-base text-[#666666] sm:text-lg"
+                                    className="text-base text-muted-foreground sm:text-lg"
                                 >
                                     Email
                                 </Label>
@@ -164,7 +164,7 @@ function ProfileTab({ user }: { user: User }) {
                                     id="email"
                                     type="email"
                                     value={user.email}
-                                    className="h-12 cursor-not-allowed rounded-[16px] bg-gray-50 px-6 text-base text-gray-500 sm:h-14 sm:text-lg"
+                                    className="h-12 cursor-not-allowed rounded-[16px] bg-muted px-6 text-base text-muted-foreground dark:bg-muted dark:text-muted-foreground sm:h-14 sm:text-lg"
                                     disabled
                                 />
                             </div>
@@ -182,14 +182,14 @@ function ProfileTab({ user }: { user: User }) {
                             <Button
                                 type="submit"
                                 disabled={processing}
-                                className="h-14 flex-1 rounded-[16px] bg-[#22C55E] px-8 text-lg font-semibold text-white shadow-none hover:bg-[#1AAA4B] disabled:opacity-50 sm:flex-none"
+                                className="h-14 flex-1 rounded-[16px] bg-green-600 px-8 text-lg font-semibold text-white shadow-none hover:bg-green-700 disabled:opacity-50 dark:bg-green-600 dark:hover:bg-green-700 sm:flex-none"
                             >
                                 {processing ? 'Updating...' : 'Update profile'}
                             </Button>
                         </div>
 
                         {recentlySuccessful && (
-                            <div className="rounded-[12px] border border-green-200 bg-green-50 p-4 text-sm text-green-700">
+                            <div className="rounded-[12px] border border-green-300 bg-green-50 p-4 text-sm text-green-700 dark:border-green-700 dark:bg-green-900 dark:text-green-200">
                                 ✓ Profile updated successfully.
                             </div>
                         )}
@@ -336,7 +336,7 @@ function AddressTab() {
                 </div>
                 <Button
                     onClick={() => setShowAddressForm(true)}
-                    className="flex h-14 w-full items-center gap-2 rounded-[16px] bg-[#22C55E] px-8 text-lg font-semibold text-white shadow-none hover:bg-[#1AAA4B] sm:w-auto"
+                    className="flex h-14 w-full items-center gap-2 rounded-[16px] bg-green-600 px-8 text-lg font-semibold text-white shadow-none hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700 sm:w-auto"
                 >
                     <Plus className="h-5 w-5" /> New Address
                 </Button>
@@ -345,17 +345,19 @@ function AddressTab() {
             {/* Addresses List */}
             {loading && addresses.length === 0 ? (
                 <div className="py-12 text-center">
-                    <p className="text-gray-500">Loading addresses...</p>
+                    <p className="text-muted-foreground dark:text-muted-foreground">
+                        Loading addresses...
+                    </p>
                 </div>
             ) : addresses.length === 0 ? (
-                <div className="rounded-[24px] border border-gray-100 bg-white p-8 text-center">
-                    <p className="mb-4 text-gray-500">
+                <div className="rounded-[24px] border border-border bg-card p-8 text-center dark:border-border dark:bg-card">
+                    <p className="mb-4 text-muted-foreground dark:text-muted-foreground">
                         No addresses found. Add your first address to get
                         started.
                     </p>
                     <Button
                         onClick={() => setShowAddressForm(true)}
-                        className="bg-[#22C55E] px-8 py-2 text-white hover:bg-[#1AAA4B]"
+                        className="bg-green-600 px-8 py-2 text-white hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700"
                     >
                         Add Address
                     </Button>
@@ -368,24 +370,24 @@ function AddressTab() {
                             className={cn(
                                 'rounded-[24px] border p-6 transition-all',
                                 addr.is_default
-                                    ? 'border-[#22C55E] bg-[#F0FDF4] shadow-[0_4px_20px_-4px_rgba(34,197,94,0.1)]'
-                                    : 'border-gray-100 bg-white hover:border-gray-200',
+                                    ? 'border-green-600 bg-green-50 shadow-[0_4px_20px_-4px_rgba(34,197,94,0.1)] dark:border-green-500 dark:bg-green-950'
+                                    : 'border-border bg-card hover:border-border dark:border-border dark:bg-primary-50',
                             )}
                         >
                             <div className="mb-4 flex items-start justify-between">
                                 <div className="flex-1 space-y-1">
-                                    <div className="flex items-center gap-2 text-sm font-bold text-[#1A1A1A]">
+                                    <div className="flex items-center gap-2 text-sm font-bold text-foreground dark:text-foreground">
                                         {addr.label_name}
                                         {addr.is_default && (
-                                            <span className="rounded bg-[#22C55E] px-2 py-1 text-[10px] uppercase tracking-wider text-white">
+                                            <span className="rounded bg-green-600 px-2 py-1 text-[10px] uppercase tracking-wider text-white dark:bg-green-600">
                                                 Default
                                             </span>
                                         )}
                                     </div>
-                                    <h4 className="text-lg font-bold text-[#1A1A1A]">
+                                    <h4 className="text-lg font-bold text-foreground dark:text-foreground">
                                         {addr.recipient_name}
                                     </h4>
-                                    <p className="font-medium text-gray-500">
+                                    <p className="font-medium text-muted-foreground dark:text-muted-foreground">
                                         {addr.phone_number}
                                     </p>
                                 </div>
@@ -415,17 +417,17 @@ function AddressTab() {
                                 </div>
                             </div>
 
-                            <p className="mb-4 leading-relaxed text-gray-600">
+                            <p className="mb-4 leading-relaxed text-foreground dark:text-foreground">
                                 {addr.address}
                                 {addr.city && addr.province && (
-                                    <span className="text-gray-500">
+                                    <span className="text-muted-foreground dark:text-muted-foreground">
                                         . {addr.city.name}, {addr.province.name}
                                     </span>
                                 )}
                             </p>
 
                             {addr.note_for_courier && (
-                                <p className="mb-4 text-sm text-gray-500">
+                                <p className="mb-4 text-sm text-muted-foreground dark:text-muted-foreground">
                                     <span className="font-semibold">
                                         Note:{' '}
                                     </span>
@@ -436,7 +438,7 @@ function AddressTab() {
                             {!addr.is_default && (
                                 <button
                                     onClick={() => handleSetDefault(addr.id)}
-                                    className="text-sm font-bold text-[#22C55E] hover:underline"
+                                    className="text-sm font-bold text-green-600 hover:underline dark:text-green-500"
                                 >
                                     Set as default
                                 </button>
@@ -448,8 +450,8 @@ function AddressTab() {
 
             {/* Pagination */}
             {pagination.last_page > 1 && (
-                <div className="flex items-center justify-between gap-4 border-t border-gray-100 pt-6">
-                    <div className="text-sm text-gray-500">
+                <div className="flex items-center justify-between gap-4 border-t border-border pt-6 dark:border-border">
+                    <div className="text-sm text-muted-foreground dark:text-muted-foreground">
                         Showing {addresses.length} of {pagination.total}{' '}
                         addresses
                     </div>
@@ -526,7 +528,66 @@ function AddressTab() {
 type ThemeType = 'system' | 'light' | 'dark';
 
 function PreferencesTab() {
-    const [theme, setTheme] = React.useState<ThemeType>('light');
+    const [theme, setTheme] = React.useState<ThemeType>('system');
+    const [loading, setLoading] = React.useState(true);
+    const [saving, setSaving] = React.useState(false);
+
+    // Load preferences on mount
+    React.useEffect(() => {
+        const fetchPreferences = async () => {
+            try {
+                const response = await fetch(route('preferences.show'), {
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                });
+                const data = await response.json();
+                setTheme(data.theme || 'system');
+            } catch (error) {
+                console.error('Error loading preferences:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchPreferences();
+    }, []);
+
+    const handleThemeChange = (newTheme: ThemeType) => {
+        const oldTheme = theme;
+        setTheme(newTheme);
+        setSaving(true);
+
+        router.patch(
+            route('preferences.update'),
+            {
+                theme: newTheme,
+            },
+            {
+                preserveScroll: true,
+                onFinish: () => setSaving(false),
+                onError: () => {
+                    setTheme(oldTheme);
+                    console.error('Failed to save preferences');
+                },
+            },
+        );
+    };
+
+    // Apply theme to document
+    React.useEffect(() => {
+        const html = document.documentElement;
+
+        if (theme === 'dark') {
+            html.classList.add('dark');
+        } else if (theme === 'light') {
+            html.classList.remove('dark');
+        } else {
+            // system preference
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                html.classList.add('dark');
+            } else {
+                html.classList.remove('dark');
+            }
+        }
+    }, [theme]);
 
     const themeOptions: {
         id: ThemeType;
@@ -543,6 +604,21 @@ function PreferencesTab() {
         { id: 'dark', label: 'Dark', description: '' },
     ];
 
+    const getPreviewImage = () => {
+        let activeTheme = theme;
+
+        if (theme === 'system') {
+            activeTheme = window.matchMedia('(prefers-color-scheme: dark)')
+                .matches
+                ? 'dark'
+                : 'light';
+        }
+
+        return activeTheme === 'dark'
+            ? '/storage/assets/images/preview-dark.png'
+            : '/storage/assets/images/preview-light.png';
+    };
+
     return (
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12">
             <div className="space-y-8 lg:col-span-7">
@@ -551,45 +627,54 @@ function PreferencesTab() {
                     comfortable to look at.
                 </p>
 
-                <div className="space-y-6">
-                    <h3 className="text-2xl font-bold text-[#1A1A1A]">Theme</h3>
-                    <div className="space-y-4">
-                        {themeOptions.map((opt) => (
-                            <div
-                                key={opt.id}
-                                onClick={() => setTheme(opt.id)}
-                                className="group flex cursor-pointer items-center justify-between border-b border-gray-100 py-4"
-                            >
-                                <div className="space-y-1">
-                                    <h4 className="text-lg font-bold text-[#1A1A1A] transition-colors group-hover:text-[#22C55E] sm:text-xl">
-                                        {opt.label}
-                                    </h4>
-                                    {opt.description && (
-                                        <p className="text-gray-500">
-                                            {opt.description}
-                                        </p>
-                                    )}
-                                </div>
-                                <div
-                                    className={cn(
-                                        'flex h-8 w-8 items-center justify-center rounded-full border-2 transition-all',
-                                        theme === opt.id
-                                            ? 'border-[#22C55E] bg-[#F0FDF4]'
-                                            : 'border-gray-200 group-hover:border-gray-300',
-                                    )}
-                                >
-                                    {theme === opt.id && (
-                                        <div className="h-4 w-4 rounded-full bg-[#22C55E]" />
-                                    )}
-                                </div>
-                            </div>
-                        ))}
+                {loading ? (
+                    <div className="py-8 text-center text-gray-500">
+                        Loading preferences...
                     </div>
-                </div>
+                ) : (
+                    <div className="space-y-6">
+                        <h3 className="text-2xl font-bold text-foreground">
+                            Theme
+                        </h3>
+                        <div className="space-y-4">
+                            {themeOptions.map((opt) => (
+                                <div
+                                    key={opt.id}
+                                    onClick={() => handleThemeChange(opt.id)}
+                                    className="group flex cursor-pointer items-center justify-between border-b border-gray-100 py-4"
+                                >
+                                    <div className="space-y-1">
+                                        <h4 className="text-lg font-bold text-foreground transition-colors group-hover:text-[#22C55E] sm:text-xl">
+                                            {opt.label}
+                                        </h4>
+                                        {opt.description && (
+                                            <p className="text-gray-500">
+                                                {opt.description}
+                                            </p>
+                                        )}
+                                    </div>
+                                    <div
+                                        className={cn(
+                                            'flex h-8 w-8 items-center justify-center rounded-full border-2 transition-all',
+                                            theme === opt.id
+                                                ? 'border-[#22C55E] bg-[#F0FDF4]'
+                                                : 'border-gray-200 group-hover:border-gray-300',
+                                            saving && 'opacity-50',
+                                        )}
+                                    >
+                                        {theme === opt.id && (
+                                            <div className="h-4 w-4 rounded-full bg-[#22C55E]" />
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
 
             <div className="lg:col-span-5">
-                <ThemePreviewCard previewImage="https://images.unsplash.com/photo-1614332287897-cdc485fa562d?auto=format&fit=crop&q=80&w=800" />
+                <ThemePreviewCard previewImage={getPreviewImage()} />
             </div>
         </div>
     );

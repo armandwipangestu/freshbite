@@ -23,6 +23,9 @@ use App\Repositories\Banner\BannerRepository;
 use App\Repositories\Address\Interfaces\AddressRepositoryInterface;
 use App\Repositories\Address\AddressRepository;
 
+use App\Repositories\Preferences\Interfaces\PreferencesRepositoryInterface;
+use App\Repositories\Preferences\PreferencesRepository;
+
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
@@ -41,6 +44,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
         $this->app->bind(BannerRepositoryInterface::class, BannerRepository::class);
         $this->app->bind(AddressRepositoryInterface::class, AddressRepository::class);
+        $this->app->bind(PreferencesRepositoryInterface::class, PreferencesRepository::class);
     }
 
     /**

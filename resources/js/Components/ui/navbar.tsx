@@ -23,7 +23,7 @@ export function Navbar() {
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     return (
-        <nav className="sticky top-0 z-50 w-full bg-white shadow-sm">
+        <nav className="sticky top-0 z-50 w-full bg-background shadow-sm">
             <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:py-3">
                 {/* Left side: Hamburger (Mobile) + Logo + Categories (Desktop) */}
                 <div className="flex items-center space-x-4 lg:space-x-6">
@@ -47,7 +47,7 @@ export function Navbar() {
                         {/* <span className="hidden lg:inline ml-2 text-xl font-bold text-[#22C55E]">FreshBite.</span> */}
                     </Link>
 
-                    <div className="hidden space-x-4 font-medium text-gray-700 lg:flex">
+                    <div className="text-foregound hidden space-x-4 font-medium lg:flex">
                         <Link href="/fruits" className="hover:text-green-600">
                             Fruits
                         </Link>
@@ -70,6 +70,7 @@ export function Navbar() {
                         onChange={(e) => setSearch(e.target.value)}
                         icon={Search}
                         iconPosition="right"
+                        className="rounded-lg border-2 border-ground-800"
                     />
                 </div>
 
