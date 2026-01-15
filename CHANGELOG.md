@@ -1,36 +1,65 @@
-## [0.3.0](https://github.com/armandwipangestu/freshbite/compare/v0.2.1...v0.3.0) (2026-01-13)
-
-### Features
-
-* **auth:** add register verification email ([8074787](https://github.com/armandwipangestu/freshbite/commit/8074787133c7a9cdac2846ce73253ebda7b07410))
-* **auth:** add sign in with google, using redirect & one tap method ([cb02bcb](https://github.com/armandwipangestu/freshbite/commit/cb02bcb9fcddfd88689db73d34dd221a60577a2f))
-* **components:** add auth card ([341041f](https://github.com/armandwipangestu/freshbite/commit/341041fd0686be9d687497a9c2f4122878b0cf5d))
-* **components:** add avatar upload card ([12d610d](https://github.com/armandwipangestu/freshbite/commit/12d610d3046b0a73d14be32f1ed159ffcde92695))
-* **components:** add card products ([9dde73d](https://github.com/armandwipangestu/freshbite/commit/9dde73d44783caed71a1838b28434c4c591b0a7c))
-* **components:** add footer ([011f71e](https://github.com/armandwipangestu/freshbite/commit/011f71e0b2c8d43bfab70de97692adfc948d660e))
-* **components:** add forgot password ([49217fa](https://github.com/armandwipangestu/freshbite/commit/49217fa720175c2b20a76e47c626eac0f7e37c64))
-* **components:** add main layout template ([80af082](https://github.com/armandwipangestu/freshbite/commit/80af08222b445672ed474e0594c88183bc5a103d))
-* **components:** add navbar mobile version ([b87a485](https://github.com/armandwipangestu/freshbite/commit/b87a48537ee3c97e5a897270ad3a008905c788cc))
-* **components:** add order summary card ([90c5ea2](https://github.com/armandwipangestu/freshbite/commit/90c5ea2fb5f11fe60b0ca98c9ea5edd226e205a9))
-* **components:** add product gallery card ([a265397](https://github.com/armandwipangestu/freshbite/commit/a2653979fb6d52fa4aea5cbb67bf1a3ce0cc9050))
-* **components:** add tab settings ([d24f7fe](https://github.com/armandwipangestu/freshbite/commit/d24f7fedf1ef88c5aaddcd3d0093478f29c513f2))
-* **components:** add theme preview card ([9b59835](https://github.com/armandwipangestu/freshbite/commit/9b59835a43f9c24ecc1d5de50bc363be6948566c))
-* **components:** add wishlist card ([0f8066d](https://github.com/armandwipangestu/freshbite/commit/0f8066d5d5534cdc68e8a30fade23118a01f04a3))
-* **page:** add auth prototype ([1fe7c21](https://github.com/armandwipangestu/freshbite/commit/1fe7c2126cd06c135dc306869f114de7fa6da667))
-* **page:** add landing page prototype ([dd1ebe2](https://github.com/armandwipangestu/freshbite/commit/dd1ebe28d9fd6eb9b1d919177f0a00f1a4266651))
-* **page:** adjust landing page ([35e5b83](https://github.com/armandwipangestu/freshbite/commit/35e5b834166352c76f935d3e1784b6dba38ecbcc))
-* **page:** redesign reset password ([e2c0fdf](https://github.com/armandwipangestu/freshbite/commit/e2c0fdfd198fbbc4b43a74b16d6a0951389c9069))
+## [0.3.0-rc.15](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.14...v0.3.0-rc.15) (2026-01-15)
 
 ### Bug Fixes
 
-* add copy default images ([b4c3432](https://github.com/armandwipangestu/freshbite/commit/b4c3432215306459368fab253608427ad09e6507))
-* add dropdown to navbar profile section ([1a84df1](https://github.com/armandwipangestu/freshbite/commit/1a84df18461646d382fef28bca96d85c291456f2))
-* **ci:** build ([baad95f](https://github.com/armandwipangestu/freshbite/commit/baad95f064e5a487422143466a5214a62e0b6e5b))
-* **ci:** change any data type to make lint correct ([76e850b](https://github.com/armandwipangestu/freshbite/commit/76e850bafa165636ed64d831a745ee143a565609))
-* **ci:** copy default images for banner and product ([9a69521](https://github.com/armandwipangestu/freshbite/commit/9a69521cf1599b3f5e00c0a794950078134b79e1))
-* **ci:** lint ([4fd7552](https://github.com/armandwipangestu/freshbite/commit/4fd75529f0cca3fd5c163d419100b32dc61c7eec))
-* **ci:** remove any data type ([287b89b](https://github.com/armandwipangestu/freshbite/commit/287b89b93d1456818f589fb143f08135ef38ba3a))
-* remove active border ([91f43dc](https://github.com/armandwipangestu/freshbite/commit/91f43dc46ee70de778f9fc5681cb366f5515d4fd))
+* mobile nav and adjust some color on dark mode ([2ab2eb3](https://github.com/armandwipangestu/freshbite/commit/2ab2eb3bcb3597d4373e20d845bfad145f63dece))
+
+## [0.3.0-rc.14](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.13...v0.3.0-rc.14) (2026-01-15)
+
+### Bug Fixes
+
+* adjust dark color in auth page ([875c62f](https://github.com/armandwipangestu/freshbite/commit/875c62fcd7ee9a00cb52d7fefbe69b0ef48de05e))
+* restore assets entrypoint ([009ceb5](https://github.com/armandwipangestu/freshbite/commit/009ceb5319d738ec5f815b565904a3b73e614961))
+
+## [0.3.0-rc.13](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.12...v0.3.0-rc.13) (2026-01-15)
+
+### Bug Fixes
+
+* assets preview light and dark theme ([a20fdf1](https://github.com/armandwipangestu/freshbite/commit/a20fdf1843afeb45da09ab870ca202229b7f8b46))
+
+## [0.3.0-rc.12](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.11...v0.3.0-rc.12) (2026-01-15)
+
+### Features
+
+* **page:** add preferences setting prototype ([a03da7a](https://github.com/armandwipangestu/freshbite/commit/a03da7a1876211a7d52d1338c1484e81e002aa8b))
+* **page:** add prototype appearance setting (light, dark, system theme) ([7dbcaf2](https://github.com/armandwipangestu/freshbite/commit/7dbcaf2b22701e93f121d5858bfca44e3f2b1190))
+
+## [0.3.0-rc.11](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.10...v0.3.0-rc.11) (2026-01-15)
+
+### Features
+
+* **page:** add address profile settings prototype ([75b4029](https://github.com/armandwipangestu/freshbite/commit/75b4029c4bca7ec4e19bfd7440fe1c50efcc12a9))
+
+### Bug Fixes
+
+* adjust sticky and w-full select option ([e373cc2](https://github.com/armandwipangestu/freshbite/commit/e373cc22de42807117a4f595abe7ed9a148fb29f))
+* debounce focused and icon trash color ([329bc24](https://github.com/armandwipangestu/freshbite/commit/329bc245b2027d287a2529bd13f9977ba510f856))
+* remove tinyint to json or boolean value ([eb6261b](https://github.com/armandwipangestu/freshbite/commit/eb6261b052b1cdffcc5a5ba50b40f453c61463a6))
+* select option province ([3bf3e49](https://github.com/armandwipangestu/freshbite/commit/3bf3e49ee21cd7681ef70831dbf68bdc176cbe9b))
+* set as default address ([ae544c6](https://github.com/armandwipangestu/freshbite/commit/ae544c63f7d6f6773f52c3ecfbbd3d5c1b5fc73c))
+
+## [0.3.0-rc.10](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.9...v0.3.0-rc.10) (2026-01-14)
+
+### Bug Fixes
+
+* **ci:** adjust unit testing feature ([b348713](https://github.com/armandwipangestu/freshbite/commit/b34871352c5f0133e8eccea293fdc746b196355e))
+* **ci:** remove sending props to navbar component ([e11afa7](https://github.com/armandwipangestu/freshbite/commit/e11afa70a9f61cc1d0cbd2ea98a499a9df2d0379))
+
+## [0.3.0-rc.9](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.8...v0.3.0-rc.9) (2026-01-14)
+
+### Features
+
+* **auth:** disable google one tap method ([e9f6eaf](https://github.com/armandwipangestu/freshbite/commit/e9f6eaf474411cabacf50b548af28a6a8767822c))
+* **components:** change navbar using real avatar from data user ([205dfb8](https://github.com/armandwipangestu/freshbite/commit/205dfb8d8e2912968b4c383a25f7755e8947ac7e))
+* **page:** add profile settings ([25f5a59](https://github.com/armandwipangestu/freshbite/commit/25f5a59f46e30281e2e939c514c7b40534254095))
+
+### Bug Fixes
+
+* navbar with avatar user ([b92d232](https://github.com/armandwipangestu/freshbite/commit/b92d2320a87cc70acecbb83fe3a62c53be81f13d))
+* resolve avatar url ([286e01d](https://github.com/armandwipangestu/freshbite/commit/286e01d8c9ff4441650d7a60cc5946acafcaf7bb))
+* resolve relative with absolute path ([218d713](https://github.com/armandwipangestu/freshbite/commit/218d713a18e9734955e4fd5f815dd2f0e1fe51fa))
+
+## [0.3.0-rc.8](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.7...v0.3.0-rc.8) (2026-01-13)
 
 ## [0.3.0-rc.7](https://github.com/armandwipangestu/freshbite/compare/v0.3.0-rc.6...v0.3.0-rc.7) (2026-01-13)
 

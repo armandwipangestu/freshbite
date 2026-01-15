@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\RajaOngkirCity;
 use App\Models\RajaOngkirProvince;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -12,24 +11,59 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class AddressFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
-        $province_id = RajaOngkirProvince::inRandomOrder()->value('id');
+        $province = RajaOngkirProvince::inRandomOrder()->first();
+
+        $city = RajaOngkirCity::where('province_id', $province->id)
+            ->inRandomOrder()
+            ->first();
+
+        $streets = [
+            'Jl. Sudirman',
+            'Jl. Thamrin',
+            'Jl. Gatot Subroto',
+            'Jl. Diponegoro',
+            'Jl. Ahmad Yani',
+        ];
+
+        $courierNotes = [
+            'Mohon hubungi penerima sebelum pengiriman.',
+            'Titip ke satpam jika penerima tidak ada.',
+            'Rumah pagar hitam, dekat masjid.',
+            'Pengiriman pagi lebih diutamakan.',
+            'Harap jangan meninggalkan paket tanpa konfirmasi.',
+        ];
+
         return [
             'label_name' => fake()->randomElement(['House', 'Apartment', 'Office', 'Other']),
             'recipient_name' => fake()->name(),
-            'phone_number' => fake()->regexify('[0-9]{10,13}'),
-            'province_id' => $province_id,
-            'city_id' => RajaOngkirCity::where('province_id', $province_id)->inRandomOrder()->value('id'),
-            'address' => fake()->address(),
-            'note_for_courier' => fake()->sentence(),
-            'is_default' => fake()->boolean(),
-            'user_id' => User::inRandomOrder()->value('id'),
+            'phone_number' => fake()->numerify('08##########'),
+
+            'province_id' => $province->id,
+            'city_id' => $city->id,
+
+            'address' => sprintf(
+                '%s No. %d, RT %02d/RW %02d',
+                fake()->randomElement($streets),
+                fake()->numberBetween(1, 200),
+                fake()->numberBetween(1, 10),
+                fake()->numberBetween(1, 10),
+            ),
+
+            'note_for_courier' => fake()->randomElement($courierNotes),
+
+            'is_default' => false,
         ];
+    }
+
+    /**
+     * State: default address
+     */
+    public function default(): static
+    {
+        return $this->state(fn() => [
+            'is_default' => true,
+        ]);
     }
 }

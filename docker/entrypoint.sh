@@ -47,43 +47,30 @@ php artisan optimize
 php artisan storage:link || true
 
 # Ensure default assets exist in volume
-if [ ! -f "storage/app/public/assets/images/logo.png" ]; then
-    log "entrypoint" "INFO" "Restoring default logo.png"
-    mkdir -p storage/app/public/assets/images
-    cp -n docker/defaults/logo.png storage/app/public/assets/images/logo.png || true
-fi
+restore_assets() {
+    SRC=$1
+    DEST=$2
+    NAME=$3
+    
+    if [ -d "$SRC" ]; then
+        log "entrypoint" "INFO" "Syncing $NAME assets..."
+        mkdir -p "$DEST"
+        cp -rup "$SRC/." "$DEST/"
+        log "entrypoint" "INFO" "$NAME assets synced."
+    fi
+}
 
-if [ ! -f "storage/app/public/assets/images/favicon.png" ]; then
-    log "entrypoint" "INFO" "Restoring default favicon.png"
-    mkdir -p storage/app/public/assets/images
-    cp -n docker/defaults/favicon.png storage/app/public/assets/images/favicon.png || true
-fi
+# 1. Restore Main Images
+restore_assets "docker/defaults/images" "storage/app/public/assets/images" "General"
 
-# Copy default banner images if missing
-if [ -d "docker/defaults/banner-images" ]; then
-    for img in docker/defaults/banner-images/*; do
-        base=$(basename "$img")
-        target="storage/app/public/banner-images/$base"
-        if [ ! -f "$target" ]; then
-            log "entrypoint" "INFO" "Restoring default banner image $base"
-            mkdir -p "$(dirname "$target")"
-            cp -n "$img" "$target" || true
-        fi
-    done
-fi
+# 2. Restore Avatars
+restore_assets "docker/defaults/avatars" "storage/app/public/avatars" "Avatar"
 
-# Copy default product images if missing
-if [ -d "docker/defaults/product-images" ]; then
-    for img in docker/defaults/product-images/*; do
-        base=$(basename "$img")
-        target="storage/app/public/product-images/$base"
-        if [ ! -f "$target" ]; then
-            log "entrypoint" "INFO" "Restoring default product image $base"
-            mkdir -p "$(dirname "$target")"
-            cp -n "$img" "$target" || true
-        fi
-    done
-fi
+# 3. Restore Banner Images
+restore_assets "docker/defaults/banner-images" "storage/app/public/banner-images" "Banner"
+
+# 4. Restore Product Images
+restore_assets "docker/defaults/product-images" "storage/app/public/product-images" "Product"
 
 # Fix permission
 chown -R www-data:www-data storage bootstrap/cache public/build

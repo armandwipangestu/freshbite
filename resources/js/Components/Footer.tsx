@@ -11,7 +11,7 @@ export default function Footer({ className }: FooterProps) {
     return (
         <footer
             className={cn(
-                'border-t border-gray-100 bg-white px-6 py-16 md:px-12 lg:px-24',
+                'border-t border-gray-100 bg-background px-6 py-16 md:px-12 lg:px-24',
                 className,
             )}
         >
@@ -36,14 +36,14 @@ export default function Footer({ className }: FooterProps) {
 
                     {/* Discover Section */}
                     <div>
-                        <h3 className="mb-6 text-xl font-bold text-[#1A1A1A]">
+                        <h3 className="mb-6 text-xl font-bold text-foreground">
                             Discover
                         </h3>
                         <ul className="space-y-4">
                             <li>
                                 <a
                                     href="#"
-                                    className="text-lg text-[#1A1A1A] transition-colors hover:text-[#22C55E]"
+                                    className="text-lg text-foreground transition-colors hover:text-[#22C55E]"
                                 >
                                     Giving back
                                 </a>
@@ -51,7 +51,7 @@ export default function Footer({ className }: FooterProps) {
                             <li>
                                 <a
                                     href="#"
-                                    className="text-lg text-[#1A1A1A] transition-colors hover:text-[#22C55E]"
+                                    className="text-lg text-foreground transition-colors hover:text-[#22C55E]"
                                 >
                                     Help & Support
                                 </a>
@@ -61,14 +61,14 @@ export default function Footer({ className }: FooterProps) {
 
                     {/* Service Section */}
                     <div>
-                        <h3 className="mb-6 text-xl font-bold text-[#1A1A1A]">
+                        <h3 className="mb-6 text-xl font-bold text-foreground">
                             Service
                         </h3>
                         <ul className="space-y-4">
                             <li>
                                 <a
                                     href="#"
-                                    className="text-lg text-[#1A1A1A] transition-colors hover:text-[#22C55E]"
+                                    className="text-lg text-foreground transition-colors hover:text-[#22C55E]"
                                 >
                                     Fruits
                                 </a>
@@ -76,7 +76,7 @@ export default function Footer({ className }: FooterProps) {
                             <li>
                                 <a
                                     href="#"
-                                    className="text-lg text-[#1A1A1A] transition-colors hover:text-[#22C55E]"
+                                    className="text-lg text-foreground transition-colors hover:text-[#22C55E]"
                                 >
                                     Vegetables
                                 </a>
@@ -84,7 +84,7 @@ export default function Footer({ className }: FooterProps) {
                             <li>
                                 <a
                                     href="#"
-                                    className="text-lg text-[#1A1A1A] transition-colors hover:text-[#22C55E]"
+                                    className="text-lg text-foreground transition-colors hover:text-[#22C55E]"
                                 >
                                     Seeds
                                 </a>
@@ -94,7 +94,7 @@ export default function Footer({ className }: FooterProps) {
 
                     {/* Social Section */}
                     <div>
-                        <h3 className="mb-6 text-xl font-bold text-[#1A1A1A]">
+                        <h3 className="mb-6 text-xl font-bold text-foreground">
                             Social
                         </h3>
                         <div className="flex items-center gap-4">
