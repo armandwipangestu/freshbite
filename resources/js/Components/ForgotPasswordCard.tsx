@@ -24,7 +24,7 @@ export default function ForgotPasswordCard({
         >
             <CardContent className="space-y-8 p-6 sm:p-10">
                 <div className="space-y-2">
-                    <h2 className="text-2xl font-bold text-[#1A1A1A]">
+                    <h2 className="text-2xl font-bold text-foreground">
                         Reset your password
                     </h2>
                     <p className="text-base leading-relaxed text-gray-500">
