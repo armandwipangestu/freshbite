@@ -51,8 +51,8 @@ export default function AddressForm({
         label_name: '',
         recipient_name: '',
         phone_number: '',
-        province_id: '',
-        city_id: '',
+        province_id: null as number | null,
+        city_id: null as number | null,
         address: '',
         note_for_courier: '',
         is_default: false,
@@ -65,30 +65,29 @@ export default function AddressForm({
 
     // Update form when initialData changes
     useEffect(() => {
-        if (show && initialData) {
-            setData({
-                label_name: initialData.label_name,
-                recipient_name: initialData.recipient_name,
-                phone_number: initialData.phone_number,
-                province_id: initialData.province_id.toString(),
-                city_id: initialData.city_id.toString(),
-                address: initialData.address,
-                note_for_courier: initialData.note_for_courier || '',
-                is_default: initialData.is_default,
-            });
-            // Fetch cities for this province
-            fetchCities(initialData.province_id);
-        } else if (show && !initialData) {
-            reset();
+        if (show) {
+            if (isEditing && initialData) {
+                setData({
+                    label_name: initialData.label_name,
+                    recipient_name: initialData.recipient_name,
+                    phone_number: initialData.phone_number,
+                    province_id: initialData.province_id,
+                    city_id: initialData.city_id,
+                    address: initialData.address,
+                    note_for_courier: initialData.note_for_courier || '',
+                    is_default: initialData.is_default,
+                });
+                fetchCities(initialData.province_id);
+            } else {
+                reset();
+            }
         }
-    }, [show, initialData]);
+    }, [show]);
 
     const fetchProvinces = async () => {
         try {
             const response = await fetch('/api/provinces', {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
             });
             const provinceList = await response.json();
             setProvinces(provinceList);
@@ -123,11 +122,19 @@ export default function AddressForm({
         }
     };
 
-    const handleProvinceChange = (value: string) => {
-        setData('province_id', value);
-        setData('city_id', '');
+    const handleProvinceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = e.target.value ? Number(e.target.value) : null;
+
+        setData((oldData) => ({
+            ...oldData,
+            province_id: value,
+            city_id: null,
+        }));
+
         if (value) {
-            fetchCities(parseInt(value, 10));
+            fetchCities(value);
+        } else {
+            setCities([]);
         }
     };
 
@@ -260,19 +267,13 @@ export default function AddressForm({
                         <br />
                         <select
                             id="province_id"
-                            value={data.province_id}
-                            onChange={(e) =>
-                                handleProvinceChange(e.target.value)
-                            }
+                            value={data.province_id ?? ''}
+                            onChange={handleProvinceChange} // Gunakan fungsi yang dibuat di atas
                             className="h-12 w-full rounded-[16px] border border-gray-200 px-6 text-base"
-                            disabled={processing}
                         >
                             <option value="">Select Province</option>
                             {provinces.map((province) => (
-                                <option
-                                    key={province.id}
-                                    value={province.id.toString()}
-                                >
+                                <option key={province.id} value={province.id}>
                                     {province.name}
                                 </option>
                             ))}
@@ -294,8 +295,15 @@ export default function AddressForm({
                         <br />
                         <select
                             id="city_id"
-                            value={data.city_id}
-                            onChange={(e) => setData('city_id', e.target.value)}
+                            value={data.city_id ?? ''}
+                            onChange={(e) =>
+                                setData(
+                                    'city_id',
+                                    e.target.value
+                                        ? Number(e.target.value)
+                                        : null,
+                                )
+                            }
                             className="h-12 w-full rounded-[16px] border border-gray-200 px-6 text-base"
                             disabled={
                                 processing || loadingGeo || !data.province_id
@@ -307,10 +315,7 @@ export default function AddressForm({
                                     : 'Select City'}
                             </option>
                             {cities.map((city) => (
-                                <option
-                                    key={city.id}
-                                    value={city.id.toString()}
-                                >
+                                <option key={city.id} value={city.id}>
                                     {city.name}
                                 </option>
                             ))}
