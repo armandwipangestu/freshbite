@@ -526,7 +526,66 @@ function AddressTab() {
 type ThemeType = 'system' | 'light' | 'dark';
 
 function PreferencesTab() {
-    const [theme, setTheme] = React.useState<ThemeType>('light');
+    const [theme, setTheme] = React.useState<ThemeType>('system');
+    const [loading, setLoading] = React.useState(true);
+    const [saving, setSaving] = React.useState(false);
+
+    // Load preferences on mount
+    React.useEffect(() => {
+        const fetchPreferences = async () => {
+            try {
+                const response = await fetch(route('preferences.show'), {
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                });
+                const data = await response.json();
+                setTheme(data.theme || 'system');
+            } catch (error) {
+                console.error('Error loading preferences:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchPreferences();
+    }, []);
+
+    const handleThemeChange = (newTheme: ThemeType) => {
+        const oldTheme = theme;
+        setTheme(newTheme);
+        setSaving(true);
+
+        router.patch(
+            route('preferences.update'),
+            {
+                theme: newTheme,
+            },
+            {
+                preserveScroll: true,
+                onFinish: () => setSaving(false),
+                onError: () => {
+                    setTheme(oldTheme);
+                    console.error('Failed to save preferences');
+                },
+            },
+        );
+    };
+
+    // Apply theme to document
+    React.useEffect(() => {
+        const html = document.documentElement;
+
+        if (theme === 'dark') {
+            html.classList.add('dark');
+        } else if (theme === 'light') {
+            html.classList.remove('dark');
+        } else {
+            // system preference
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                html.classList.add('dark');
+            } else {
+                html.classList.remove('dark');
+            }
+        }
+    }, [theme]);
 
     const themeOptions: {
         id: ThemeType;
@@ -551,41 +610,50 @@ function PreferencesTab() {
                     comfortable to look at.
                 </p>
 
-                <div className="space-y-6">
-                    <h3 className="text-2xl font-bold text-[#1A1A1A]">Theme</h3>
-                    <div className="space-y-4">
-                        {themeOptions.map((opt) => (
-                            <div
-                                key={opt.id}
-                                onClick={() => setTheme(opt.id)}
-                                className="group flex cursor-pointer items-center justify-between border-b border-gray-100 py-4"
-                            >
-                                <div className="space-y-1">
-                                    <h4 className="text-lg font-bold text-[#1A1A1A] transition-colors group-hover:text-[#22C55E] sm:text-xl">
-                                        {opt.label}
-                                    </h4>
-                                    {opt.description && (
-                                        <p className="text-gray-500">
-                                            {opt.description}
-                                        </p>
-                                    )}
-                                </div>
-                                <div
-                                    className={cn(
-                                        'flex h-8 w-8 items-center justify-center rounded-full border-2 transition-all',
-                                        theme === opt.id
-                                            ? 'border-[#22C55E] bg-[#F0FDF4]'
-                                            : 'border-gray-200 group-hover:border-gray-300',
-                                    )}
-                                >
-                                    {theme === opt.id && (
-                                        <div className="h-4 w-4 rounded-full bg-[#22C55E]" />
-                                    )}
-                                </div>
-                            </div>
-                        ))}
+                {loading ? (
+                    <div className="py-8 text-center text-gray-500">
+                        Loading preferences...
                     </div>
-                </div>
+                ) : (
+                    <div className="space-y-6">
+                        <h3 className="text-2xl font-bold text-[#1A1A1A]">
+                            Theme
+                        </h3>
+                        <div className="space-y-4">
+                            {themeOptions.map((opt) => (
+                                <div
+                                    key={opt.id}
+                                    onClick={() => handleThemeChange(opt.id)}
+                                    className="group flex cursor-pointer items-center justify-between border-b border-gray-100 py-4"
+                                >
+                                    <div className="space-y-1">
+                                        <h4 className="text-lg font-bold text-[#1A1A1A] transition-colors group-hover:text-[#22C55E] sm:text-xl">
+                                            {opt.label}
+                                        </h4>
+                                        {opt.description && (
+                                            <p className="text-gray-500">
+                                                {opt.description}
+                                            </p>
+                                        )}
+                                    </div>
+                                    <div
+                                        className={cn(
+                                            'flex h-8 w-8 items-center justify-center rounded-full border-2 transition-all',
+                                            theme === opt.id
+                                                ? 'border-[#22C55E] bg-[#F0FDF4]'
+                                                : 'border-gray-200 group-hover:border-gray-300',
+                                            saving && 'opacity-50',
+                                        )}
+                                    >
+                                        {theme === opt.id && (
+                                            <div className="h-4 w-4 rounded-full bg-[#22C55E]" />
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
 
             <div className="lg:col-span-5">
