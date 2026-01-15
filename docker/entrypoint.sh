@@ -47,43 +47,27 @@ php artisan optimize
 php artisan storage:link || true
 
 # Ensure default assets exist in volume
-if [ -d "docker/defaults/assets/images" ]; then
-    for img in docker/defaults/assets/images/*; do
-        base=$(basename "$img")
-        target="storage/app/public/assets/images/$base"
-        if [ ! -f "$target" ]; then
-            log "entrypoint" "INFO" "Restoring default assets image $base"
-            mkdir -p "$(dirname "$target")"
-            cp -n "$img" "$target" || true
-        fi
-    done
-fi
+restore_assets() {
+    SRC=$1
+    DEST=$2
+    NAME=$3
+    
+    if [ -d "$SRC" ]; then
+        log "entrypoint" "INFO" "Syncing $NAME assets..."
+        mkdir -p "$DEST"
+        cp -rup "$SRC/." "$DEST/"
+        log "entrypoint" "INFO" "$NAME assets synced."
+    fi
+}
 
-# Copy default banner images if missing
-if [ -d "docker/defaults/banner-images" ]; then
-    for img in docker/defaults/banner-images/*; do
-        base=$(basename "$img")
-        target="storage/app/public/banner-images/$base"
-        if [ ! -f "$target" ]; then
-            log "entrypoint" "INFO" "Restoring default banner image $base"
-            mkdir -p "$(dirname "$target")"
-            cp -n "$img" "$target" || true
-        fi
-    done
-fi
+# 1. Restore Main Images
+restore_assets "docker/defaults/images" "storage/app/public/assets/images" "General"
 
-# Copy default product images if missing
-if [ -d "docker/defaults/product-images" ]; then
-    for img in docker/defaults/product-images/*; do
-        base=$(basename "$img")
-        target="storage/app/public/product-images/$base"
-        if [ ! -f "$target" ]; then
-            log "entrypoint" "INFO" "Restoring default product image $base"
-            mkdir -p "$(dirname "$target")"
-            cp -n "$img" "$target" || true
-        fi
-    done
-fi
+# 2. Restore Banner Images
+restore_assets "docker/defaults/banner-images" "storage/app/public/banner-images" "Banner"
+
+# 3. Restore Product Images
+restore_assets "docker/defaults/product-images" "storage/app/public/product-images" "Product"
 
 # Fix permission
 chown -R www-data:www-data storage bootstrap/cache public/build
